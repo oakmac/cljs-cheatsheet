@@ -101,10 +101,6 @@
 // Variables
 //------------------------------------------------------------------------------
 
-@headerBlue: #5f7fbf;
-@footerBlue: @headerBlue;
-@cljsGreen: #95c94b;
-
 @linkBlue: #20c;
 @tooltipBackgroundColor: #333;
 
@@ -119,10 +115,8 @@
 @searchHighlightColor: #ff0; // yellow
 @relatedHighlightColor: #ffa500; // orange
 
-@bodyWidth: 1200px;
-
 //------------------------------------------------------------------------------
-// Style
+// Tag Selectors
 //------------------------------------------------------------------------------
 
 body {
@@ -130,6 +124,122 @@ body {
   font-family: "Open Sans";
   font-size: 16px;
   font-weight: 400;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 300px;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  margin-bottom: 20px;
+
+  h1 {
+    font-family: "Open Sans Light";
+    font-size: 28px;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+
+    img {
+      margin: -5px 5px 0 0;
+      width: 40px;
+      vertical-align: middle;
+    }
+  }
+
+  input[type="text"] {
+    box-sizing: border-box;
+    margin-left: auto;
+    padding: 5px 10px;
+    width: 300px;
+  }
+}
+
+section {
+  h2 {
+    border-bottom: 2px solid #ddd;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding: 0 0 5px 0;
+    text-transform: uppercase;
+  }
+}
+
+// large screens
+.one-col-container { display: none; }
+.two-col-container { display: none; }
+.three-col-container {
+  display: flex;
+  justify-content: space-between;
+  .column { width: 32%; }
+}
+
+// medium screens
+@media all and (max-width: 1074px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    margin-bottom: 15px;
+
+    input[type="text"] {
+      width: 280px;
+    }
+  }
+
+  .one-col-container { display: none; }
+  .three-col-container { display: none; }
+  .two-col-container {
+    display: flex;
+    justify-content: space-between;
+    .column { width: 49%; }
+  }
+}
+
+// small screens
+@media all and (max-width: 699px) {
+  body {
+    padding: 5px;
+  }
+
+  header {
+    display: block;
+    margin-bottom: 0;
+
+    h1 {
+      font-family: "Open Sans Light";
+      font-size: 24px;
+      font-weight: 300;
+      margin: 0 0 5px 0;
+      padding: 0;
+
+      img {
+        margin: -5px 5px 0 0;
+        width: 30px;
+        vertical-align: middle;
+      }
+    }
+
+    input[type="text"] {
+      display: block;
+      margin: 0;
+      padding: 5px 10px;
+      width: 100%;
+    }
+  }
+
+  .two-col-container { display: none; }
+  .three-col-container { display: none; }
+  .one-col-container { display: block; }
+}
+
+footer {
+  border-top: 1px solid #ddd;
+  font-size: 12px;
+  padding: 20px 0 5px 0;
 }
 
 code, pre {
@@ -142,6 +252,10 @@ em {
   font-family: "Open Sans";
   font-weight: 400;
 }
+
+//------------------------------------------------------------------------------
+// Snowflake Classes
+//------------------------------------------------------------------------------
 
 .section-31efe {
   margin-bottom: 30px;
@@ -549,127 +663,4 @@ em {
 
 .links-446e0 {
   margin-bottom: 4px;
-}
-
-//------------------------------------------------------------------------------
-// New CSS Below
-//------------------------------------------------------------------------------
-
-body {
-  margin: 0 auto;
-  max-width: 1200px;
-  min-width: 300px;
-  padding: 20px;
-}
-
-header {
-  display: flex;
-  margin-bottom: 20px;
-
-  h1 {
-    font-family: "Open Sans Light";
-    font-size: 28px;
-    font-weight: 300;
-    margin: 0;
-    padding: 0;
-
-    img {
-      margin: -5px 5px 0 0;
-      width: 40px;
-      vertical-align: middle;
-    }
-  }
-
-  input[type="text"] {
-    box-sizing: border-box;
-    margin-left: auto;
-    padding: 5px 10px;
-    width: 300px;
-  }
-}
-
-section {
-  h2 {
-    border-bottom: 2px solid #ddd;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    padding: 0 0 5px 0;
-    text-transform: uppercase;
-  }
-}
-
-// large screens
-.one-col-container { display: none; }
-.two-col-container { display: none; }
-.three-col-container {
-  display: flex;
-  justify-content: space-between;
-  .column { width: 32%; }
-}
-
-// medium screens
-@media all and (max-width: 1074px) {
-  body {
-    padding: 10px;
-  }
-
-  header {
-    margin-bottom: 15px;
-
-    input[type="text"] {
-      width: 280px;
-    }
-  }
-
-  .one-col-container { display: none; }
-  .three-col-container { display: none; }
-  .two-col-container {
-    display: flex;
-    justify-content: space-between;
-    .column { width: 49%; }
-  }
-}
-
-// small screens
-@media all and (max-width: 699px) {
-  body {
-    padding: 5px;
-  }
-
-  header {
-    display: block;
-    margin-bottom: 0;
-
-    h1 {
-      font-family: "Open Sans Light";
-      font-size: 24px;
-      font-weight: 300;
-      margin: 0 0 5px 0;
-      padding: 0;
-
-      img {
-        margin: -5px 5px 0 0;
-        width: 30px;
-        vertical-align: middle;
-      }
-    }
-
-    input[type="text"] {
-      display: block;
-      margin: 0;
-      padding: 5px 10px;
-      width: 100%;
-    }
-  }
-
-  .two-col-container { display: none; }
-  .three-col-container { display: none; }
-  .one-col-container { display: block; }
-}
-
-footer {
-  border-top: 1px solid #ddd;
-  font-size: 12px;
-  padding: 20px 0 5px 0;
 }
