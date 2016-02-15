@@ -1,5 +1,6 @@
 (ns cljs-cheatsheet-client.core
   (:require
+    cljsjs.jquery
     [clojure.string :refer [blank?]]
     [cljs-cheatsheet-client.dom :refer [by-id get-element-box]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mousetrap-boxes]]
@@ -70,41 +71,6 @@
         $tooltip-el ($ (str "#" tt-id))]
     (.fadeTo $tooltip-el opacity-fade-speed 1)
     (.removeClass ($ fn-link-sel) related-highlight-class)))
-
-;;------------------------------------------------------------------------------
-;; Window Size
-;;------------------------------------------------------------------------------
-
-;; TODO:
-;; - move this to CSS media queries?
-;; - create a 4 column layout
-
-(def sml-layout-class "sml-5dcf3")
-(def med-layout-class "med-0000a")
-(def lrg-layout-class "lrg-92b4d")
-(def layout-classes (str sml-layout-class " "
-                         med-layout-class " "
-                         lrg-layout-class))
-
-(defn- width->size [w]
-  (cond
-    (>= w 1060) :large
-    (>= w 660)  :medium
-    :else       :small))
-
-(def current-size (atom nil))
-
-(defn- on-change-size [_ _ _ new-size]
-  (-> ($ "body")
-    (.removeClass layout-classes)
-    (.addClass
-      (case new-size
-        :small  sml-layout-class
-        :medium med-layout-class
-        :large  lrg-layout-class
-        :else nil))))
-
-(add-watch current-size :change on-change-size)
 
 ;;------------------------------------------------------------------------------
 ;; Search
@@ -179,12 +145,6 @@
 ;; Events
 ;;------------------------------------------------------------------------------
 
-(defn- on-window-resize []
-  (let [browser-width (.width ($ js/window))
-        new-size (width->size browser-width)]
-    (when-not (= @current-size new-size)
-      (reset! current-size new-size))))
-
 (defn- change-search-input2 []
   (let [txt (-> ($ search-input-sel) .val .toLowerCase)]
     (when (not= txt @current-search-txt)
@@ -197,8 +157,7 @@
 (defn- add-events! []
   (.on ($ "body") "mouseenter" related-link-sel mouseenter-related-link)
   (.on ($ "body") "mouseleave" related-link-sel mouseleave-related-link)
-  (.on ($ search-input-sel) "blur change keydown" change-search-input)
-  (aset js/window "onresize" on-window-resize))
+  (.on ($ search-input-sel) "blur change keydown" change-search-input))
 
 ;;------------------------------------------------------------------------------
 ;; Global Cheatsheet Init
@@ -211,12 +170,11 @@
   ;; add search and other events
   (add-events!)
 
-  ;; trigger resize and search
-  (on-window-resize)
+  ;; trigger search
   (change-search-input2)
 
   ;; put the focus on the search field
   (when-let [search-input-el (by-id search-input-id)]
     (.focus search-input-el)))
 
-($ init!)
+(init!)

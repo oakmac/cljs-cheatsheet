@@ -1074,30 +1074,29 @@
 (def clojure-cheatsheet-href "http://clojure.org/cheatsheet")
 (def clojure-tooltip-cheatsheet-href "http://jafingerhut.github.io/cheatsheet/clojuredocs/cheatsheet-tiptip-cdocs-summary.html")
 (def clojurescript-github-href "https://github.com/clojure/clojurescript")
-(def cljsinfo-github-href "https://github.com/cljsinfo/cljs.info/")
-(def cljsinfo-license-href "https://github.com/cljsinfo/cljs.info/blob/master/LICENSE.md")
+(def repo-href "https://github.com/oakmac/cljs-cheatsheet/")
+(def license-href "https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md")
 
 ;; include this? "Please copy, improve, and share this work."
 ;; TODO: fix the markup here
 (hiccups/defhtml footer []
   [:footer
-    [:div.inner-cb85a
-      [:div.links-446e0
-        [:label.quiet-5d4e8 "reference: "]
-        [:a.ftr-link-e980e {:href clojure-cheatsheet-href} "Clojure cheatsheet"]
-        ", "
-        [:a.ftr-link-e980e {:href clojure-tooltip-cheatsheet-href} "Cheatsheet with tooltips"]
-        ", "
-        [:a.ftr-link-e980e {:href clojurescript-github-href} "ClojureScript source"]]
-      [:div.links-446e0
-        [:label.quiet-5d4e8 "source: "]
-        [:a.ftr-link-e980e {:href cljsinfo-github-href} "github.com/cljsinfo/cljs.info"]]
-      [:div.links-446e0
-        [:label.quiet-5d4e8 "license: "]
-        [:a.ftr-link-e980e {:href cljsinfo-license-href} "MIT"]]]])
+    [:div.links-446e0
+      [:label.quiet-5d4e8 "reference: "]
+      [:a.ftr-link-e980e {:href clojure-cheatsheet-href} "Clojure cheatsheet"]
+      ", "
+      [:a.ftr-link-e980e {:href clojure-tooltip-cheatsheet-href} "Cheatsheet with tooltips"]
+      ", "
+      [:a.ftr-link-e980e {:href clojurescript-github-href} "ClojureScript source"]]
+    [:div.links-446e0
+      [:label.quiet-5d4e8 "source: "]
+      [:a.ftr-link-e980e {:href repo-href} "github.com/oakmac/cljs-cheatsheet"]]
+    [:div.links-446e0
+      [:label.quiet-5d4e8 "license: "]
+      [:a.ftr-link-e980e {:href license-href} "MIT"]]])
 
 ;;------------------------------------------------------------------------------
-;; Head
+;; Head and Script Includes
 ;;------------------------------------------------------------------------------
 
 (def page-title "ClojureScript Cheatsheet")
@@ -1113,12 +1112,15 @@
     [:link {:rel "stylesheet" :href fonts-url}]
     [:link {:rel "stylesheet" :href "/css/main.min.css"}]])
 
+(hiccups/defhtml script-tags []
+  [:script {:src "js/cheatsheet.min.js"}])
+
 ;;------------------------------------------------------------------------------
 ;; Body
 ;;------------------------------------------------------------------------------
 
 (hiccups/defhtml body []
-  [:section
+  [:section.group-2be36
     [:h2 "Basics"]
     [:div.three-col-container
       [:div.column
@@ -1147,7 +1149,7 @@
       (js-interop-section)
       (atoms-section)]]
 
-  [:section
+  [:section.group-2be36
     [:h2 "Collections"]
     [:div.three-col-container
       [:div.column
@@ -1173,7 +1175,7 @@
       (sets-section)
       (maps-section)]]
 
-  [:section
+  [:section.group-2be36
     [:h2 "Sequences"]
     [:div.three-col-container
       [:div.column (seq-in-out-section)]
@@ -1189,7 +1191,7 @@
       (use-seq-section)
       (create-seq-section)]]
 
-  [:section
+  [:section.group-2be36
     [:h2 "Misc"]
     [:div.three-col-container
       [:div.column (bitwise-section)]]
@@ -1207,6 +1209,7 @@
        (body)
        (footer)
        (info-tooltips)
+       (script-tags)
        "</body>"
        "</html>"))
 

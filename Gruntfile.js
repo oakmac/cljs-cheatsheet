@@ -89,7 +89,7 @@ function extractSnowflakeClasses(filename, pattern) {
 function snowflakeCount() {
   var cssClasses = extractSnowflakeClasses("public/css/main.min.css"),
     jsServer = extractSnowflakeClasses("app.js"),
-    jsClient = extractSnowflakeClasses('public/js/client.min.js'),
+    jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js'),
     jsClasses = jsServer.concat(jsClient);
 
   console.log(cssClasses.length + " class names found in css/main.min.css");
