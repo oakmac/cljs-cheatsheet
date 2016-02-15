@@ -17,9 +17,15 @@
 
 (def alt-icon-style "margin-left: 2px; vertical-align: baseline;")
 
+;; keep track of the symbols we need docs for
+(def symbols (atom #{}))
+
 ;;------------------------------------------------------------------------------
 ;; Helpers
 ;;------------------------------------------------------------------------------
+
+(defn- json-stringify [js-thing]
+  (js/JSON.stringify js-thing nil 2))
 
 (defn- extract-namespace [full-name]
   (let [first-slash-pos (.indexOf full-name "/")]
@@ -68,10 +74,13 @@
 (hiccups/defhtml fn-link
   ([nme] (fn-link nme cljs-core-ns))
   ([nme nme-space]
-   [:a.fn-a8476
-     {:data-full-name (str nme-space "/" nme)
-      :href (docs-href nme nme-space)}
-     (html-encode nme)]))
+   (let [full-name (str nme-space "/" nme)
+         ;; add this symbol to the docs list
+         _ (swap! symbols conj (str nme-space "/" nme))]
+     [:a.fn-a8476
+       {:data-full-name full-name
+        :href (docs-href nme nme-space)}
+       (html-encode nme)])))
 
 (hiccups/defhtml inside-fn-link
   ([nme] (inside-fn-link nme cljs-core-ns))
@@ -1079,7 +1088,7 @@
 (def license-href "https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md")
 
 ;; include this? "Please copy, improve, and share this work."
-;; TODO: fix the markup here
+;; TODO: improve the markup here
 (hiccups/defhtml footer []
   [:footer
     [:div.links-446e0
@@ -1217,10 +1226,14 @@
 ;; Init
 ;;------------------------------------------------------------------------------
 
-(defn- write-cheatsheet! []
+(defn- write-cheatsheet-html! []
   (.writeFileSync fs "public/index.html" (cheatsheet-page)))
 
-(write-cheatsheet!)
+(defn- write-symbols-json! []
+  (.writeFileSync fs "symbols.json" (-> @symbols sort clj->js json-stringify)))
+
+(write-cheatsheet-html!)
+(write-symbols-json!)
 
 ;; needed for :nodejs cljs build
 (def always-nil (constantly nil))
