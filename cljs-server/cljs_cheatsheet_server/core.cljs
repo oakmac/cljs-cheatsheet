@@ -1067,8 +1067,9 @@
 
 (hiccups/defhtml header []
   [:header
-    [:img {:src "/img/cljs-ring.svg" :alt "ClojureScript Logo"}]
-    [:h1 "ClojureScript Cheatsheet"]
+    [:h1
+      [:img {:src "/img/cljs-ring.svg" :alt "ClojureScript Logo"}]
+      "ClojureScript Cheatsheet"]
     [:input#searchInput {:type "text" :placeholder "Search"}]])
 
 (def clojure-cheatsheet-href "http://clojure.org/cheatsheet")
