@@ -1,6 +1,11 @@
-/out/
-/target/
+# ignore CLJS-generated files
+target/
+public/js/cheatsheet.js
+public/js/cheatsheet.min.js
 app.js
+
+# ignore node_modules
+node_modules/
 
 # ignore diff files
 *.diff

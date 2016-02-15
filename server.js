@@ -1,5 +1,6 @@
-// quick server to serve files out of the public/ folder
-// append ?_slow=true to simulate slow loading times
+// This file exists for developer convenience to host a quick file server out
+// of the public/ folder.
+// append ?_slow=true to files to simulate slow loading times
 
 var express = require('express'),
     app = express();
