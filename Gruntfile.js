@@ -167,6 +167,10 @@ function squeezeClasses() {
 //------------------------------------------------------------------------------
 
 function buildCheatsheetSanityCheck() {
+  if (! grunt.file.exists('public/index.html')) {
+    grunt.fail.warn('Could not find public/index.html! Aborting...');
+  }
+
   if (! grunt.file.exists('public/js/cheatsheet.min.js')) {
     grunt.fail.warn('Could not find public/js/cheatsheet.min.js! Aborting...');
   }
@@ -260,7 +264,9 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 
 grunt.registerTask('build-cheatsheet-sanity-check', buildCheatsheetSanityCheck);
 grunt.registerTask('hash-cheatsheet', hashCheatsheetFiles);
-grunt.registerTask('squeeze-classes', squeezeClasses);
+
+// TODO: this is unfinished
+//grunt.registerTask('squeeze-classes', squeezeClasses);
 
 grunt.registerTask('build-cheatsheet', [
   'build-cheatsheet-sanity-check',

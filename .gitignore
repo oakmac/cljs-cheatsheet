@@ -1,14 +1,18 @@
-# ignore CLJS-generated files
-target/
-public/js/cheatsheet.js
-public/js/cheatsheet.min.js
-app.js
+# ignore the publish directory
+00-publish/
 
 # ignore node_modules
 node_modules/
 
-# ignore the publish directory
-00-publish/
+# ignore CLJS-generated files
+target/
+public/index.html
+public/js/cheatsheet.js
+public/js/cheatsheet.min.js
+app.js
+
+# ignore less-generated css file
+public/js/main.min.css
 
 # ignore diff files
 *.diff
