@@ -77,8 +77,8 @@
       (replace "=" "EQ")))
 
 (defn- docs-href [nme nme-space]
-  (str "/docs/"
-       (uri-encode nme-space)
+  (str "http://clojuredocs.org/"
+       (uri-encode (replace nme-space "cljs.core" "clojure.core"))
        "/"
        (uri-encode (encode-symbol-url nme))))
 
