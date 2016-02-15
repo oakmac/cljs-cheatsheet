@@ -1,5 +1,6 @@
 (ns cljs-cheatsheet-client.html
-  (:require-macros [hiccups.core :as hiccups])
+  (:require-macros
+    [hiccups.core :as hiccups])
   (:require
     hiccups.runtime
     [clojure.string :refer [blank?]]
