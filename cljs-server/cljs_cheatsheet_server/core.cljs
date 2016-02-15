@@ -1149,14 +1149,7 @@
       [:div.column
         (functions-section)
         (strings-section)
-        (atoms-section)]]
-    [:div.one-col-container
-      (basics-section)
-      (functions-section)
-      (numbers-section)
-      (strings-section)
-      (js-interop-section)
-      (atoms-section)]]
+        (atoms-section)]]]
 
   [:section.group-2be36
     [:h2 "Collections"]
@@ -1176,13 +1169,7 @@
         (maps-section)]
       [:div.column
         (vectors-section)
-        (sets-section)]]
-    [:div.one-col-container
-      (collections-section)
-      (lists-section)
-      (vectors-section)
-      (sets-section)
-      (maps-section)]]
+        (sets-section)]]]
 
   [:section.group-2be36
     [:h2 "Sequences"]
@@ -1194,20 +1181,14 @@
       [:div.column (seq-in-out-section)]
       [:div.column
         (use-seq-section)
-        (create-seq-section)]]
-    [:div.one-col-container
-      (seq-in-out-section)
-      (use-seq-section)
-      (create-seq-section)]]
+        (create-seq-section)]]]
 
   [:section.group-2be36
     [:h2 "Misc"]
     [:div.three-col-container
       [:div.column (bitwise-section)]]
     [:div.two-col-container
-      [:div.column (bitwise-section)]]
-    [:div.one-col-container
-      (bitwise-section)]])
+      [:div.column (bitwise-section)]]])
 
 (hiccups/defhtml cheatsheet-page []
   (str "<!doctype html>"

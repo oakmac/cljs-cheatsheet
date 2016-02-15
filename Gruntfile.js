@@ -51,15 +51,8 @@ function difference(arr1, arr2) {
 
 // Snowflake class names must contain at least one letter and one number
 function hasNumbersAndLetters(str) {
-  if (str.search(/\d/) === -1) {
-    return false;
-  }
-
-  if (str.search(/[a-z]/) === -1) {
-    return false;
-  }
-
-  return true;
+  return str.search(/\d/) !== -1 &&
+         str.search(/[a-z]/) !== -1;
 }
 
 // returns an array of unique Snowflake classes from a file
@@ -68,17 +61,18 @@ function extractSnowflakeClasses(filename, pattern) {
     pattern = /([a-z0-9]+-){1,}([abcdef0-9]){5}/g;
   }
 
-  var fileContents = grunt.file.read(filename);
+  const fileContents = grunt.file.read(filename);
+  const matches = fileContents.match(pattern);
   var classes = {};
-
-  var matches = fileContents.match(pattern);
 
   if (matches) {
     for (var i = 0; i < matches.length; i++) {
-      var c = matches[i];
+      var className = matches[i];
+      var arr = className.split('-');
+      var hash = arr[arr.length - 1];
 
-      if (hasNumbersAndLetters(c) === true) {
-        classes[c] = null;
+      if (hasNumbersAndLetters(hash) === true) {
+        classes[className] = null;
       }
     }
   }
@@ -113,7 +107,8 @@ function preBuildSanityCheck() {
     grunt.fail.warn('Could not find public/js/cheatsheet.min.js! Aborting...');
   }
 
-  // TODO: check to make sure the ctime on cheatsheet.min.js is pretty fresh (< 5 minutes)
+  // TODO: check to make sure the ctime on cheatsheet.min.js is pretty fresh
+  //       (< 5 minutes)
 
   grunt.log.writeln('Everything looks ok for a build.');
 }

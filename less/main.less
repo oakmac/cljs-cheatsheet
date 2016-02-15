@@ -168,7 +168,6 @@ section {
 }
 
 // large screens
-.one-col-container { display: none; }
 .two-col-container { display: none; }
 .three-col-container {
   display: flex;
@@ -190,7 +189,6 @@ section {
     }
   }
 
-  .one-col-container { display: none; }
   .three-col-container { display: none; }
   .two-col-container {
     display: flex;
@@ -232,8 +230,14 @@ section {
   }
 
   .two-col-container { display: none; }
-  .three-col-container { display: none; }
-  .one-col-container { display: block; }
+  .three-col-container {
+    display: block;
+
+    .column {
+      display: block;
+      width: auto;
+    }
+  }
 }
 
 footer {
