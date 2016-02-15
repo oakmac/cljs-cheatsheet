@@ -8,7 +8,7 @@ TODO: write this section
 
 ## Development Setup
 
-##### First time setup
+### First time setup
 
 Install [Leiningen] and [Node.js]
 
@@ -17,7 +17,7 @@ Install [Leiningen] and [Node.js]
 npm install
 ```
 
-##### Development workflow
+### Development workflow
 
 You may wish to run these commands in separate console tabs / screens.
 
