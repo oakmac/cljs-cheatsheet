@@ -4,6 +4,7 @@
   (:require
     [cljs.reader :refer [read-string]]
     [clojure.string :refer [blank? join replace]]
+    [cljs-cheatsheet.util :refer [docs-href js-log log]]
     [hiccups.runtime :as hiccupsrt]))
 
 ;; The main purpose of this file is to produce public/index.html
@@ -15,7 +16,6 @@
 (def marked (js/require "marked"))
 
 (def html-encode js/goog.string.htmlEscape)
-(def uri-encode js/encodeURIComponent)
 
 (def cljs-core-ns "cljs.core")
 (def clj-string-ns "clojure.string")
@@ -30,33 +30,8 @@
 ;; Helpers
 ;;------------------------------------------------------------------------------
 
-(defn js-log
-  "Log a JavaScript thing."
-  [js-thing]
-  (js/console.log js-thing))
-
-(defn log
-  "Log a Clojure thing."
-  [clj-thing]
-  (js-log (pr-str clj-thing)))
-
 (defn- json-stringify [js-thing]
   (js/JSON.stringify js-thing nil 2))
-
-(defn- extract-namespace [full-name]
-  (let [first-slash-pos (.indexOf full-name "/")]
-    (subs full-name 0 first-slash-pos)))
-
-(defn- extract-symbol [full-name]
-  (let [first-slash-pos (.indexOf full-name "/")]
-    (subs full-name (inc first-slash-pos))))
-
-(defn- split-full-name [r]
-  (let [ns1 (extract-namespace r)
-        symbol-name (extract-symbol r)]
-    {:full-name r
-     :namespace ns1
-     :symbol symbol-name}))
 
 (hiccups/defhtml tt-icon
   ([tt-id] (tt-icon tt-id nil))
@@ -68,24 +43,6 @@
 
 (hiccups/defhtml literal [n]
   [:span.literal-c3029 n])
-
-(defn- encode-symbol-url [s]
-  (-> s
-      (replace "." "DOT")
-      (replace ">" "GT")
-      (replace "<" "LT")
-      (replace "!" "BANG")
-      (replace "?" "QMARK")
-      (replace "/" "SLASH")
-      (replace "*" "STAR")
-      (replace "+" "PLUS")
-      (replace "=" "EQ")))
-
-(defn- docs-href [nme nme-space]
-  (str "http://clojuredocs.org/"
-       (uri-encode (replace nme-space "cljs.core" "clojure.core"))
-       "/"
-       (uri-encode (encode-symbol-url nme))))
 
 (hiccups/defhtml fn-link
   ([nme] (fn-link nme cljs-core-ns))
@@ -797,132 +754,131 @@
 
 ;; TODO: break these up into functions
 
+(hiccups/defhtml truthy-table []
+  [:table.tbl-3160a
+    [:thead
+      [:tr
+        [:th.tbl-hdr-e0564 "Name"]
+        [:th.tbl-hdr-e0564 "Code"]
+        [:th.tbl-hdr-e0564 "Boolean Value"]]]
+    [:tbody
+      [:tr.dark-even-7aff7
+        [:td.cell-e6fd2.right-border-c1b54 "Empty string"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "\"\""]]
+        [:td.cell-e6fd2 [:code "true"]]]
+      [:tr.dark-odd-6cd97
+        [:td.cell-e6fd2.right-border-c1b54 "Zero"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "0"]]
+        [:td.cell-e6fd2 [:code "true"]]]
+      [:tr.dark-even-7aff7
+        [:td.cell-e6fd2.right-border-c1b54 "Not a number"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "js/NaN"]]
+        [:td.cell-e6fd2 [:code "true"]]]
+      [:tr.dark-odd-6cd97
+        [:td.cell-e6fd2.right-border-c1b54 "Empty vector"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "[]"]]
+        [:td.cell-e6fd2 [:code "true"]]]
+      [:tr.dark-even-7aff7
+        [:td.cell-e6fd2.right-border-c1b54 "Empty array"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "(array)"]]
+        [:td.cell-e6fd2 [:code "true"]]]
+      [:tr.dark-odd-6cd97
+        [:td.cell-e6fd2.right-border-c1b54 "False"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "false"]]
+        [:td.cell-e6fd2 [:code "false"]]]
+      [:tr.dark-even-7aff7
+        [:td.cell-e6fd2.right-border-c1b54 "Nil"]
+        [:td.cell-e6fd2.right-border-c1b54 [:code "nil"]]
+        [:td.cell-e6fd2 [:code "false"]]]]])
+
+(hiccups/defhtml function-shorthand-table []
+  [:table.exmpl-tbl-42d9f
+    [:thead
+      [:tr
+        [:th.tbl-hdr-e0564 "Shorthand"]
+        [:th.tbl-hdr-e0564 "Expands To"]]]
+    [:tbody
+      [:tr.dark-even-7aff7
+        [:td.code-72fa0.right-border-c1b54 "#(str \"Hello \" %)"]
+        [:td.code-72fa0 [:pre "(fn [n]\n  (str \"Hello \" n))"]]]
+      [:tr.dark-odd-6cd97
+        [:td.code-72fa0.right-border-c1b54 "#(my-fn %1 %2 %3)"]
+        [:td.code-72fa0 [:pre "(fn [a b c]\n  (my-fn a b c))"]]]
+      [:tr.dark-even-7aff7
+        [:td.code-72fa0.right-border-c1b54 "#(* % (apply + %&amp;))"]
+        [:td.code-72fa0 [:pre {:style "font-size:10px"}
+                          "(fn [x &amp; the-rest]\n"
+                          "  (* x (apply + the-rest)))"]]]]])
+
 (hiccups/defhtml basics-tooltips []
 
   [:div#tooltip-define.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
-      "Everything in ClojureScript is immutable by default, meaning that the "
-      "value of a symbol cannot be changed after it is defined."]]
+    [:p "Everything in ClojureScript is immutable by default, meaning that the "
+        "value of a symbol cannot be changed after it is defined."]]
 
   [:div#tooltip-branch.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
-      "In conditional statements, everything evaluates to " [:code "true"]
-      " except for " [:code "false"] " and " [:code "nil"] "."]
-    [:p.info-2e4f9
-      "This is much simpler than JavaScript, which has complex rules for "
-      "truthiness."]
-    [:table.tbl-3160a
-      [:thead
-        [:tr
-          [:th.tbl-hdr-e0564 "Name"]
-          [:th.tbl-hdr-e0564 "Code"]
-          [:th.tbl-hdr-e0564 "Boolean Value"]]]
-      [:tbody
-        [:tr.dark-even-7aff7
-          [:td.cell-e6fd2.right-border-c1b54 "Empty string"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "\"\""]]
-          [:td.cell-e6fd2 [:code "true"]]]
-        [:tr.dark-odd-6cd97
-          [:td.cell-e6fd2.right-border-c1b54 "Zero"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "0"]]
-          [:td.cell-e6fd2 [:code "true"]]]
-        [:tr.dark-even-7aff7
-          [:td.cell-e6fd2.right-border-c1b54 "Not a number"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "js/NaN"]]
-          [:td.cell-e6fd2 [:code "true"]]]
-        [:tr.dark-odd-6cd97
-          [:td.cell-e6fd2.right-border-c1b54 "Empty vector"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "[]"]]
-          [:td.cell-e6fd2 [:code "true"]]]
-        [:tr.dark-even-7aff7
-          [:td.cell-e6fd2.right-border-c1b54 "Empty array"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "(array)"]]
-          [:td.cell-e6fd2 [:code "true"]]]
-        [:tr.dark-odd-6cd97
-          [:td.cell-e6fd2.right-border-c1b54 "False"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "false"]]
-          [:td.cell-e6fd2 [:code "false"]]]
-        [:tr.dark-even-7aff7
-          [:td.cell-e6fd2.right-border-c1b54 "Nil"]
-          [:td.cell-e6fd2.right-border-c1b54 [:code "nil"]]
-          [:td.cell-e6fd2 [:code "false"]]]]]]
+    [:p "In conditional statements, everything evaluates to " [:code "true"]
+        " except for " [:code "false"] " and " [:code "nil"] "."]
+    [:p "This is much simpler than JavaScript, which has complex rules for "
+        "truthiness."]
+    (truthy-table)]
 
   [:div#tooltip-numbers.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
-      "All ClojureScript Numbers are IEEE 754 Double Precision floating point. "
-      "The same as JavaScript."]]
+    [:p "All ClojureScript Numbers are IEEE 754 Double Precision floating point. "
+        "The same as JavaScript."]]
 
   [:div#tooltip-atoms.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "Atoms provide a way to manage state in a ClojureScript program."]
-    [:p.info-2e4f9
+    [:p
       "Unlike JavaScript, everything in ClojureScript is immutable by default. "
       "This means that you cannot change the value of something after it has "
       "been defined."]
-    [:p.info-2e4f9
+    [:p
       "Atoms allow for mutability and distinguish between setting and reading "
       "a value, which makes state easier to reason about."]
-    [:p.info-2e4f9
+    [:p
       "Watcher functions execute when a value changes, providing a powerful UI "
       "pattern when your value maps to interface state."]]
 
   [:div#tooltip-functions.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "ClojureScript Functions are JavaScript Functions and can be called and "
       "used in all the ways that JavaScript Functions can."]
-    [:p.info-2e4f9
+    [:p
       "The core library provides many useful higher-order functions and there "
       "is a convenient shorthand for creating anonymous functions."]]
 
   [:div#tooltip-function-shorthand.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "The " [:code "#()"] " function shorthand is a convenient way to write a "
       "small function definition and is often used to pass closures from one "
       "scope to another."]
-    [:p.info-2e4f9
+    [:p
       [:code "#()"] " forms cannot be nested and it is idiomatic to keep them "
       "short."]
-    [:table.exmpl-tbl-42d9f
-      [:thead
-        [:tr
-          [:th.tbl-hdr-e0564 "Shorthand"]
-          [:th.tbl-hdr-e0564 "Expands To"]]]
-      [:tbody
-        [:tr.dark-even-7aff7
-          [:td.code-72fa0.right-border-c1b54 "#(str \"Hello \" %)"]
-          [:td.code-72fa0 [:pre "(fn [n]\n  (str \"Hello \" n))"]]]
-        [:tr.dark-odd-6cd97
-          [:td.code-72fa0.right-border-c1b54 "#(my-fn %1 %2 %3)"]
-          [:td.code-72fa0 [:pre "(fn [a b c]\n  (my-fn a b c))"]]]
-        [:tr.dark-even-7aff7
-          [:td.code-72fa0.right-border-c1b54 "#(* % (apply + %&amp;))"]
-          [:td.code-72fa0 [:pre {:style "font-size:10px"}
-                           "(fn [x &amp; the-rest]\n"
-                           "  (* x (apply + the-rest)))"]]]]]]
+    (function-shorthand-table)]
 
   [:div#tooltip-strings.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
-      "ClojureScript Strings are JavaScript Strings and have all of the native "
-      "methods and properties that a JavaScript String has."]
-    [:p.info-2e4f9
-      "ClojureScript Strings must be defined using double quotes."]
-    [:p.info-2e4f9
-      "The " [:code "clojure.string"] " namespace provides many useful "
-      "functions for dealing with strings."]])
+    [:p "ClojureScript Strings are JavaScript Strings and have all of the native "
+        "methods and properties that a JavaScript String has."]
+    [:p "ClojureScript Strings must be defined using double quotes."]
+    [:p "The " [:code "clojure.string"] " namespace provides many useful "
+        "functions for dealing with strings."]])
 
 (hiccups/defhtml collections-tooltips []
   [:div#tooltip-collections.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "ClojureScript provides four collection types: lists, vectors, sets, and "
       "maps. "
       "Each of these data types has unique strengths and are used heavily in "
       "most programs."]
-    [:p.info-2e4f9
+    [:p
       "All collections are immutable and persistent, which means they preserve "
       "the previous version(s) of themselves when they are modified. "
       "Creating a \"changed\" version of any collection is an efficient "
       "operation."]
-    [:p.info-2e4f9
+    [:p
       "Collections can be represented literally:"]
     [:table.tbl-3160a
       [:thead
@@ -944,131 +900,76 @@
           [:td.cell-e6fd2 [:code "{}"]]]]]]
 
   [:div#tooltip-lists.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "Lists are a sequence of values, similar to a vector."]
-    [:p.info-2e4f9
+    [:p
       "Most literal lists represent a function call."]
-    [:p.info-2e4f9
+    [:p
       [:code "(a b c)"] " is a list of three things, and it also means "
       "\"call the function " [:code "a"] " with two arguments: " [:code "b"]
       " and " [:code "c"] "\""]]
 
   [:div#tooltip-vectors.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "Vectors are collections of values that are indexed by sequential "
       "integers."]
-    [:p.info-2e4f9
+    [:p
       "Though similar, a JavaScript Array is not the same thing as a "
       "ClojureScript vector. "
       "ie: " [:code "(.indexOf my-vec)"] " will not work on a vector."]]
 
   [:div#tooltip-vector-as-fn.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "A vector can be used as a function to access its elements."]]
 
   [:div#tooltip-sets.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9 "Sets are collections of unique values, just like in "
+    [:p "Sets are collections of unique values, just like in "
       "mathematics."]]
 
   [:div#tooltip-set-as-fn.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "A set can be used as a function to access its elements."]]
 
   [:div#tooltip-maps.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "A map is a collection that maps keys to values. "
       "Accessing a value in a map using a key is very fast."]
-    [:p.info-2e4f9
+    [:p
       "In JavaScript, Objects are commonly used as a de facto map using "
       "strings as keys. "
       "A key in a ClojureScript map can be any value, although keywords are "
       "commonly used."]]
 
   [:div#tooltip-keywords-as-fn.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "Keywords can be used as a function to get a value from a map. "
       "They are commonly used as map keys for this reason."]])
 
 (hiccups/defhtml sequences-tooltips []
   [:div#tooltip-sequences.tooltip-53dde {:style "display:none"}
-    [:p.info-2e4f9
+    [:p
       "Many core algorithms are defined in terms of sequences. A sequence is "
       "an interface to a list structure that allows for algorithms to be "
       "written in a generic way."]
-    [:p.info-2e4f9
+    [:p
       "Every sequence is a collection, and every collection can be converted "
       "into a sequence using the " [:code "seq"] " function. In fact, this is "
       "what happens internally when a collection is passed to a sequence "
       "function."]
-    [:p.info-2e4f9
+    [:p
       "Most of the sequence functions are lazy, which means that they consume "
       "their elements incrementally as needed. For example, it is possible to "
       "have an infinite sequence."]
-    [:p.info-2e4f9
+    [:p
       "You can force a sequence to evaluate all its elements with the "
       [:code "doall"] " function. This is useful when you want to see the "
       "results of a side-effecting function over an entire sequence."]])
 
 (hiccups/defhtml info-tooltips []
-  (basics-tooltips)
-  (collections-tooltips)
-  (sequences-tooltips))
-
-(defn- code-signature-class [idx]
-  (str "code-b64c8 "
-    (if (even? idx) "dark-even-7aff7" "dark-odd-6cd97")))
-
-(hiccups/defhtml code-signature [idx sig nme]
-  (let [len (count sig)
-        sig2 (subs sig 1 (dec len))]
-    [:code {:class (code-signature-class idx)}
-      "(" (html-encode nme)
-      (when-not (blank? sig2) (str " " (html-encode sig2)))
-      ")"]))
-
-(hiccups/defhtml related-fn-link [s]
-  [:a.related-link-674b6
-    {:data-full-name (:full-name s)
-     :href (docs-href (:symbol s) (:namespace s))}
-    (html-encode (:symbol s))])
-
-(hiccups/defhtml related-links-for-ns [ns1 all-related]
-  (let [filtered-related (filter #(= (:namespace %) ns1) all-related)]
-    (list
-      (when-not (= ns1 cljs-core-ns)
-        [:span.tt-literal-3cdfc "(" ns1 "/)"])
-      (map related-fn-link filtered-related))))
-
-(hiccups/defhtml related-links [r]
-  (let [r2 (map split-full-name r)
-        namespaces (distinct (map :namespace r2))]
-    (list
-      [:h5.related-hdr-915e5 "Related"]
-      [:div.related-links-f8e49
-        (map #(related-links-for-ns % r2) namespaces)])))
-
-(hiccups/defhtml inline-tooltip [tt]
-  (let [desc-html (:description-html tt)
-        id (:id tt)
-        full-name (:full-name tt)
-        symbol-name (extract-symbol full-name)
-        ns1 (extract-namespace full-name)
-        related (:related tt)
-        signature (:signature tt)
-        type (if (:type tt) (:type tt))]
-    [:div.inline-tooltip-8ca2a
-      {:id id
-       :style "display:none"}
-      [:h4.tooltip-hdr-db7c5
-        (when-not (= cljs-core-ns ns1)
-          [:span.namespace-2e700 ns1 "/"])
-        (html-encode symbol-name)
-        (when type [:span.type-7920d type])]
-      [:div.signature-4086a
-        (map-indexed #(code-signature %1 %2 symbol-name) signature)]
-      [:div.description-26a4d desc-html]
-      (when (and related (first related) (not (blank? (first related))))
-        (related-links related))]))
+  [:section
+    (basics-tooltips)
+    (collections-tooltips)
+    (sequences-tooltips)])
 
 ;;------------------------------------------------------------------------------
 ;; Header and Footer
@@ -1129,7 +1030,7 @@
 ;;------------------------------------------------------------------------------
 
 (hiccups/defhtml body []
-  [:section.group-2be36
+  [:section.major-category
     [:h2 "Basics"]
     [:div.three-col-container
       [:div.column
@@ -1151,7 +1052,7 @@
         (strings-section)
         (atoms-section)]]]
 
-  [:section.group-2be36
+  [:section.major-category
     [:h2 "Collections"]
     [:div.three-col-container
       [:div.column
@@ -1171,7 +1072,7 @@
         (vectors-section)
         (sets-section)]]]
 
-  [:section.group-2be36
+  [:section.major-category
     [:h2 "Sequences"]
     [:div.three-col-container
       [:div.column (seq-in-out-section)]
@@ -1183,7 +1084,7 @@
         (use-seq-section)
         (create-seq-section)]]]
 
-  [:section.group-2be36
+  [:section.major-category
     [:h2 "Misc"]
     [:div.three-col-container
       [:div.column (bitwise-section)]]

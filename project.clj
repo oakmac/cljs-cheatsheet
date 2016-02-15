@@ -25,19 +25,18 @@
   :cljsbuild
     {:builds
       [{:id "cheatsheet-dev"
-        :source-paths ["cljs-client"]
+        :source-paths ["cljs-client" "cljs-shared"]
         :compiler {:output-to "public/js/cheatsheet.js"
                    :optimizations :whitespace}}
 
        {:id "cheatsheet-prod"
-        :source-paths ["cljs-client"]
-        :compiler {:externs ["externs/jquery-1.9.js"]
-                   :output-to "public/js/cheatsheet.min.js"
+        :source-paths ["cljs-client" "cljs-shared"]
+        :compiler {:output-to "public/js/cheatsheet.min.js"
                    :optimizations :advanced
                    :pretty-print false}}
 
        {:id "server"
-        :source-paths ["cljs-server"]
+        :source-paths ["cljs-server" "cljs-shared"]
         :compiler {:language-in :ecmascript5
                    :language-out :ecmascript5
                    :output-to "app.js"

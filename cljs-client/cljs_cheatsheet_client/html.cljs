@@ -2,36 +2,12 @@
   (:require-macros [hiccups.core :as hiccups])
   (:require
     hiccups.runtime
-    [clojure.string :refer [blank? replace]]
-    [cljs-cheatsheet-client.util :refer [extract-namespace extract-symbol js-log log split-full-name]]))
+    [clojure.string :refer [blank?]]
+    [cljs-cheatsheet.util :refer [docs-href js-log log]]
+    [cljs-cheatsheet-client.util :refer [extract-namespace extract-symbol split-full-name]]))
 
 (def html-encode js/goog.string.htmlEscape)
-(def uri-encode js/encodeURIComponent)
-
 (def cljs-core-ns "cljs.core")
-
-;;------------------------------------------------------------------------------
-;; Helpers
-;;------------------------------------------------------------------------------
-
-;; TODO: this belongs in some sort of shared util namespace
-(defn- encode-symbol-url [s]
-  (-> s
-      (replace "." "DOT")
-      (replace ">" "GT")
-      (replace "<" "LT")
-      (replace "!" "BANG")
-      (replace "?" "QMARK")
-      (replace "/" "SLASH")
-      (replace "*" "STAR")
-      (replace "+" "PLUS")
-      (replace "=" "EQ")))
-
-(defn- docs-href [nme nme-space]
-  (str "/docs/"
-       (uri-encode nme-space)
-       "/"
-       (uri-encode (encode-symbol-url nme))))
 
 ;;------------------------------------------------------------------------------
 ;; Inline Tooltip

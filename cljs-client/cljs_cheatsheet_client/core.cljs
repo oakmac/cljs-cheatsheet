@@ -2,10 +2,11 @@
   (:require
     cljsjs.jquery
     [clojure.string :refer [blank?]]
+    [cljs-cheatsheet.util :refer [js-log log]]
     [cljs-cheatsheet-client.dom :refer [by-id get-element-box]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mousetrap-boxes]]
     [cljs-cheatsheet-client.tooltips :as tooltips]
-    [cljs-cheatsheet-client.util :refer [js-log log point-inside-box?]]))
+    [cljs-cheatsheet-client.util :refer [point-inside-box?]]))
 
 (def $ js/jQuery)
 
@@ -16,7 +17,7 @@
 (def matched-search-sel (str "." matched-search-class))
 (def no-results-class "no-results-5d3ea")
 (def fn-link-sel ".fn-a8476, .inside-fn-c7607")
-(def group-sel ".group-2be36")
+(def group-sel "section.major-category")
 (def section-sel ".section-31efe")
 (def search-input-id "searchInput")
 (def search-input-sel (str "#" search-input-id))

@@ -1,9 +1,10 @@
 (ns cljs-cheatsheet-client.tooltips
   (:require
     [clojure.string :refer [blank? replace split]]
+    [cljs-cheatsheet.util :refer [js-log log]]
     [cljs-cheatsheet-client.html :refer [inline-tooltip]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mouse-position mousetrap-boxes]]
-    [cljs-cheatsheet-client.util :refer [fetch-clj half js-log log point-inside-box?]]))
+    [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]))
 
 (def $ js/jQuery)
 (def has-touch-events? (aget js/window "hasTouchEvents"))

@@ -7,16 +7,6 @@
 ;; Util Functions
 ;;------------------------------------------------------------------------------
 
-(defn js-log
-  "Log a JavaScript thing."
-  [js-thing]
-  (js/console.log js-thing))
-
-(defn log
-  "Log a Clojure thing."
-  [clj-thing]
-  (js-log (pr-str clj-thing)))
-
 (defn half [n]
   (/ n 2))
 
