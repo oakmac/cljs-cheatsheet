@@ -2,11 +2,12 @@
   (:require-macros
     [hiccups.core :as hiccups])
   (:require
-    ;; [cljs-cheatsheet-server.util :refer [js-log log]]
+    [cljs.reader :refer [read-string]]
     [clojure.string :refer [blank? join replace]]
     [hiccups.runtime :as hiccupsrt]))
 
 (def fs (js/require "fs"))
+(def marked (js/require "marked"))
 
 (def html-encode js/goog.string.htmlEscape)
 (def uri-encode js/encodeURIComponent)
@@ -23,6 +24,16 @@
 ;;------------------------------------------------------------------------------
 ;; Helpers
 ;;------------------------------------------------------------------------------
+
+(defn js-log
+  "Log a JavaScript thing."
+  [js-thing]
+  (js/console.log js-thing))
+
+(defn log
+  "Log a Clojure thing."
+  [clj-thing]
+  (js-log (pr-str clj-thing)))
 
 (defn- json-stringify [js-thing]
   (js/JSON.stringify js-thing nil 2))
@@ -784,13 +795,11 @@
 (hiccups/defhtml basics-tooltips []
 
   [:div#tooltip-define.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Everything in ClojureScript is immutable by default, meaning that the "
       "value of a symbol cannot be changed after it is defined."]]
 
   [:div#tooltip-branch.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "In conditional statements, everything evaluates to " [:code "true"]
       " except for " [:code "false"] " and " [:code "nil"] "."]
@@ -834,13 +843,11 @@
           [:td.cell-e6fd2 [:code "false"]]]]]]
 
   [:div#tooltip-numbers.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "All ClojureScript Numbers are IEEE 754 Double Precision floating point. "
       "The same as JavaScript."]]
 
   [:div#tooltip-atoms.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Atoms provide a way to manage state in a ClojureScript program."]
     [:p.info-2e4f9
@@ -855,7 +862,6 @@
       "pattern when your value maps to interface state."]]
 
   [:div#tooltip-functions.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "ClojureScript Functions are JavaScript Functions and can be called and "
       "used in all the ways that JavaScript Functions can."]
@@ -864,7 +870,6 @@
       "is a convenient shorthand for creating anonymous functions."]]
 
   [:div#tooltip-function-shorthand.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "The " [:code "#()"] " function shorthand is a convenient way to write a "
       "small function definition and is often used to pass closures from one "
@@ -891,7 +896,6 @@
                            "  (* x (apply + the-rest)))"]]]]]]
 
   [:div#tooltip-strings.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "ClojureScript Strings are JavaScript Strings and have all of the native "
       "methods and properties that a JavaScript String has."]
@@ -903,7 +907,6 @@
 
 (hiccups/defhtml collections-tooltips []
   [:div#tooltip-collections.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "ClojureScript provides four collection types: lists, vectors, sets, and "
       "maps. "
@@ -936,7 +939,6 @@
           [:td.cell-e6fd2 [:code "{}"]]]]]]
 
   [:div#tooltip-lists.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Lists are a sequence of values, similar to a vector."]
     [:p.info-2e4f9
@@ -947,7 +949,6 @@
       " and " [:code "c"] "\""]]
 
   [:div#tooltip-vectors.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Vectors are collections of values that are indexed by sequential "
       "integers."]
@@ -957,22 +958,18 @@
       "ie: " [:code "(.indexOf my-vec)"] " will not work on a vector."]]
 
   [:div#tooltip-vector-as-fn.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "A vector can be used as a function to access its elements."]]
 
   [:div#tooltip-sets.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9 "Sets are collections of unique values, just like in "
       "mathematics."]]
 
   [:div#tooltip-set-as-fn.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "A set can be used as a function to access its elements."]]
 
   [:div#tooltip-maps.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "A map is a collection that maps keys to values. "
       "Accessing a value in a map using a key is very fast."]
@@ -983,14 +980,12 @@
       "commonly used."]]
 
   [:div#tooltip-keywords-as-fn.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Keywords can be used as a function to get a value from a map. "
       "They are commonly used as map keys for this reason."]])
 
 (hiccups/defhtml sequences-tooltips []
   [:div#tooltip-sequences.tooltip-53dde {:style "display:none"}
-    [:i.fa.fa-thumb-tack.pin-0ad63]
     [:p.info-2e4f9
       "Many core algorithms are defined in terms of sequences. A sequence is "
       "an interface to a list structure that allows for algorithms to be "
@@ -1223,6 +1218,45 @@
        "</html>"))
 
 ;;------------------------------------------------------------------------------
+;; Create docs.json
+;;------------------------------------------------------------------------------
+
+(def file-encoding (js-obj "encoding" "utf8"))
+
+(defn- merge-docs [all-docs cheatsheet-docs symbol-str]
+  (let [;; try the special form first
+        full-doc (get-in all-docs [:symbols (replace symbol-str "cljs.core/" "special/")] false)
+        ;; else look up the name like normal
+        full-doc (if-not full-doc
+                   (get-in all-docs [:symbols symbol-str] false)
+                   full-doc)
+        description-markdown (:description full-doc)
+        cheatsheet-doc {:description-html (marked description-markdown)
+                        :signature (:signature full-doc)
+                        :related (:related full-doc)
+                        :full-name symbol-str}
+
+        ;; add type if it is a macro or special form
+        type (:type full-doc)
+        cheatsheet-doc (if (or (= type "macro")
+                               (= type "special form"))
+                         (assoc cheatsheet-doc :type type)
+                         cheatsheet-doc)]
+
+    ;; warn to the console if we did not find a doc for any symbol in the cheatsheet
+    ;; NOTE: hopefully this never happens, but we need to know if it ever does
+    (when-not (or full-doc description-markdown)
+      (js-log (str "UH-OH: could not find the doc for " symbol-str " - probably need to look into that")))
+    (assoc cheatsheet-docs symbol-str cheatsheet-doc)))
+
+;; NOTE: this is not finished yet
+(defn- write-docs-json! []
+  (let [all-docs-str (.readFileSync fs "cljs-api.edn" file-encoding)
+        all-docs (read-string all-docs-str)
+        cheatsheet-docs (reduce (partial merge-docs all-docs) {} @symbols)]
+    (.writeFileSync fs "public/docs.json" (-> cheatsheet-docs clj->js json-stringify))))
+
+;;------------------------------------------------------------------------------
 ;; Init
 ;;------------------------------------------------------------------------------
 
@@ -1234,6 +1268,9 @@
 
 (write-cheatsheet-html!)
 (write-symbols-json!)
+
+;; TODO: this is not finished yet
+;; (write-docs-json!)
 
 ;; needed for :nodejs cljs build
 (def always-nil (constantly nil))
