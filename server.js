@@ -1,6 +1,11 @@
-// This file exists for developer convenience to host a quick file server out
-// of the public/ folder.
-// append ?_slow=true to files to simulate slow loading times
+// This file exists for developer convenience to host a web server out of the
+// public/ folder.
+//
+// Pass a port argument to this script to host on a port of your choice.
+// ie: node server.js 9224
+//
+// append the ?_slow=true query parameter to files to simulate slow loading times
+// ie: http://127.0.0.1:8888/api/data.json?_slow=true
 
 var express = require('express'),
     app = express();

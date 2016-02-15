@@ -1,4 +1,4 @@
-var md5 = require('md5');
+const md5 = require('md5');
 
 module.exports = function(grunt) {
 'use strict';
@@ -87,11 +87,11 @@ function extractSnowflakeClasses(filename, pattern) {
 }
 
 function snowflakeCount() {
-  var cssClasses = extractSnowflakeClasses("public/css/main.min.css"),
-    jsServer = extractSnowflakeClasses("app.js"),
-    jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js'),
-    docs = extractSnowflakeClasses('public/docs.json'),
-    jsClasses = jsServer.concat(jsClient, docs);
+  const cssClasses = extractSnowflakeClasses("public/css/main.min.css");
+  const jsServer = extractSnowflakeClasses("app.js");
+  const jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js');
+  const docs = extractSnowflakeClasses('public/docs.json');
+  const jsClasses = jsServer.concat(jsClient, docs);
 
   console.log(cssClasses.length + " class names found in css/main.min.css");
   console.log(jsClasses.length + " class names found in JS files");
@@ -100,73 +100,11 @@ function snowflakeCount() {
   console.log( difference(jsClasses, cssClasses) );
 }
 
-// http://tinyurl.com/looyyvc
-function hexavigesimal(a) {
-  a += 1;
-  var c = 0;
-  var x = 1;
-  while (a >= x) {
-    c++;
-    a -= x;
-    x *= 26;
-  }
-
-  var s = "";
-  for (var i = 0; i < c; i++) {
-    s = "abcdefghijklmnopqrstuvwxyz".charAt(a % 26) + s;
-    a = Math.floor(a/26);
-  }
-
-  return s;
-}
-
-// given a unique array of class names, returns an object of them
-// mapped to short versions
-// input:  ["foo-91c46", "bar-aedf3", "baz-2a44d", etc]
-// output: {"foo-91c46":"a", "bar-aedf3":"b", "baz-2a44d":"c", etc}
-function shrinkClassNames(classes, prefix) {
-  if (! prefix) {
-    prefix = "";
-  }
-
-  var o = {};
-  for (var i = 0; i < classes.length; i++) {
-    o[ classes[i] ] = prefix + hexavigesimal(i);
-  }
-  return o;
-}
-
-function squeezeClasses() {
-  var cssFile = '00-publish/css/main.min.css',
-    cssClasses = extractSnowflakeClasses(cssFile),
-    cssContents = grunt.file.read(cssFile),
-    jsFile = '00-publish/js/cheatsheet.min.js',
-    jsClasses = extractSnowflakeClasses(jsFile),
-    jsContents = grunt.file.read(jsFile),
-    allClasses = keys(arrToObj(cssClasses.concat(jsClasses))).sort(),
-    squeezedClasses = shrinkClassNames(allClasses);
-
-  for (var i in squeezedClasses) {
-    if (squeezedClasses.hasOwnProperty(i) !== true) continue;
-    var regex = new RegExp(i, "g");
-
-    if (jsContents.search(regex) === -1) {
-      console.log("class \"" + i + "\" not found in cheatsheet.min.js");
-    }
-
-    cssContents = cssContents.replace(regex, squeezedClasses[i]);
-    jsContents = jsContents.replace(regex, squeezedClasses[i]);
-  }
-
-  grunt.file.write(cssFile, cssContents);
-  grunt.file.write(jsFile, jsContents);
-}
-
 //------------------------------------------------------------------------------
 // Cheatsheet Publish
 //------------------------------------------------------------------------------
 
-function buildCheatsheetSanityCheck() {
+function preBuildSanityCheck() {
   if (! grunt.file.exists('public/index.html')) {
     grunt.fail.warn('Could not find public/index.html! Aborting...');
   }
@@ -176,14 +114,16 @@ function buildCheatsheetSanityCheck() {
   }
 
   // TODO: check to make sure the ctime on cheatsheet.min.js is pretty fresh (< 5 minutes)
+
+  grunt.log.writeln('Everything looks ok for a build.');
 }
 
-function hashCheatsheetFiles() {
-  var cssFile = grunt.file.read('00-publish/css/main.min.css'),
-    cssHash = md5(cssFile).substr(0, 8),
-    jsFile = grunt.file.read('00-publish/js/cheatsheet.min.js'),
-    jsHash = md5(jsFile).substr(0, 8),
-    htmlFile = grunt.file.read('00-publish/index.html');
+function hashAssets() {
+  const cssFile = grunt.file.read('00-publish/css/main.min.css');
+  const cssHash = md5(cssFile).substr(0, 8);
+  const jsFile = grunt.file.read('00-publish/js/cheatsheet.min.js');
+  const jsHash = md5(jsFile).substr(0, 8);
+  const htmlFile = grunt.file.read('00-publish/index.html');
 
   // write the new files
   grunt.file.write('00-publish/css/main.min.' + cssHash + '.css', cssFile);
@@ -262,23 +202,21 @@ grunt.loadNpmTasks('grunt-contrib-copy');
 grunt.loadNpmTasks('grunt-contrib-less');
 grunt.loadNpmTasks('grunt-contrib-watch');
 
-grunt.registerTask('build-cheatsheet-sanity-check', buildCheatsheetSanityCheck);
-grunt.registerTask('hash-cheatsheet', hashCheatsheetFiles);
+// custom tasks
+grunt.registerTask('pre-build-sanity-check', preBuildSanityCheck);
+grunt.registerTask('hash-assets', hashAssets);
 
-// TODO: this is unfinished
-//grunt.registerTask('squeeze-classes', squeezeClasses);
-
-grunt.registerTask('build-cheatsheet', [
-  'build-cheatsheet-sanity-check',
+grunt.registerTask('build', [
+  'pre-build-sanity-check',
   'clean:pre',
   'less',
   'copy:cheatsheet',
   'clean:post',
-  'hash-cheatsheet'
+  'hash-assets'
 ]);
 
 grunt.registerTask('snowflake', snowflakeCount);
-grunt.registerTask('default', 'less');
+grunt.registerTask('default', 'watch');
 
 // end module.exports
 };

@@ -12,7 +12,7 @@ public/js/cheatsheet.min.js
 app.js
 
 # ignore less-generated css file
-public/js/main.min.css
+public/css/main.min.css
 
 # ignore diff files
 *.diff
