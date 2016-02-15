@@ -101,6 +101,11 @@
 // Variables
 //------------------------------------------------------------------------------
 
+@maxWidth: 1200px;
+@minWidth: 300px;
+@largeBreakpoint: 1024px;
+@medBreakpoint: 679px;
+
 @linkBlue: #20c;
 @tooltipBackgroundColor: #333;
 
@@ -125,8 +130,8 @@ body {
   font-size: 16px;
   font-weight: 400;
   margin: 0 auto;
-  max-width: 1200px;
-  min-width: 300px;
+  max-width: @maxWidth;
+  min-width: @minWidth;
   padding: 20px;
 }
 
@@ -176,7 +181,7 @@ section {
 }
 
 // medium screens
-@media all and (max-width: 1074px) {
+@media all and (max-width: @largeBreakpoint) {
   body {
     padding: 10px;
   }
@@ -185,7 +190,7 @@ section {
     margin-bottom: 15px;
 
     input[type="text"] {
-      width: 280px;
+      width: 275px;
     }
   }
 
@@ -198,7 +203,7 @@ section {
 }
 
 // small screens
-@media all and (max-width: 699px) {
+@media all and (max-width: @medBreakpoint) {
   body {
     padding: 5px;
   }
