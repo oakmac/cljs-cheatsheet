@@ -14,17 +14,6 @@
 ;; Helpers
 ;;------------------------------------------------------------------------------
 
-(hiccups/defhtml tt-icon
-  ([tt-id] (tt-icon tt-id nil))
-  ([tt-id style]
-   [:span.tooltip-link-0e91b
-     {:data-info-id tt-id
-      :style (if style style)}
-     "&#xf05a;"])) ;; NOTE: this is FontAwesome's "fa-info-circle"
-
-(hiccups/defhtml literal [n]
-  [:span.literal-c3029 n])
-
 ;; TODO: this belongs in some sort of shared util namespace
 (defn- encode-symbol-url [s]
   (-> s

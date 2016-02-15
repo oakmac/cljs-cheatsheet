@@ -6,6 +6,11 @@
     [clojure.string :refer [blank? join replace]]
     [hiccups.runtime :as hiccupsrt]))
 
+;; The main purpose of this file is to produce public/index.html
+
+;; NOTE: this file is pretty messy; it could stand to be cleaned up and
+;;       organized into namespaces
+
 (def fs (js/require "fs"))
 (def marked (js/require "marked"))
 
@@ -87,7 +92,7 @@
   ([nme nme-space]
    (let [full-name (str nme-space "/" nme)
          ;; add this symbol to the docs list
-         _ (swap! symbols conj (str nme-space "/" nme))]
+         _ (swap! symbols conj full-name)]
      [:a.fn-a8476
        {:data-full-name full-name
         :href (docs-href nme nme-space)}
