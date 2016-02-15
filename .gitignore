@@ -1,0 +1,6 @@
+/out/
+/target/
+app.js
+
+# ignore diff files
+*.diff
