@@ -90,7 +90,8 @@ function snowflakeCount() {
   var cssClasses = extractSnowflakeClasses("public/css/main.min.css"),
     jsServer = extractSnowflakeClasses("app.js"),
     jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js'),
-    jsClasses = jsServer.concat(jsClient);
+    docs = extractSnowflakeClasses('public/docs.json'),
+    jsClasses = jsServer.concat(jsClient, docs);
 
   console.log(cssClasses.length + " class names found in css/main.min.css");
   console.log(jsClasses.length + " class names found in JS files");
@@ -178,7 +179,7 @@ function hashCheatsheetFiles() {
     cssHash = md5(cssFile).substr(0, 8),
     jsFile = grunt.file.read('00-publish/js/cheatsheet.min.js'),
     jsHash = md5(jsFile).substr(0, 8),
-    htmlFile = grunt.file.read('00-publish/cheatsheet/index.html');
+    htmlFile = grunt.file.read('00-publish/index.html');
 
   // write the new files
   grunt.file.write('00-publish/css/main.min.' + cssHash + '.css', cssFile);
@@ -189,7 +190,7 @@ function hashCheatsheetFiles() {
   grunt.file.delete('00-publish/js/cheatsheet.min.js');
 
   // update the HTML file
-  grunt.file.write('00-publish/cheatsheet/index.html',
+  grunt.file.write('00-publish/index.html',
     htmlFile.replace('main.min.css', 'main.min.' + cssHash + '.css')
     .replace('cheatsheet.min.js', 'cheatsheet.min.' + jsHash + '.js'));
 
@@ -212,19 +213,16 @@ grunt.initConfig({
     },
 
     // remove all the files in the 00-publish folder
-    pre: ['00-publish']
+    pre: ['00-publish'],
+
+    // remove the uncompressed CLJS client file
+    post: ['00-publish/js/cheatsheet.js']
   },
 
   copy: {
     cheatsheet: {
       files: [
-        { src: 'public/cheatsheet/index.html', dest: '00-publish/cheatsheet/index.html' },
-        { src: 'public/cheatsheet/docs.json', dest: '00-publish/cheatsheet/docs.json' },
-        { src: 'public/css/main.min.css', dest: '00-publish/css/main.min.css' },
-        { src: 'public/fonts/*', dest: '00-publish/fonts/', expand: true, flatten: true },
-        { src: 'public/img/*', dest: '00-publish/img/', expand: true, flatten: true },
-        { src: 'public/js/cheatsheet.min.js', dest: '00-publish/js/cheatsheet.min.js' },
-        { src: 'public/js/libs/jquery-2.1.1.min.js', dest: '00-publish/js/libs/jquery-2.1.1.min.js' }
+        {expand: true, cwd: 'public/', src: ['**'], dest: '00-publish/'}
       ]
     }
   },
@@ -269,6 +267,7 @@ grunt.registerTask('build-cheatsheet', [
   'clean:pre',
   'less',
   'copy:cheatsheet',
+  'clean:post',
   'hash-cheatsheet'
 ]);
 

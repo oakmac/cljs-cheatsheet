@@ -1114,7 +1114,7 @@
     [:meta {:name "description" :content "ClojureScript cheatsheet"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
     [:link {:rel "apple-touch-icon" :href "apple-touch-icon.png"}]
-    [:link {:rel "stylesheet" :href "/css/main.min.css"}]])
+    [:link {:rel "stylesheet" :href "css/main.min.css"}]])
 
 (hiccups/defhtml script-tags []
   [:script {:src "js/cheatsheet.min.js"}])
