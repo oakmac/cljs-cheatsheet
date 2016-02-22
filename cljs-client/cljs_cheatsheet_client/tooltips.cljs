@@ -106,12 +106,15 @@
 (def push-right-further 150)
 (def push-left 75)
 (def push-left-further 160)
+(def push-up 23)
 
 ;; TODO: need to deal with tooltips tooltips at the bottom of the
 ;; page (flip up)
 (defn- position-inline-tooltip! [tt]
   (let [$link-el (:$link-el tt)
         window-width (.width ($ js/window))
+        window-height (.height ($ js/window))
+        scrollY (.scrollTop ($ js/window))
         link-offset (.offset $link-el)
         link-x (aget link-offset "left")
         link-y (aget link-offset "top")
@@ -122,6 +125,7 @@
         tooltip-width (.outerWidth $tooltip-el)
         tooltip-left (- (+ link-x (half link-width)) (half tooltip-width))
         tooltip-right (+ tooltip-left tooltip-width)
+        tooltip-bottom (+ tooltip-height link-y)
 
         ;; TODO: all of this push left/right logic should probably be in it's
         ;; own function
@@ -134,16 +138,25 @@
                         (< (- (+ tooltip-right 10) push-left) window-width))
         push-left-further? (and (not push-left?)
                                 (> tooltip-right window-width))
+        flip-tooltip? (> tooltip-bottom (+ window-height scrollY))
         tooltip-left (cond
                        push-right? (+ tooltip-left push-right)
                        push-right-further? (+ tooltip-left push-right-further)
                        push-left? (- tooltip-left push-left)
                        push-left-further? (- tooltip-left push-left-further)
                        :else tooltip-left)
-        tooltip-top (+ link-y link-height 5)]
+        tooltip-top (cond
+                       flip-tooltip? (- (+ link-y link-height) (+ tooltip-height push-up))
+                       :else (+ link-y link-height 5))]
+
     ;; add the correct arrow class
     (.addClass $tooltip-el
-      (cond push-right? "push-right-6e671"
+      (cond (and push-right? flip-tooltip?) "flip-tt-right-69ad9"
+            (and push-right-further? flip-tooltip?) "flip-tt-right-further-0a2a7"
+            (and push-left? flip-tooltip?) "flip-tt-left-fa5f3"
+            (and push-left-further? flip-tooltip?) "flip-tt-left-further-df907"
+            flip-tooltip? "flip-tt-ceef8"
+            push-right? "push-right-6e671"
             push-right-further? "push-right-further-76f02"
             push-left? "push-left-267d7"
             push-left-further? "push-left-further-38c9b"
