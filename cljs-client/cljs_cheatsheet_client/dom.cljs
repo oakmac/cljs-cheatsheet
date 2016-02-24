@@ -1,11 +1,8 @@
 (ns cljs-cheatsheet-client.dom
+  "Some DOM helper functions."
   (:require goog.dom))
 
 (def $ js/jQuery)
-
-;;------------------------------------------------------------------------------
-;; Some DOM Helper Functions
-;;------------------------------------------------------------------------------
 
 (defn by-id [id]
   (.getElementById js/document id))

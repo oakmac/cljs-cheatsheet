@@ -1,8 +1,7 @@
 (ns cljs-cheatsheet.util
+  "Utility functions shared on both the client and server."
   (:require
     [clojure.string :refer [replace]]))
-
-;; utility functions shared on both the client and server
 
 ;;------------------------------------------------------------------------------
 ;; Logging
@@ -29,8 +28,8 @@
   [s]
   (replace s "/" "_fs"))
 
-(defn docs-href [nme nme-space]
+(defn docs-href [name name-space]
   (str "http://clojuredocs.org/"
-       (uri-encode (replace nme-space "cljs.core" "clojure.core"))
+       (uri-encode (replace name-space "cljs.core" "clojure.core"))
        "/"
-       (uri-encode (encode-symbol-url nme))))
+       (uri-encode (encode-symbol-url name))))

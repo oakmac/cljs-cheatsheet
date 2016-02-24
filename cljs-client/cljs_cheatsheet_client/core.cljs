@@ -1,12 +1,13 @@
 (ns cljs-cheatsheet-client.core
   (:require
     cljsjs.jquery
-    [clojure.string :refer [blank?]]
+    [clojure.string :refer [blank? lower-case]]
     [cljs-cheatsheet.util :refer [js-log log]]
     [cljs-cheatsheet-client.dom :refer [by-id get-element-box]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mousetrap-boxes]]
     [cljs-cheatsheet-client.tooltips :as tooltips]
-    [cljs-cheatsheet-client.util :refer [point-inside-box?]]))
+    [cljs-cheatsheet-client.util :refer [point-inside-box?]]
+    [goog.functions :refer [once]]))
 
 (def $ js/jQuery)
 
@@ -147,7 +148,7 @@
 ;;------------------------------------------------------------------------------
 
 (defn- change-search-input2 []
-  (let [txt (-> ($ search-input-sel) .val .toLowerCase)]
+  (let [txt (-> ($ search-input-sel) .val lower-case)]
     (when (not= txt @current-search-txt)
       (reset! current-search-txt txt))))
 
@@ -164,18 +165,22 @@
 ;; Global Cheatsheet Init
 ;;------------------------------------------------------------------------------
 
-(defn- init! []
-  ;; initialize tooltip events
-  (tooltips/init!)
+(def init!
+  "Global initialization for the cheatsheet page.
+   NOTE: this function may only be called one time"
+  (once
+    (fn []
+      ;; initialize tooltip events
+      (tooltips/init!)
 
-  ;; add search and other events
-  (add-events!)
+      ;; add search and other events
+      (add-events!)
 
-  ;; trigger search
-  (change-search-input2)
+      ;; trigger search
+      (change-search-input2)
 
-  ;; put the focus on the search field
-  (when-let [search-input-el (by-id search-input-id)]
-    (.focus search-input-el)))
+      ;; put the focus on the search field
+      (when-let [search-input-el (by-id search-input-id)]
+        (.focus search-input-el)))))
 
 (init!)

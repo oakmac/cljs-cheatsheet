@@ -45,23 +45,28 @@
   [:span.literal-c3029 n])
 
 (hiccups/defhtml fn-link
-  ([nme] (fn-link nme cljs-core-ns))
-  ([nme nme-space]
-   (let [full-name (str nme-space "/" nme)
+  ([symbol-name]
+   (fn-link symbol-name cljs-core-ns))
+  ([symbol-name name-space]
+   (let [full-name (str name-space "/" symbol-name)
          ;; add this symbol to the docs list
          _ (swap! symbols conj full-name)]
      [:a.fn-a8476
        {:data-full-name full-name
-        :href (docs-href nme nme-space)}
-       (html-encode nme)])))
+        :href (docs-href symbol-name name-space)}
+       (html-encode symbol-name)])))
 
 (hiccups/defhtml inside-fn-link
-  ([nme] (inside-fn-link nme cljs-core-ns))
-  ([nme nme-space]
-   [:a.inside-fn-c7607
-     {:data-full-name (str nme-space "/" nme)
-      :href (docs-href nme nme-space)}
-     (html-encode nme)]))
+  ([symbol-name]
+   (inside-fn-link symbol-name cljs-core-ns))
+  ([symbol-name name-space]
+   (let [full-name (str name-space "/" symbol-name)
+         ;; add this symbol to the docs list
+         _ (swap! symbols conj full-name)]
+     [:a.inside-fn-c7607
+       {:data-full-name (str name-space "/" symbol-name)
+        :href (docs-href symbol-name name-space)}
+       (html-encode symbol-name)])))
 
 ;;------------------------------------------------------------------------------
 ;; Sections
@@ -1091,7 +1096,7 @@
     [:div.two-col-container
       [:div.column (bitwise-section)]]])
 
-(hiccups/defhtml cheatsheet-page []
+(defn cheatsheet-page []
   (str "<!doctype html>"
        "<html>"
        (head)

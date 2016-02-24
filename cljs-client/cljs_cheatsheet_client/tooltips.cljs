@@ -4,7 +4,8 @@
     [cljs-cheatsheet.util :refer [js-log log]]
     [cljs-cheatsheet-client.html :refer [inline-tooltip]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mouse-position mousetrap-boxes]]
-    [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]))
+    [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]
+    [goog.functions :refer [once]]))
 
 (def $ js/jQuery)
 (def has-touch-events? (aget js/window "hasTouchEvents"))
@@ -108,8 +109,6 @@
 (def push-left-further 160)
 (def push-up 23)
 
-;; TODO: need to deal with tooltips tooltips at the bottom of the
-;; page (flip up)
 (defn- position-inline-tooltip! [tt]
   (let [$link-el (:$link-el tt)
         window-width (.width ($ js/window))
@@ -184,7 +183,7 @@
 ;; Tooltip Atoms
 ;;------------------------------------------------------------------------------
 
-(defn- on-change-tooltip [_ _ old-tt new-tt]
+(defn- on-change-tooltip [_kwd _the-atom old-tt new-tt]
   ;; close tooltip
   (when (and old-tt (not= old-tt new-tt))
     (fade-out-tooltip! old-tt (= :inline (:tt-type old-tt))))
@@ -210,7 +209,7 @@
   (or (point-inside-box? m-pos box1)
       (point-inside-box? m-pos box2)))
 
-(defn- on-change-mouse-position [_ _ _ pos]
+(defn- on-change-mouse-position [_kwd _the-atom _old-pos pos]
   ;; hide tooltip when the mouse goes outside the box(es)
   (when (and @active-tooltip
              (not (mouse-inside-tooltip? pos (vals @mousetrap-boxes))))
@@ -273,7 +272,7 @@
 ;       (show-info-tooltip! tooltip-id))))
 
 ;;------------------------------------------------------------------------------
-;; Init and Events
+;; Tooltip Initialization
 ;;------------------------------------------------------------------------------
 
 ;; TODO: touch events are not really polished yet
@@ -282,13 +281,16 @@
 ;     (.on "touchend" touchend-body)
 ;     (.on "touchend" info-icon-sel touchend-icon)))
 
-(defn init!
-  "Initialize tooltip events."
-  []
-  (-> ($ "body")
-      (.on "mousemove" mousemove-body)
-      (.on "mouseenter" info-icon-sel mouseenter-info-icon)
-      (.on "mouseenter" links-sel mouseenter-link)))
-  ;; TODO: add these back
-  ; (when has-touch-events?
-  ;   (add-touch-events!))
+(def init!
+  "Initialize tooltip events.
+   NOTE: this function may only be called one time."
+  (once
+    (fn []
+      (doto ($ "body")
+        (.on "mousemove" mousemove-body)
+        (.on "mouseenter" info-icon-sel mouseenter-info-icon)
+        (.on "mouseenter" links-sel mouseenter-link)))))
+
+    ;; TODO: add these back
+    ; (when has-touch-events?
+    ;   (add-touch-events!))
