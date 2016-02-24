@@ -21,8 +21,6 @@
 (def clj-string-ns "clojure.string")
 (def clj-set-ns "clojure.set")
 
-(def alt-icon-style "margin-left: 2px; vertical-align: baseline;")
-
 ;; keep track of the symbols we need docs for
 (def symbols (atom #{}))
 
@@ -33,13 +31,11 @@
 (defn- json-stringify [js-thing]
   (js/JSON.stringify js-thing nil 2))
 
-(hiccups/defhtml tt-icon
-  ([tt-id] (tt-icon tt-id nil))
-  ([tt-id style]
-   [:span.tooltip-link-0e91b
-     {:data-info-id tt-id
-      :style (if style style "")}
-     "&#xf05a;"])) ;; NOTE: this is FontAwesome's "fa-info-circle"
+(hiccups/defhtml tt-icon [id]
+  [:img.tooltip-icon-0e91b
+    {:alt ""
+     :data-info-id id
+     :src "img/info-circle.svg"}])
 
 (hiccups/defhtml literal [n]
   [:span.literal-c3029 n])
@@ -78,7 +74,7 @@
     [:table.tbl-902f0
       [:tbody
         [:tr
-          [:td.label-9e0b7 "Define" (tt-icon "define" "margin: 0; vertical-align: baseline;")]
+          [:td.label-9e0b7 "Define" (tt-icon "define")]
           [:td.body-885f4
             (fn-link "def")
             (fn-link "defn")
@@ -88,7 +84,7 @@
             (fn-link "declare")
             (fn-link "ns")]]
         [:tr
-          [:td.label-9e0b7 "Branch" (tt-icon "branch" "margin: 0; padding-right: 0; vertical-align: baseline;")]
+          [:td.label-9e0b7 "Branch" (tt-icon "branch")]
           [:td.body-885f4
             (fn-link "if")
             (fn-link "if-not")
@@ -140,7 +136,7 @@
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             [:div.row-5dec8 "#(...) &rarr; (fn [args] (...))"
-              (tt-icon "function-shorthand" alt-icon-style)]
+              (tt-icon "function-shorthand")]
             (fn-link "fn")
             (fn-link "defn")
             (fn-link "defn-")
@@ -457,7 +453,7 @@
           [:td.body-885f4
             [:div.row-5dec8
               "(my-vec idx) &rarr; (" (inside-fn-link "nth") " my-vec idx)"
-              (tt-icon "vector-as-fn" alt-icon-style)]
+              (tt-icon "vector-as-fn")]
             (fn-link "get")
             (fn-link "peek")]]
         [:tr
@@ -494,7 +490,7 @@
           [:td.body-885f4
             [:div.row-5dec8
               "(my-set itm) &rarr; (" (inside-fn-link "get") " my-set itm)"
-              (tt-icon "set-as-fn" alt-icon-style)]
+              (tt-icon "set-as-fn")]
             (fn-link "contains?")]]
         [:tr
           [:td.label-9e0b7 "'Change'"]
@@ -537,7 +533,7 @@
           [:td.body-885f4
             [:div.row-5dec8
               "(:key my-map) &rarr; (" (inside-fn-link "get") " my-map :key)"
-              (tt-icon "keywords-as-fn" alt-icon-style)]
+              (tt-icon "keywords-as-fn")]
             (fn-link "get-in")
             (fn-link "contains?")
             (fn-link "find")

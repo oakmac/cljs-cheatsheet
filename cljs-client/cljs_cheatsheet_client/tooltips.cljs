@@ -10,7 +10,7 @@
 (def $ js/jQuery)
 (def has-touch-events? (aget js/window "hasTouchEvents"))
 
-(def info-icon-sel ".tooltip-link-0e91b")
+(def info-icon-sel ".tooltip-icon-0e91b")
 (def links-sel ".fn-a8476, .inside-fn-c7607")
 
 (def left-arrow-class "left-arr-42ea1")
@@ -55,6 +55,10 @@
 ;; add some wiggle room around the edge of the tooltip border
 (def tooltip-mouseout-buffer 4)
 
+(def tooltip-push-left 15)
+(def tooltip-push-right 14)
+(def tooltip-push-up 25)
+
 (defn- position-info-tooltip! [tt]
   (let [$icon-el (:$icon-el tt)
         icon-height (.height $icon-el)
@@ -74,9 +78,9 @@
         tooltip-height (.outerHeight $tooltip-el)
         tooltip-width (.outerWidth $tooltip-el)
         flip? (> (+ icon-x tooltip-width 30) browser-width)
-        tooltip-left (if flip? (- icon-x tooltip-width 11)
-                               (+ icon-x 18))
-        tooltip-top (- icon-y 22)]
+        tooltip-left (if flip? (- icon-x tooltip-width tooltip-push-left)
+                               (+ icon-x tooltip-push-right))
+        tooltip-top (- icon-y tooltip-push-up)]
 
     ;; toggle arrow classes
     (.removeClass $tooltip-el arrow-classes)
@@ -85,9 +89,8 @@
       (.addClass $tooltip-el left-arrow-class))
 
     ;; position the element
-    (.css $tooltip-el (js-obj
-                       "left" tooltip-left
-                       "top" tooltip-top))
+    (.css $tooltip-el (js-obj "left" tooltip-left
+                              "top" tooltip-top))
 
     ;; save the bounds of the tooltip
     (reset! mousetrap-boxes
@@ -261,6 +264,8 @@
                                                   :$link-el $link-el
                                                   :tt-type :inline})))))
 
+;; TODO: touch events are not really polished yet
+
 ; (defn- touchend-body [js-evt]
 ;   (hide-all-info-tooltips!))
 
@@ -271,26 +276,24 @@
 ;       (hide-all-info-tooltips!)
 ;       (show-info-tooltip! tooltip-id))))
 
-;;------------------------------------------------------------------------------
-;; Tooltip Initialization
-;;------------------------------------------------------------------------------
-
-;; TODO: touch events are not really polished yet
 ; (defn- add-touch-events! []
 ;   (-> ($ "body")
 ;     (.on "touchend" touchend-body)
 ;     (.on "touchend" info-icon-sel touchend-icon)))
 
+; (when has-touch-events?
+;   (add-touch-events!))
+
+;;------------------------------------------------------------------------------
+;; Tooltip Initialization
+;;------------------------------------------------------------------------------
+
 (def init!
   "Initialize tooltip events.
-   NOTE: this function may only be called one time."
+   NOTE: this function may only be called one time"
   (once
     (fn []
       (doto ($ "body")
         (.on "mousemove" mousemove-body)
         (.on "mouseenter" info-icon-sel mouseenter-info-icon)
         (.on "mouseenter" links-sel mouseenter-link)))))
-
-    ;; TODO: add these back
-    ; (when has-touch-events?
-    ;   (add-touch-events!))

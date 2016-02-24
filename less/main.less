@@ -1,5 +1,4 @@
 @import "normalize-3.0.3.less";
-@import "font-awesome-4.2.0.less";
 
 //------------------------------------------------------------------------------
 // Fonts
@@ -289,15 +288,13 @@ em {
   }
 }
 
-.tooltip-link-0e91b {
-  color: #888;
+.tooltip-icon-0e91b {
+  box-sizing: border-box;
   cursor: default;
   display: inline-block;
-  font-family: "FontAwesome";
-  font-size: 12px;
-  font-weight: normal;
+  height: 12px;
   margin-left: 4px;
-  padding: 4px;
+  padding: 0;
   vertical-align: middle;
 }
 
@@ -307,6 +304,11 @@ em {
   padding: 10px;
   text-transform: uppercase;
   width: 60px;
+
+  .tooltip-icon-0e91b {
+    margin-left: 2px;
+    margin-top: -2px;
+  }
 }
 
 .body-885f4 {
