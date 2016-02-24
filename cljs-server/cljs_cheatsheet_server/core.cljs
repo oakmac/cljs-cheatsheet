@@ -979,7 +979,7 @@
 (hiccups/defhtml header []
   [:header
     [:h1
-      [:img {:src "/img/cljs-ring.svg" :alt "ClojureScript Logo"}]
+      [:img {:src "img/cljs-ring.svg" :alt "ClojureScript Logo"}]
       "ClojureScript Cheatsheet"]
     [:input#searchInput {:type "text" :placeholder "Search"}]])
 
