@@ -8,7 +8,6 @@
     [goog.functions :refer [once]]))
 
 (def $ js/jQuery)
-(def has-touch-events? (aget js/window "hasTouchEvents"))
 
 (def info-icon-sel ".tooltip-icon-0e91b")
 (def links-sel ".fn-a8476, .inside-fn-c7607")
@@ -264,7 +263,9 @@
                                                   :$link-el $link-el
                                                   :tt-type :inline})))))
 
-;; TODO: touch events are not really polished yet
+;; TODO: touch events are not really finished yet
+
+; (def has-touch-events? (aget js/window "hasTouchEvents"))
 
 ; (defn- touchend-body [js-evt]
 ;   (hide-all-info-tooltips!))

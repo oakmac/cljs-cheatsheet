@@ -78,14 +78,14 @@
 ;; Search
 ;;------------------------------------------------------------------------------
 
-(def current-search-txt (atom ""))
+(def search-text (atom ""))
 
 (defn- show-all-groups-and-sections! []
   (.show ($ group-sel))
   (.show ($ section-sel)))
 
 (defn- toggle-el!
-  "Show / hide an element based on whether it contains a search match or not."
+  "Show or hide an element based on whether it contains a search match."
   [_idx el]
   (let [$el ($ el)
         $matched (.find $el matched-search-sel)
@@ -95,20 +95,21 @@
       (.hide $el))))
 
 (defn- toggle-groups-and-sections!
-  "Show / hide groups and sections based on whether they contain a search match
-   or not."
+  "Show or hide groups and sections based on whether they contain a search match."
   []
   (.each ($ section-sel) toggle-el!)
   (.each ($ group-sel) toggle-el!))
 
-(defn- any-matches-total? []
+(defn- any-matches?
+  "Did anything match our search text?"
+  []
   (-> ($ matched-search-sel)
       (aget "length")
       pos?))
 
 (defn- toggle-fn-link [el search-txt]
   (let [$link ($ el)
-        link-txt (-> $link .text .toLowerCase)
+        link-txt (-> $link .text lower-case)
         match? (not= -1 (.indexOf link-txt search-txt))]
     (if match?
       (.addClass $link matched-search-class)
@@ -130,18 +131,18 @@
 
 (defn- search! [txt]
   (toggle-fn-matches! txt)
-  (if (any-matches-total?)
+  (if (any-matches?)
     (do
       (.removeClass ($ search-input-sel) no-results-class)
       (toggle-groups-and-sections!))
     (show-no-matches!)))
 
-(defn- change-search-txt [_kwd _the-atom _old-txt new-txt]
+(defn- change-search-text [_kwd _the-atom _old-txt new-txt]
   (if (blank? new-txt)
     (clear-search!)
     (search! new-txt)))
 
-(add-watch current-search-txt :main change-search-txt)
+(add-watch search-text :main change-search-text)
 
 ;;------------------------------------------------------------------------------
 ;; Events
@@ -149,8 +150,8 @@
 
 (defn- change-search-input2 []
   (let [txt (-> ($ search-input-sel) .val lower-case)]
-    (when (not= txt @current-search-txt)
-      (reset! current-search-txt txt))))
+    (when (not= txt @search-text)
+      (reset! search-text txt))))
 
 ;; reset the stack so we can grab the value out of the text field
 (defn- change-search-input []
