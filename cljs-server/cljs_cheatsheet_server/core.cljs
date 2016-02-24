@@ -767,31 +767,31 @@
         [:th.tbl-hdr-e0564 "Code"]
         [:th.tbl-hdr-e0564 "Boolean Value"]]]
     [:tbody
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Empty string"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "\"\""]]
         [:td.cell-e6fd2 [:code "true"]]]
-      [:tr.dark-odd-6cd97
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Zero"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "0"]]
         [:td.cell-e6fd2 [:code "true"]]]
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Not a number"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "js/NaN"]]
         [:td.cell-e6fd2 [:code "true"]]]
-      [:tr.dark-odd-6cd97
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Empty vector"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "[]"]]
         [:td.cell-e6fd2 [:code "true"]]]
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Empty array"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "(array)"]]
         [:td.cell-e6fd2 [:code "true"]]]
-      [:tr.dark-odd-6cd97
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "False"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "false"]]
         [:td.cell-e6fd2 [:code "false"]]]
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.cell-e6fd2.right-border-c1b54 "Nil"]
         [:td.cell-e6fd2.right-border-c1b54 [:code "nil"]]
         [:td.cell-e6fd2 [:code "false"]]]]])
@@ -803,13 +803,13 @@
         [:th.tbl-hdr-e0564 "Shorthand"]
         [:th.tbl-hdr-e0564 "Expands To"]]]
     [:tbody
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.code-72fa0.right-border-c1b54 "#(str \"Hello \" %)"]
         [:td.code-72fa0 [:pre "(fn [n]\n  (str \"Hello \" n))"]]]
-      [:tr.dark-odd-6cd97
+      [:tr
         [:td.code-72fa0.right-border-c1b54 "#(my-fn %1 %2 %3)"]
         [:td.code-72fa0 [:pre "(fn [a b c]\n  (my-fn a b c))"]]]
-      [:tr.dark-even-7aff7
+      [:tr
         [:td.code-72fa0.right-border-c1b54 "#(* % (apply + %&amp;))"]
         [:td.code-72fa0 [:pre {:style "font-size:10px"}
                           "(fn [x &amp; the-rest]\n"
@@ -891,16 +891,16 @@
           [:th.tbl-hdr-e0564 "Collection"]
           [:th.tbl-hdr-e0564 "Literal Form"]]]
       [:tbody
-        [:tr.dark-even-7aff7
+        [:tr
           [:td.cell-e6fd2.right-border-c1b54 "List"]
           [:td.cell-e6fd2 [:code "()"]]]
-        [:tr.dark-odd-6cd97
+        [:tr
           [:td.cell-e6fd2.right-border-c1b54 "Vector"]
           [:td.cell-e6fd2 [:code "[]"]]]
-        [:tr.dark-even-7aff7
+        [:tr
           [:td.cell-e6fd2.right-border-c1b54 "Set"]
           [:td.cell-e6fd2 [:code "#{}"]]]
-        [:tr.dark-odd-6cd97
+        [:tr
           [:td.cell-e6fd2.right-border-c1b54 "Map"]
           [:td.cell-e6fd2 [:code "{}"]]]]]]
 

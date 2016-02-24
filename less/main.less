@@ -262,13 +262,6 @@ em {
   font-weight: 400;
 }
 
-
-
-
-
-
-
-
 //------------------------------------------------------------------------------
 // Snowflake Classes
 //------------------------------------------------------------------------------
@@ -699,6 +692,14 @@ em {
 .tbl-3160a {
   font-size: 14px;
   margin: 15px 0;
+
+  tbody tr {
+    background-color: @darkEvenColor;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: @darkOddColor;
+  }
 
   code {
     background: none;
