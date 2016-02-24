@@ -126,7 +126,7 @@
 
 body {
   color: #222;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
   margin: 0 auto;
@@ -262,6 +262,13 @@ em {
   font-weight: 400;
 }
 
+
+
+
+
+
+
+
 //------------------------------------------------------------------------------
 // Snowflake Classes
 //------------------------------------------------------------------------------
@@ -279,6 +286,14 @@ em {
 
 .tbl-902f0 {
   width: 100%;
+
+  tbody tr {
+    background-color: @evenColor;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: @oddColor;
+  }
 }
 
 .tooltip-link-0e91b {
@@ -349,14 +364,6 @@ em {
   color: #000;
   display: block;
   padding: 5px 0;
-}
-
-.odd-372e6 {
-  background-color: @oddColor;
-}
-
-.even-ff837 {
-  background-color: @evenColor;
 }
 
 .solo-section-d5309 {

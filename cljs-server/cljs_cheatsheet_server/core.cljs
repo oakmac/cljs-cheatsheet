@@ -77,7 +77,7 @@
     [:h3.section-title-8ccf5 "Basics"]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Define" (tt-icon "define" "margin: 0; vertical-align: baseline;")]
           [:td.body-885f4
             (fn-link "def")
@@ -87,7 +87,7 @@
             (fn-link "letfn")
             (fn-link "declare")
             (fn-link "ns")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Branch" (tt-icon "branch" "margin: 0; padding-right: 0; vertical-align: baseline;")]
           [:td.body-885f4
             (fn-link "if")
@@ -102,7 +102,7 @@
             (fn-link "case")
             (fn-link "when-some")
             (fn-link "if-some")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Compare"]
           [:td.body-885f4
             (fn-link "=")
@@ -112,7 +112,7 @@
             (fn-link "not")
             (fn-link "identical?")
             (fn-link "compare")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Loop"]
           [:td.body-885f4
             (fn-link "map")
@@ -122,7 +122,7 @@
             (fn-link "doseq")
             (fn-link "dotimes")
             (fn-link "while")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
             (fn-link "true?")
@@ -136,7 +136,7 @@
     [:h3.section-title-8ccf5 "#( ) Functions" (tt-icon "functions")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             [:div.row-5dec8 "#(...) &rarr; (fn [args] (...))"
@@ -154,7 +154,7 @@
             (fn-link "fnil")
             (fn-link "every-pred")
             (fn-link "some-fn")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Call"]
           [:td.body-885f4
             (fn-link "apply")
@@ -165,7 +165,7 @@
             (fn-link "cond->>")
             (fn-link "some->")
             (fn-link "some->>")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
             (fn-link "fn?")
@@ -176,14 +176,14 @@
     [:h3.section-title-8ccf5 "Numbers" (tt-icon "numbers")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Literals"]
           [:td.body-885f4
             (literal "7")
             (literal "3.14")
             (literal "-1.2e3")
             (literal "0x0000ff")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Arithmetic"]
           [:td.body-885f4
             (fn-link "+")
@@ -197,7 +197,7 @@
             (fn-link "dec")
             (fn-link "max")
             (fn-link "min")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Compare"]
           [:td.body-885f4
             (fn-link "=")
@@ -208,11 +208,11 @@
             (fn-link "<=")
             (fn-link ">=")
             (fn-link "compare")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Cast"]
           [:td.body-885f4
             (fn-link "int")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
             (fn-link "zero?")
@@ -222,7 +222,7 @@
             (fn-link "odd?")
             (fn-link "number?")
             (fn-link "integer?")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Random"]
           [:td.body-885f4
             (fn-link "rand")
@@ -233,13 +233,13 @@
     [:h3.section-title-8ccf5 "\" \" Strings" (tt-icon "strings")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             (literal "\"abc\"")
             (fn-link "str")
             (fn-link "name")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Use"]
           [:td.body-885f4
             (literal "(.-length my-str)")
@@ -254,7 +254,7 @@
             (fn-link "replace" clj-string-ns)
             (fn-link "replace-first" clj-string-ns)
             (fn-link "reverse" clj-string-ns)]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Regex"]
           [:td.body-885f4
             [:span.literal-c3029 "#\"" [:span {:style "font-style:italic"} "pattern"] "\""]
@@ -265,14 +265,14 @@
             (literal "(clojure.string/)")
             (fn-link "replace" clj-string-ns)
             (fn-link "replace-first" clj-string-ns)]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Letters"]
           [:td.body-885f4
             (literal "(clojure.string/)")
             (fn-link "capitalize" clj-string-ns)
             (fn-link "lower-case" clj-string-ns)
             (fn-link "upper-case" clj-string-ns)]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Trim"]
           [:td.body-885f4
             (literal "(clojure.string/)")
@@ -280,7 +280,7 @@
             (fn-link "trim-newline" clj-string-ns)
             (fn-link "triml" clj-string-ns)
             (fn-link "trimr" clj-string-ns)]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
             (fn-link "char")
@@ -293,26 +293,26 @@
     [:h3.section-title-8ccf5 "Atoms / State" (tt-icon "atoms")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             (fn-link "atom")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Get Value"]
           [:td.body-885f4
             [:span.literal-c3029 "@my-atom &rarr; (" (inside-fn-link "deref") " my-atom)"]]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Set Value"]
           [:td.body-885f4
             (fn-link "swap!")
             (fn-link "reset!")
             (fn-link "compare-and-set!")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Watch"]
           [:td.body-885f4
             (fn-link "add-watch")
             (fn-link "remove-watch")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Validators"]
           [:td.body-885f4
             (fn-link "set-validator!")
@@ -323,38 +323,38 @@
     [:h3.section-title-8ccf5 "JavaScript Interop"]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create Object"]
           [:td.body-885f4
             (literal "#js {}")
             (fn-link "js-obj")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Create Array"]
           [:td.body-885f4
             (literal "#js []")
             (fn-link "array")
             (fn-link "make-array")
             (fn-link "aclone")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Get Property"]
           [:td.body-885f4
             [:div.row-5dec8 "(.-innerHTML el)"]
             [:div.row-5dec8 "(" (inside-fn-link "aget") " el \"innerHTML\")"]]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Set Property"]
           [:td.body-885f4
             [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]
             [:div.row-5dec8 "(" (inside-fn-link "aset") " el \"innerHTML\" \"Hi!\")"]]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Delete Property"]
           [:td.body-885f4
             (fn-link "js-delete")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Convert Between"]
           [:td.body-885f4
             (fn-link "clj->js")
             (fn-link "js->clj")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Type Tests"]
           [:td.body-885f4
             (fn-link "array?")
@@ -362,14 +362,14 @@
             (fn-link "number?")
             (fn-link "object?")
             (fn-link "string?")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Exceptions"]
           [:td.body-885f4
             (fn-link "try")
             (fn-link "catch")
             (fn-link "finally")
             (fn-link "throw")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "External Library"]
           [:td.body-885f4
             [:div.row-5dec8 "(js/alert \"Hello world!\")"]
@@ -381,7 +381,7 @@
     [:h3.section-title-8ccf5 "Collections" (tt-icon "collections")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "General"]
           [:td.body-885f4
             (fn-link "count")
@@ -389,7 +389,7 @@
             (fn-link "not-empty")
             (fn-link "into")
             (fn-link "conj")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Content Tests"]
           [:td.body-885f4
             (fn-link "distinct?")
@@ -398,7 +398,7 @@
             (fn-link "not-every?")
             (fn-link "some")
             (fn-link "not-any?")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Capabilities"]
           [:td.body-885f4
             (fn-link "sequential?")
@@ -406,7 +406,7 @@
             (fn-link "sorted?")
             (fn-link "counted?")
             (fn-link "reversible?")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Type Tests"]
           [:td.body-885f4
             (fn-link "coll?")
@@ -421,19 +421,19 @@
     [:h3.section-title-8ccf5 "( ) Lists" (tt-icon "lists")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             (literal "'()")
             (fn-link "list")
             (fn-link "list*")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             (fn-link "first")
             (fn-link "nth")
             (fn-link "peek")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "'Change'"]
           [:td.body-885f4
             (fn-link "cons")
@@ -446,13 +446,13 @@
     [:h3.section-title-8ccf5 "[ ] Vectors" (tt-icon "vectors")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             (literal "[]")
             (fn-link "vector")
             (fn-link "vec")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
@@ -460,7 +460,7 @@
               (tt-icon "vector-as-fn" alt-icon-style)]
             (fn-link "get")
             (fn-link "peek")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "'Change'"]
           [:td.body-885f4
             (fn-link "assoc")
@@ -469,7 +469,7 @@
             (fn-link "replace")
             (fn-link "conj")
             (fn-link "rseq")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Loop"]
           [:td.body-885f4
             (fn-link "mapv")
@@ -481,7 +481,7 @@
     [:h3.section-title-8ccf5 "#{ } Sets" (tt-icon "sets")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             (literal "#{}")
@@ -489,19 +489,19 @@
             (fn-link "hash-set")
             (fn-link "sorted-set")
             (fn-link "sorted-set-by")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
               "(my-set itm) &rarr; (" (inside-fn-link "get") " my-set itm)"
               (tt-icon "set-as-fn" alt-icon-style)]
             (fn-link "contains?")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "'Change'"]
           [:td.body-885f4
             (fn-link "conj")
             (fn-link "disj")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Set Ops"]
           [:td.body-885f4
             (literal "(clojure.set/)")
@@ -509,7 +509,7 @@
             (fn-link "difference" clj-set-ns)
             (fn-link "intersection" clj-set-ns)
             (fn-link "select" clj-set-ns)]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
             (literal "(clojure.set/)")
@@ -521,7 +521,7 @@
     [:h3.section-title-8ccf5 "{ } Maps" (tt-icon "maps")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
             [:div.row-5dec8 "{:key1 \"a\" :key2 \"b\"}"]
@@ -532,7 +532,7 @@
             (fn-link "sorted-map-by")
             (fn-link "frequencies")
             (fn-link "group-by")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
@@ -543,7 +543,7 @@
             (fn-link "find")
             (fn-link "keys")
             (fn-link "vals")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "'Change'"]
           [:td.body-885f4
             (fn-link "assoc")
@@ -553,12 +553,12 @@
             (fn-link "merge-with")
             (fn-link "select-keys")
             (fn-link "update-in")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Entry"]
           [:td.body-885f4
             (fn-link "key")
             (fn-link "val")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Sorted Maps"]
           [:td.body-885f4
             (fn-link "rseq")
@@ -570,7 +570,7 @@
     [:h3.section-title-8ccf5 "Create a Seq"]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "From Collection"]
           [:td.body-885f4
             (fn-link "seq")
@@ -579,23 +579,23 @@
             (fn-link "rseq")
             (fn-link "subseq")
             (fn-link "rsubseq")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Producer Functions"]
           [:td.body-885f4
             (fn-link "lazy-seq")
             (fn-link "repeatedly")
             (fn-link "iterate")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "From Constant"]
           [:td.body-885f4
             (fn-link "repeat")
             (fn-link "range")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "From Other"]
           [:td.body-885f4
             (fn-link "re-seq")
             (fn-link "tree-seq")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "From Sequence"]
           [:td.body-885f4
             (fn-link "keep")
@@ -606,7 +606,7 @@
     [:h3.section-title-8ccf5 "Seq in, Seq out" (tt-icon "sequences")]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Get Shorter"]
           [:td.body-885f4
             (fn-link "distinct")
@@ -614,7 +614,7 @@
             (fn-link "remove")
             (fn-link "take-nth")
             (fn-link "for")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Get Longer"]
           [:td.body-885f4
             (fn-link "cons")
@@ -625,7 +625,7 @@
             (fn-link "cycle")
             (fn-link "interleave")
             (fn-link "interpose")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Get From Tail"]
           [:td.body-885f4
             (fn-link "rest")
@@ -637,7 +637,7 @@
             (fn-link "drop-while")
             (fn-link "take-last")
             (fn-link "for")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Get From Head"]
           [:td.body-885f4
             (fn-link "take")
@@ -645,7 +645,7 @@
             (fn-link "butlast")
             (fn-link "drop-last")
             (fn-link "for")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "'Change'"]
           [:td.body-885f4
             (fn-link "conj")
@@ -662,14 +662,14 @@
             (fn-link "remove")
             (fn-link "replace")
             (fn-link "shuffle")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Rearrange"]
           [:td.body-885f4
             (fn-link "reverse")
             (fn-link "sort")
             (fn-link "sort-by")
             (fn-link "compare")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Process Items"]
           [:td.body-885f4
             (fn-link "map")
@@ -683,7 +683,7 @@
     [:h3.section-title-8ccf5 "Using a Seq"]
     [:table.tbl-902f0
       [:tbody
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Extract Item"]
           [:td.body-885f4
             (fn-link "first")
@@ -701,7 +701,7 @@
             (fn-link "when-first")
             (fn-link "max-key")
             (fn-link "min-key")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Construct Collection"]
           [:td.body-885f4
             (fn-link "zipmap")
@@ -712,22 +712,22 @@
             (fn-link "vec")
             (fn-link "into-array")
             (fn-link "to-array-2d")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Pass to Function"]
           [:td.body-885f4
             (fn-link "apply")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Search"]
           [:td.body-885f4
             (fn-link "some")
             (fn-link "filter")]]
-        [:tr.odd-372e6
+        [:tr
           [:td.label-9e0b7 "Force Evaluation"]
           [:td.body-885f4
             (fn-link "doseq")
             (fn-link "dorun")
             (fn-link "doall")]]
-        [:tr.even-ff837
+        [:tr
           [:td.label-9e0b7 "Check For Forced"]
           [:td.body-885f4
             (fn-link "realized?")]]]]])
