@@ -42,7 +42,7 @@ grunt build
 
 ## License
 
-All code licensed under the terms of the [MIT License].
+[MIT License]
 
 [cljs.info/cheatsheet]:http://cljs.info/cheatsheet
 [Leiningen]:http://leiningen.org
