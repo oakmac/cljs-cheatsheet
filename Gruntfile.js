@@ -1,4 +1,5 @@
 const md5 = require('md5');
+const kidif = require('kidif');
 
 module.exports = function(grunt) {
 'use strict';
@@ -95,6 +96,16 @@ function snowflakeCount() {
 }
 
 //------------------------------------------------------------------------------
+// Build docs.json from kidif files
+//------------------------------------------------------------------------------
+
+function buildDocs() {
+  const docs = kidif('docs/*.cljsdoc');
+
+  console.log(docs);
+}
+
+//------------------------------------------------------------------------------
 // Cheatsheet Publish
 //------------------------------------------------------------------------------
 
@@ -186,6 +197,11 @@ grunt.initConfig({
     less: {
       files: "less/*.less",
       tasks: "less:watch"
+    },
+
+    docs: {
+      files: 'docs/*.cljsdoc',
+      tasks: 'build-docs'
     }
   }
 
@@ -198,6 +214,7 @@ grunt.loadNpmTasks('grunt-contrib-less');
 grunt.loadNpmTasks('grunt-contrib-watch');
 
 // custom tasks
+grunt.registerTask('build-docs', buildDocs);
 grunt.registerTask('pre-build-sanity-check', preBuildSanityCheck);
 grunt.registerTask('hash-assets', hashAssets);
 
