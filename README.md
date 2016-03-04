@@ -1,6 +1,6 @@
 # A ClojureScript Cheatsheet
 
-This project produces the cheatsheet found at [cljs.info/cheatsheet].
+This project produces the cheatsheet at [cljs.info/cheatsheet]
 
 ## Design
 
@@ -22,7 +22,9 @@ npm install
 You may wish to run these commands in separate console tabs / screens.
 
 ```sh
-# compile LESS into CSS whenever a .less file changes
+# does two things:
+# - compiles LESS into CSS whenever a less/*.less file changes
+# - builds public/docs.json whenever a docs/*.cljsdoc file changes
 grunt watch
 
 # run a local web server on port 9224

@@ -21,8 +21,10 @@
 (def clj-string-ns "clojure.string")
 (def clj-set-ns "clojure.set")
 
-;; keep track of the symbols we need docs for
-(def symbols (atom #{}))
+(def symbols
+  "Keeps track of the symbols on the cheatsheet that need tooltips.
+   Used to produce symbols.json"
+  (atom #{}))
 
 ;;------------------------------------------------------------------------------
 ;; Helpers
@@ -1106,45 +1108,6 @@
        "</html>"))
 
 ;;------------------------------------------------------------------------------
-;; Create docs.json
-;;------------------------------------------------------------------------------
-
-(def file-encoding (js-obj "encoding" "utf8"))
-
-(defn- merge-docs [all-docs cheatsheet-docs symbol-str]
-  (let [;; try the special form first
-        full-doc (get-in all-docs [:symbols (replace symbol-str "cljs.core/" "special/")] false)
-        ;; else look up the name like normal
-        full-doc (if-not full-doc
-                   (get-in all-docs [:symbols symbol-str] false)
-                   full-doc)
-        description-markdown (:description full-doc)
-        cheatsheet-doc {:description-html (marked description-markdown)
-                        :signature (:signature full-doc)
-                        :related (:related full-doc)
-                        :full-name symbol-str}
-
-        ;; add type if it is a macro or special form
-        type (:type full-doc)
-        cheatsheet-doc (if (or (= type "macro")
-                               (= type "special form"))
-                         (assoc cheatsheet-doc :type type)
-                         cheatsheet-doc)]
-
-    ;; warn to the console if we did not find a doc for any symbol in the cheatsheet
-    ;; NOTE: hopefully this never happens, but we need to know if it ever does
-    (when-not (or full-doc description-markdown)
-      (js-log (str "UH-OH: could not find the doc for " symbol-str " - probably need to look into that")))
-    (assoc cheatsheet-docs symbol-str cheatsheet-doc)))
-
-;; NOTE: this is not finished yet
-(defn- write-docs-json! []
-  (let [all-docs-str (.readFileSync fs "cljs-api.edn" file-encoding)
-        all-docs (read-string all-docs-str)
-        cheatsheet-docs (reduce (partial merge-docs all-docs) {} @symbols)]
-    (.writeFileSync fs "public/docs.json" (-> cheatsheet-docs clj->js json-stringify))))
-
-;;------------------------------------------------------------------------------
 ;; Init
 ;;------------------------------------------------------------------------------
 
@@ -1156,9 +1119,6 @@
 
 (write-cheatsheet-html!)
 (write-symbols-json!)
-
-;; TODO: this is not finished yet
-;; (write-docs-json!)
 
 ;; needed for :nodejs cljs build
 (def always-nil (constantly nil))

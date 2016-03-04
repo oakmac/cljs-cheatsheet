@@ -6,7 +6,6 @@ node_modules/
 
 # ignore CLJS-generated files
 target/
-public/index.html
 public/js/cheatsheet.js
 public/js/cheatsheet.min.js
 app.js
