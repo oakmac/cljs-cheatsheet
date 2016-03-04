@@ -252,7 +252,7 @@ grunt.initConfig({
 
     docs: {
       files: 'docs/*.cljsdoc',
-      tasks: 'build-docs'
+      tasks: 'docs'
     }
   }
 
@@ -265,7 +265,7 @@ grunt.loadNpmTasks('grunt-contrib-less');
 grunt.loadNpmTasks('grunt-contrib-watch');
 
 // custom tasks
-grunt.registerTask('build-docs', buildDocs);
+grunt.registerTask('docs', buildDocs);
 grunt.registerTask('pre-build-sanity-check', preBuildSanityCheck);
 grunt.registerTask('hash-assets', hashAssets);
 
@@ -273,6 +273,7 @@ grunt.registerTask('build', [
   'pre-build-sanity-check',
   'clean:pre',
   'less',
+  'docs',
   'copy:cheatsheet',
   'clean:post',
   'hash-assets'
