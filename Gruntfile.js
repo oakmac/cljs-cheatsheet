@@ -154,6 +154,7 @@ function buildDocs() {
   }
 
   grunt.file.write('public/docs.json', JSON.stringify(docsWeNeed));
+  grunt.log.writeln(symbolsWeNeed.length + ' doc symbols written to public/docs.json');
 }
 
 //------------------------------------------------------------------------------
