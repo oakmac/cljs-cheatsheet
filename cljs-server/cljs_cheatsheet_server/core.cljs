@@ -2,18 +2,17 @@
   (:require-macros
     [hiccups.core :as hiccups])
   (:require
-    [cljs.reader :refer [read-string]]
     [clojure.string :refer [blank? join replace]]
     [cljs-cheatsheet.util :refer [docs-href js-log log]]
     [hiccups.runtime :as hiccupsrt]))
 
-;; The main purpose of this file is to produce public/index.html
+;; This file produces:
+;; - public/index.html
+;; - symbols.json
 
-;; NOTE: this file is pretty messy; it could stand to be cleaned up and
-;;       organized into namespaces
+;; NOTE: this file is pretty messy; it could stand to be cleaned up some
 
 (def fs (js/require "fs"))
-(def marked (js/require "marked"))
 
 (def html-encode js/goog.string.htmlEscape)
 
