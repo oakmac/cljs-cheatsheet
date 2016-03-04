@@ -1,5 +1,6 @@
 const md5 = require('md5');
 const kidif = require('kidif');
+const marked = require('marked');
 
 module.exports = function(grunt) {
 'use strict';
@@ -99,10 +100,60 @@ function snowflakeCount() {
 // Build docs.json from kidif files
 //------------------------------------------------------------------------------
 
-function buildDocs() {
-  const docs = kidif('docs/*.cljsdoc');
+function splitSection(str) {
+  const lines = str.split('\n');
+  let lines2 = []
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (line !== '') {
+      lines2.push(line);
+    }
+  }
+  return lines2;
+}
 
-  console.log(docs);
+function docsToObj(docsArr) {
+  var docs = {};
+
+  for (var i = 0; i < docsArr.length; i++) {
+    var symbol = docsArr[i];
+
+    docs[ symbol.name ] = {};
+    docs[ symbol.name ]['full-name'] = symbol.name;
+    docs[ symbol.name ]['signature'] = splitSection(symbol.signature);
+    docs[ symbol.name ]['description-html'] = marked(symbol.description);
+
+    if (symbol.related) {
+      docs[ symbol.name ]['related'] = splitSection(symbol.related);
+    }
+
+    if (symbol.type) {
+      docs[ symbol.name ]['type'] = symbol.type;
+    }
+  }
+
+  return docs;
+}
+
+function buildDocs() {
+  const allDocsArr = kidif('docs/*.cljsdoc');
+  const allDocsObj = docsToObj(allDocsArr);
+  const symbolsWeNeed = require('./symbols.json');
+
+  // build only the symbols we need for the cheatsheet
+  var docsWeNeed = {};
+  for (var i = 0; i < symbolsWeNeed.length; i++) {
+    var fullName = symbolsWeNeed[i];
+
+    // sanity check: make sure we have all the symbols on the cheatsheet
+    if (! allDocsObj.hasOwnProperty(fullName)) {
+      grunt.fail.warn('Missing docfile for ' + fullName);
+    }
+
+    docsWeNeed[fullName] = allDocsObj[fullName];
+  }
+
+  grunt.file.write('public/docs.json', JSON.stringify(docsWeNeed));
 }
 
 //------------------------------------------------------------------------------
