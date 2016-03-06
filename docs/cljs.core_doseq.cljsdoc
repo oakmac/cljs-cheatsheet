@@ -1,3 +1,5 @@
+TODO: this needs a better explanation and example
+
 ===== Name
 cljs.core/doseq
 
@@ -19,7 +21,3 @@ cljs.core/doall
 cljs.core/dorun
 cljs.core/for
 cljs.core/dotimes
-
-===== TODO
-
-This needs a better explanation and example.

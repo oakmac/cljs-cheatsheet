@@ -1,3 +1,5 @@
+TODO: this really needs an example
+
 ===== Name
 cljs.core/partition
 
@@ -22,7 +24,3 @@ elements.
 cljs.core/partition-all
 cljs.core/split-at
 cljs.core/partition-by
-
-===== TODO
-
-This function really needs an example.
