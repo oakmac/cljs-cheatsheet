@@ -13,16 +13,19 @@ conj(oin)
 
 Returns a new collection with the `x`s "added" to `coll`.
 
-The "addition" may happen at different "places" depending on the collection
-type.
+`conj` adds items to the end of a vector, the beginning of a list, and into a
+set.
+
+`conj` works with maps by merging and also supports vector pairs with two
+elements.
+
+Multiple `x`s are added in order, as if called one at a time.
 
 `(conj nil item)` returns `(item)`.
 
 ===== Related
 cljs.core/cons
 cljs.core/into
+cljs.core/merge
 cljs.core/peek
 cljs.core/pop
-
-===== TODO
-should add a table here of how things are "added" to different collection types
