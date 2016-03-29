@@ -4,7 +4,8 @@ This project produces the cheatsheet at [cljs.info/cheatsheet]
 
 ## Design
 
-TODO: write this section
+You can read about some of the design decisions that went into the cheatsheet
+[here](design.md).
 
 ## Development Setup
 
