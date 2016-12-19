@@ -26,7 +26,9 @@
 (defn- encode-symbol-url
   "Encode URL for clojuredocs.org"
   [s]
-  (replace s "/" "_fs"))
+  (-> s
+      (replace "/" "_fs") ;; divide symbol - "/"
+      (replace "?" "_q")))
 
 (defn docs-href [name name-space]
   (str "http://clojuredocs.org/"

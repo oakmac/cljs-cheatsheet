@@ -964,7 +964,7 @@
       "have an infinite sequence."]
     [:p
       "You can force a sequence to evaluate all its elements with the "
-      [:code "doall"] " function. This is useful when you want to see the "
+      [:code "doseq"] " function. This is useful when you want to see the "
       "results of a side-effecting function over an entire sequence."]])
 
 (hiccups/defhtml info-tooltips []
