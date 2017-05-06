@@ -1,12 +1,12 @@
 (ns cljs-cheatsheet-client.core
   (:require
-    cljsjs.jquery
-    [clojure.string :refer [blank? lower-case]]
-    [cljs-cheatsheet.util :refer [js-log log]]
+    [cljsjs.jquery]
     [cljs-cheatsheet-client.dom :refer [by-id get-element-box]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mousetrap-boxes]]
     [cljs-cheatsheet-client.tooltips :as tooltips]
     [cljs-cheatsheet-client.util :refer [point-inside-box?]]
+    [cljs-cheatsheet.util :refer [js-log log]]
+    [clojure.string :refer [blank? lower-case]]
     [goog.functions :refer [once]]))
 
 (def $ js/jQuery)

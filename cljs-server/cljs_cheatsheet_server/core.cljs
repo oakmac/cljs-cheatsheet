@@ -807,7 +807,9 @@
         [:td.code-72fa0.right-border-c1b54 "#(my-fn %1 %2 %3)"]
         [:td.code-72fa0 [:pre "(fn [a b c]\n  (my-fn a b c))"]]]
       [:tr
-        [:td.code-72fa0.right-border-c1b54 "#(* % (apply + %&amp;))"]
+        [:td.code-72fa0.right-border-c1b54
+          {:style "font-size:10px"}
+          "#(* % (apply + %&amp;))"]
         [:td.code-72fa0 [:pre {:style "font-size:10px"}
                           "(fn [x &amp; the-rest]\n"
                           "  (* x (apply + the-rest)))"]]]]])
