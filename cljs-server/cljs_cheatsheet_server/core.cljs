@@ -347,6 +347,10 @@
           [:td.body-885f4
             (fn-link "js-delete")]]
         [:tr
+          [:td.label-9e0b7 "List Properties"]
+          [:td.body-885f4
+            (fn-link "js-keys")]]
+        [:tr
           [:td.label-9e0b7 "Convert Between"]
           [:td.body-885f4
             (fn-link "clj->js")
@@ -1039,12 +1043,12 @@
     [:div.three-col-container
       [:div.column
         (basics-section)
-        (functions-section)]
-      [:div.column
-        (numbers-section)
         (strings-section)]
       [:div.column
-        (atoms-section)
+        (functions-section)
+        (numbers-section)
+        (atoms-section)]
+      [:div.column
         (js-interop-section)]]
     [:div.two-col-container
       [:div.column
