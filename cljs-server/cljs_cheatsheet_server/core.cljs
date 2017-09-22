@@ -321,6 +321,10 @@
     [:table.tbl-902f0
       [:tbody
         [:tr
+          [:td.label-9e0b7 "Object Access"]
+          [:td.body-885f4
+            (fn-link "this-as")]]
+        [:tr
           [:td.label-9e0b7 "Create Object"]
           [:td.body-885f4
             (literal "#js {}")
