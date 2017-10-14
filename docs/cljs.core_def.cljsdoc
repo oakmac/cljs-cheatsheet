@@ -6,15 +6,15 @@ special form
 
 ===== Signature
 [symbol]
-[symbol init]
-[symbol doc-string init]
+[symbol init?]
+[symbol doc-string? init?]
 
 ===== Description
 
 Creates a global variable with the name of `symbol` and a namespace of the
 current namespace.
 
-If `init` is supplied, it is evaluated and the result is assigned to `symbol`.
+If `init` is supplied, it is evaluated and the result is assigned to `symbol`, otherwise `symbol` is `nil`.
 
 `doc-string` is an optional documentation string.
 
