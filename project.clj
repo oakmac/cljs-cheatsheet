@@ -7,13 +7,13 @@
             :url "https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.7.228"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.9.946"]
                  [cljsjs/jquery "2.1.4-0"]
-                 [com.cognitect/transit-cljs "0.8.237"]
+                 [com.cognitect/transit-cljs "0.8.243"]
                  [hiccups "0.3.0"]]
 
-  :plugins [[lein-cljsbuild "1.1.2"]]
+  :plugins [[lein-cljsbuild "1.1.7"]]
 
   :source-paths ["src"]
 
