@@ -11,11 +11,11 @@ You can read about some of the design decisions that went into the cheatsheet
 
 ### First time setup
 
-Install [Leiningen] and [Node.js]
+Install [Leiningen], [Node.js], and [Yarn].
 
 ```sh
 # install node_modules
-npm install
+yarn install
 ```
 
 ### Development workflow
@@ -50,4 +50,5 @@ grunt build
 [cljs.info/cheatsheet]:http://cljs.info/cheatsheet
 [Leiningen]:http://leiningen.org
 [Node.js]:http://nodejs.org
+[Yarn]:https://yarnpkg.com/
 [MIT License]:https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md
