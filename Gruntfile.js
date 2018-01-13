@@ -236,7 +236,7 @@ grunt.initConfig({
 
     watch: {
       files: {
-        'public/css/main.min.css': 'less/main.less'
+        'public/css/main.min.css': 'less/000-main.less'
       }
     }
   },

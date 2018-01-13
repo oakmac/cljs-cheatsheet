@@ -325,6 +325,10 @@
             (fn-link "get-validator")]]]]])
 
 
+(def cljs-oops-lib-url "https://github.com/binaryage/cljs-oops")
+(def cljs-docs-url "https://github.com/binaryage/cljs-oops#object-operations")
+
+
 (hiccups/defhtml js-interop-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "JavaScript Interop"]
@@ -345,15 +349,19 @@
         [:tr
           [:td.label-9e0b7 "Get Property"]
           [:td.body-885f4
-            [:div.row-5dec8 "(.-innerHTML el)"]]]
-            ;; TODO: How to show oget here?
-            ; [:div.row-5dec8 "(" (inside-fn-link "aget") " el \"innerHTML\")"]]]
+            [:div.row-5dec8 "(.-innerHTML el)"]
+            [:div.row-5dec8
+              [:div.msg-b3d36
+                "Using " [:a {:href cljs-oops-lib-url} "cljs-oops"] " library:"]
+              [:div "(" [:a.inside-fn-c7607 {:href cljs-docs-url} "oget"] " el \"innerHTML\")"]]]]
         [:tr
           [:td.label-9e0b7 "Set Property"]
           [:td.body-885f4
-            [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]]]
-            ;; TODO: how to show aset here?
-            ; [:div.row-5dec8 "(" (inside-fn-link "aset") " el \"innerHTML\" \"Hi!\")"]]]
+            [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]
+            [:div.row-5dec8
+              [:div.msg-b3d36
+                "Using " [:a {:href cljs-oops-lib-url} "cljs-oops"] " library:"]
+              [:div "(" [:a.inside-fn-c7607 {:href cljs-docs-url} "aget"] " el \"innerHTML\")"]]]]
         [:tr
           [:td.label-9e0b7 "Delete Property"]
           [:td.body-885f4
