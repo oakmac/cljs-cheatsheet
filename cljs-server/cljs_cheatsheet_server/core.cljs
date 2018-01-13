@@ -361,7 +361,7 @@
             [:div.row-5dec8
               [:div.msg-b3d36
                 "Using " [:a {:href cljs-oops-lib-url} "cljs-oops"] " library:"]
-              [:div "(" [:a.inside-fn-c7607 {:href cljs-docs-url} "aget"] " el \"innerHTML\")"]]]]
+              [:div "(" [:a.inside-fn-c7607 {:href cljs-docs-url} "oset!"] " el \"innerHTML\" \"Hi!\")"]]]]
         [:tr
           [:td.label-9e0b7 "Delete Property"]
           [:td.body-885f4
