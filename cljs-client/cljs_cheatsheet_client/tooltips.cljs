@@ -1,11 +1,12 @@
 (ns cljs-cheatsheet-client.tooltips
   (:require
-    [clojure.string :refer [blank? replace split]]
-    [cljs-cheatsheet.util :refer [js-log log]]
     [cljs-cheatsheet-client.html :refer [inline-tooltip]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mouse-position mousetrap-boxes]]
     [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]
-    [goog.functions :refer [once]]))
+    [cljs-cheatsheet.util :refer [js-log log]]
+    [clojure.string :refer [blank? replace split]]
+    [goog.functions :refer [once]]
+    [oops.core :refer [ocall oget oset!]]))
 
 (def $ js/jQuery)
 
@@ -63,8 +64,8 @@
         icon-height (.height $icon-el)
         icon-width (.width $icon-el)
         icon-coords (.offset $icon-el)
-        icon-x (+ (aget icon-coords "left") (half icon-width))
-        icon-y (+ (aget icon-coords "top") (half icon-height))
+        icon-x (+ (oget icon-coords "left") (half icon-width))
+        icon-y (+ (oget icon-coords "top") (half icon-height))
         browser-width (.width ($ js/window))
         $tooltip-el ($ (str "#" (:id tt)))
 
@@ -117,8 +118,8 @@
         window-height (.height ($ js/window))
         scrollY (.scrollTop ($ js/window))
         link-offset (.offset $link-el)
-        link-x (aget link-offset "left")
-        link-y (aget link-offset "top")
+        link-x (oget link-offset "left")
+        link-y (oget link-offset "top")
         link-height (.outerHeight $link-el)
         link-width (.outerWidth $link-el)
         $tooltip-el ($ (str "#" (:id tt)))
@@ -235,11 +236,11 @@
 ;;------------------------------------------------------------------------------
 
 (defn- mousemove-body [js-evt]
-  (reset! mouse-position {:x (aget js-evt "pageX")
-                          :y (aget js-evt "pageY")}))
+  (reset! mouse-position {:x (oget js-evt "pageX")
+                          :y (oget js-evt "pageY")}))
 
 (defn- mouseenter-info-icon [js-evt]
-  (let [icon-el (aget js-evt "currentTarget")
+  (let [icon-el (oget js-evt "currentTarget")
         $icon-el ($ icon-el)
         info-id (.attr $icon-el "data-info-id")
         tooltip-already-showing? (and @active-tooltip
@@ -252,7 +253,7 @@
                               :tt-type :info}))))
 
 (defn- mouseenter-link [js-evt]
-  (let [$link-el ($ (aget js-evt "currentTarget"))
+  (let [$link-el ($ (oget js-evt "currentTarget"))
         full-name (.attr $link-el "data-full-name")
         tooltip-data (get @docs (keyword full-name))
         tooltip-already-showing? (and @active-tooltip
@@ -265,7 +266,7 @@
 
 ;; TODO: touch events are not really finished yet
 
-; (def has-touch-events? (aget js/window "hasTouchEvents"))
+; (def has-touch-events? (oget js/window "hasTouchEvents"))
 
 ; (defn- touchend-body [js-evt]
 ;   (hide-all-info-tooltips!))
@@ -273,7 +274,7 @@
 ; (defn- touchend-icon [js-evt]
 ;   (.stopPropagation js-evt)
 ;   (when-let [tooltip-id (js-evt->tooltip-id js-evt)]
-;     (let [icon-el (aget js-evt "currentTarget")]
+;     (let [icon-el (oget js-evt "currentTarget")]
 ;       (hide-all-info-tooltips!)
 ;       (show-info-tooltip! tooltip-id))))
 

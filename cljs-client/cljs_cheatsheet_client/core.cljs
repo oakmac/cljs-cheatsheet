@@ -1,13 +1,14 @@
 (ns cljs-cheatsheet-client.core
   (:require
-    [cljsjs.jquery]
     [cljs-cheatsheet-client.dom :refer [by-id get-element-box]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mousetrap-boxes]]
     [cljs-cheatsheet-client.tooltips :as tooltips]
     [cljs-cheatsheet-client.util :refer [point-inside-box?]]
     [cljs-cheatsheet.util :refer [js-log log]]
+    [cljsjs.jquery]
     [clojure.string :refer [blank? lower-case]]
-    [goog.functions :refer [once]]))
+    [goog.functions :refer [once]]
+    [oops.core :refer [ocall oget oset!]]))
 
 (def $ js/jQuery)
 
@@ -48,8 +49,9 @@
                                (reset! any-underneath-tooltip? true)))))
     (deref any-underneath-tooltip?)))
 
+
 (defn- mouseenter-related-link [js-evt]
-  (let [link-el (aget js-evt "currentTarget")
+  (let [link-el (oget js-evt "currentTarget")
         $link-el ($ link-el)
         full-name (.attr $link-el "data-full-name")
         sel1 (str ".fn-a8476[data-full-name='" full-name "']")
@@ -65,8 +67,9 @@
     (when (related-links-underneath-tooltip?)
       (.fadeTo $tooltip-el opacity-fade-speed tooltip-opacity))))
 
+
 (defn- mouseleave-related-link [js-evt]
-  (let [link-el (aget js-evt "currentTarget")
+  (let [link-el (oget js-evt "currentTarget")
         $link-el ($ link-el)
         full-name (.attr $link-el "data-full-name")
         tt-id (:id @active-tooltip)
@@ -74,25 +77,29 @@
     (.fadeTo $tooltip-el opacity-fade-speed 1)
     (.removeClass ($ fn-link-sel) related-highlight-class)))
 
+
 ;;------------------------------------------------------------------------------
 ;; Search
 ;;------------------------------------------------------------------------------
 
 (def search-text (atom ""))
 
+
 (defn- show-all-groups-and-sections! []
   (.show ($ group-sel))
   (.show ($ section-sel)))
+
 
 (defn- toggle-el!
   "Show or hide an element based on whether it contains a search match."
   [_idx el]
   (let [$el ($ el)
         $matched (.find $el matched-search-sel)
-        matches-in-el? (pos? (aget $matched "length"))]
+        matches-in-el? (pos? (oget $matched "length"))]
     (if matches-in-el?
       (.show $el)
       (.hide $el))))
+
 
 (defn- toggle-groups-and-sections!
   "Show or hide groups and sections based on whether they contain a search match."
@@ -100,12 +107,14 @@
   (.each ($ section-sel) toggle-el!)
   (.each ($ group-sel) toggle-el!))
 
+
 (defn- any-matches?
   "Did anything match our search text?"
   []
   (-> ($ matched-search-sel)
-      (aget "length")
+      (oget "length")
       pos?))
+
 
 (defn- toggle-fn-link [el search-txt]
   (let [$link ($ el)
@@ -115,19 +124,23 @@
       (.addClass $link matched-search-class)
       (.removeClass $link matched-search-class))))
 
+
 (defn- toggle-fn-matches! [search-txt]
   (let [$links ($ fn-link-sel)]
     (.each $links #(toggle-fn-link %2 search-txt))))
+
 
 (defn- clear-search! []
   (.removeClass ($ search-input-sel) no-results-class)
   (.removeClass ($ fn-link-sel) matched-search-class)
   (show-all-groups-and-sections!))
 
+
 (defn- show-no-matches! []
   (.addClass ($ search-input-sel) no-results-class)
   (.removeClass ($ fn-link-sel) matched-search-class)
   (show-all-groups-and-sections!))
+
 
 (defn- search! [txt]
   (toggle-fn-matches! txt)
@@ -137,12 +150,15 @@
       (toggle-groups-and-sections!))
     (show-no-matches!)))
 
+
 (defn- change-search-text [_kwd _the-atom _old-txt new-txt]
   (if (blank? new-txt)
     (clear-search!)
     (search! new-txt)))
 
+
 (add-watch search-text :main change-search-text)
+
 
 ;;------------------------------------------------------------------------------
 ;; Events
@@ -153,14 +169,17 @@
     (when (not= txt @search-text)
       (reset! search-text txt))))
 
+
 ;; reset the stack so we can grab the value out of the text field
 (defn- change-search-input []
   (js/setTimeout change-search-input2 1))
+
 
 (defn- add-events! []
   (.on ($ "body") "mouseenter" related-link-sel mouseenter-related-link)
   (.on ($ "body") "mouseleave" related-link-sel mouseleave-related-link)
   (.on ($ search-input-sel) "blur change keydown" change-search-input))
+
 
 ;;------------------------------------------------------------------------------
 ;; Global Cheatsheet Init

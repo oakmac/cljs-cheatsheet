@@ -1,46 +1,56 @@
 (ns cljs-cheatsheet-client.dom
   "Some DOM helper functions."
-  (:require goog.dom))
+  (:require
+    goog.dom
+    [oops.core :refer [ocall oget oset!]]))
 
 (def $ js/jQuery)
 
 (defn by-id [id]
   (.getElementById js/document id))
 
+
 (defn element? [el]
   (goog.dom/isElement el))
 
+
 (defn get-value [id]
-  (aget (by-id id) "value"))
+  (oget (by-id id) "value"))
+
 
 (defn set-html! [id html]
-  (aset (by-id id) "innerHTML" html))
+  (oset! (by-id id) "innerHTML" html))
+
 
 (defn- set-value! [id v]
-  (aset (by-id id) "value" v))
+  (oset! (by-id id) "value" v))
+
 
 (defn show-el! [id]
-  (aset (by-id id) "style" "display" ""))
+  (oset! (by-id id) "style" "display" ""))
+
 
 (defn hide-el! [id]
-  (aset (by-id id) "style" "display" "none"))
+  (oset! (by-id id) "style" "display" "none"))
+
 
 (defn toggle-display! [id]
   (let [el (by-id id)
-        display (aget el "style" "display")]
+        display (oget el "style" "display")]
     (if (= display "none")
       (show-el! id)
       (hide-el! id))))
+
 
 ;; NOTE: Surely there must be a jQuery or Google Closure function that does
 ;;       this already?
 (defn get-element-box [el]
   (let [$el ($ el)
         o (.offset $el)
-        x (aget o "left")
-        y (aget o "top")
-        height (.outerHeight $el)
-        width (.outerWidth $el)]
+        x (oget o "left")
+        y (oget o "top")
+        height (ocall $el "outerHeight")
+        width (ocall $el "outerWidth")]
     {:x1 x
      :x2 (+ x width)
      :y1 y

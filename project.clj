@@ -7,11 +7,13 @@
             :url "https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.9.946"]
-                 [cljsjs/jquery "2.1.4-0"]
-                 [com.cognitect/transit-cljs "0.8.243"]
-                 [hiccups "0.3.0"]]
+  :dependencies
+    [[org.clojure/clojure "1.9.0"]
+     [org.clojure/clojurescript "1.9.946"]
+     [binaryage/oops "0.5.8"]
+     [cljsjs/jquery "2.1.4-0"]
+     [com.cognitect/transit-cljs "0.8.243"]
+     [hiccups "0.3.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
 
@@ -26,12 +28,15 @@
     {:builds
       [{:id "cheatsheet-dev"
         :source-paths ["cljs-client" "cljs-shared"]
-        :compiler {:output-to "public/js/cheatsheet.js"
+        :compiler {:checked-arrays :warn
+                   :output-to "public/js/cheatsheet.js"
                    :optimizations :whitespace}}
+
 
        {:id "cheatsheet-prod"
         :source-paths ["cljs-client" "cljs-shared"]
-        :compiler {:output-to "public/js/cheatsheet.min.js"
+        :compiler {:checked-arrays :warn
+                   :output-to "public/js/cheatsheet.min.js"
                    :optimizations :advanced
                    :pretty-print false}}
 
