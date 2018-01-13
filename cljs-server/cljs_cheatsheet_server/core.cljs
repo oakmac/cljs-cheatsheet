@@ -20,6 +20,7 @@
 (def clj-string-ns "clojure.string")
 (def clj-set-ns "clojure.set")
 
+
 (def symbols
   "Keeps track of the symbols on the cheatsheet that need tooltips.
    Used to produce symbols.json"
@@ -32,14 +33,17 @@
 (defn- json-stringify [js-thing]
   (js/JSON.stringify js-thing nil 2))
 
+
 (hiccups/defhtml tt-icon [id]
   [:img.tooltip-icon-0e91b
     {:alt ""
      :data-info-id id
      :src "img/info-circle.svg"}])
 
+
 (hiccups/defhtml literal [n]
   [:span.literal-c3029 n])
+
 
 (hiccups/defhtml fn-link
   ([symbol-name]
@@ -52,6 +56,7 @@
        {:data-full-name full-name
         :href (docs-href symbol-name name-space)}
        (html-encode symbol-name)])))
+
 
 (hiccups/defhtml inside-fn-link
   ([symbol-name]
@@ -128,6 +133,7 @@
             (fn-link "nil?")
             (fn-link "some?")]]]]])
 
+
 (hiccups/defhtml functions-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "#( ) Functions" (tt-icon "functions")]
@@ -167,6 +173,7 @@
           [:td.body-885f4
             (fn-link "fn?")
             (fn-link "ifn?")]]]]])
+
 
 (hiccups/defhtml numbers-section []
   [:div.section-31efe
@@ -224,6 +231,7 @@
           [:td.body-885f4
             (fn-link "rand")
             (fn-link "rand-int")]]]]])
+
 
 (hiccups/defhtml strings-section []
   [:div.section-31efe
@@ -285,6 +293,7 @@
             (literal "(clojure.string/)")
             (fn-link "blank?" clj-string-ns)]]]]])
 
+
 (hiccups/defhtml atoms-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Atoms / State" (tt-icon "atoms")]
@@ -315,6 +324,7 @@
             (fn-link "set-validator!")
             (fn-link "get-validator")]]]]])
 
+
 (hiccups/defhtml js-interop-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "JavaScript Interop"]
@@ -335,13 +345,15 @@
         [:tr
           [:td.label-9e0b7 "Get Property"]
           [:td.body-885f4
-            [:div.row-5dec8 "(.-innerHTML el)"]
-            [:div.row-5dec8 "(" (inside-fn-link "aget") " el \"innerHTML\")"]]]
+            [:div.row-5dec8 "(.-innerHTML el)"]]]
+            ;; TODO: How to show oget here?
+            ; [:div.row-5dec8 "(" (inside-fn-link "aget") " el \"innerHTML\")"]]]
         [:tr
           [:td.label-9e0b7 "Set Property"]
           [:td.body-885f4
-            [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]
-            [:div.row-5dec8 "(" (inside-fn-link "aset") " el \"innerHTML\" \"Hi!\")"]]]
+            [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]]]
+            ;; TODO: how to show aset here?
+            ; [:div.row-5dec8 "(" (inside-fn-link "aset") " el \"innerHTML\" \"Hi!\")"]]]
         [:tr
           [:td.label-9e0b7 "Delete Property"]
           [:td.body-885f4
@@ -372,6 +384,7 @@
             [:div.row-5dec8 "(js/alert \"Hello world!\")"]
             [:div.row-5dec8 "(js/console.log my-obj)"]
             [:div.row-5dec8 "(.html (js/jQuery \"#myDiv\") \"Hi!\")"]]]]]])
+
 
 (hiccups/defhtml collections-section []
   [:div.section-31efe
@@ -413,6 +426,7 @@
             (fn-link "map?")
             (fn-link "seq?")]]]]])
 
+
 (hiccups/defhtml lists-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "( ) Lists" (tt-icon "lists")]
@@ -437,6 +451,7 @@
             (fn-link "conj")
             (fn-link "rest")
             (fn-link "pop")]]]]])
+
 
 (hiccups/defhtml vectors-section []
   [:div.section-31efe
@@ -472,6 +487,7 @@
             (fn-link "mapv")
             (fn-link "filterv")
             (fn-link "reduce-kv")]]]]])
+
 
 (hiccups/defhtml sets-section []
   [:div.section-31efe
@@ -512,6 +528,7 @@
             (literal "(clojure.set/)")
             (fn-link "subset?" clj-set-ns)
             (fn-link "superset?" clj-set-ns)]]]]])
+
 
 (hiccups/defhtml maps-section []
   [:div.section-31efe
@@ -562,6 +579,7 @@
             (fn-link "subseq")
             (fn-link "rsubseq")]]]]])
 
+
 (hiccups/defhtml create-seq-section []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Create a Seq"]
@@ -597,6 +615,7 @@
           [:td.body-885f4
             (fn-link "keep")
             (fn-link "keep-indexed")]]]]])
+
 
 (hiccups/defhtml seq-in-out-section []
   [:div.section-31efe
@@ -674,6 +693,7 @@
             (fn-link "mapcat")
             (fn-link "for")
             (fn-link "replace")]]]]])
+
 
 (hiccups/defhtml use-seq-section []
   [:div.section-31efe
@@ -793,6 +813,7 @@
         [:td.cell-e6fd2.right-border-c1b54 [:code "nil"]]
         [:td.cell-e6fd2 [:code "false"]]]]])
 
+
 (hiccups/defhtml function-shorthand-table []
   [:table.exmpl-tbl-42d9f
     [:thead
@@ -808,11 +829,14 @@
         [:td.code-72fa0 [:pre "(fn [a b c]\n  (my-fn a b c))"]]]
       [:tr
         [:td.code-72fa0.right-border-c1b54
-          {:style "font-size:10px"}
+          {:style "font-size: 10px"}
           "#(* % (apply + %&amp;))"]
-        [:td.code-72fa0 [:pre {:style "font-size:10px"}
-                          "(fn [x &amp; the-rest]\n"
-                          "  (* x (apply + the-rest)))"]]]]])
+        [:td.code-72fa0
+          [:pre
+            {:style "font-size: 10px"}
+            "(fn [x &amp; the-rest]\n"
+            "  (* x (apply + the-rest)))"]]]]])
+
 
 (hiccups/defhtml basics-tooltips []
 
@@ -869,6 +893,7 @@
     [:p "ClojureScript Strings must be defined using double quotes."]
     [:p "The " [:code "clojure.string"] " namespace provides many useful "
         "functions for dealing with strings."]])
+
 
 (hiccups/defhtml collections-tooltips []
   [:div#tooltip-collections.tooltip-53dde {:style "display:none"}
@@ -949,6 +974,7 @@
       "Keywords can be used as a function to get a value from a map. "
       "They are commonly used as map keys for this reason."]])
 
+
 (hiccups/defhtml sequences-tooltips []
   [:div#tooltip-sequences.tooltip-53dde {:style "display:none"}
     [:p
@@ -969,11 +995,13 @@
       [:code "doseq"] " function. This is useful when you want to see the "
       "results of a side-effecting function over an entire sequence."]])
 
+
 (hiccups/defhtml info-tooltips []
   [:section
     (basics-tooltips)
     (collections-tooltips)
     (sequences-tooltips)])
+
 
 ;;------------------------------------------------------------------------------
 ;; Header and Footer
@@ -986,11 +1014,13 @@
       "ClojureScript Cheatsheet"]
     [:input#searchInput {:type "text" :placeholder "Search"}]])
 
+
 (def clojure-cheatsheet-href "http://clojure.org/cheatsheet")
 (def clojure-tooltip-cheatsheet-href "http://jafingerhut.github.io/cheatsheet/clojuredocs/cheatsheet-tiptip-cdocs-summary.html")
 (def clojurescript-github-href "https://github.com/clojure/clojurescript")
 (def repo-href "https://github.com/oakmac/cljs-cheatsheet/")
 (def license-href "https://github.com/oakmac/cljs-cheatsheet/blob/master/LICENSE.md")
+
 
 ;; include this? "Please copy, improve, and share this work."
 ;; TODO: improve the markup here
@@ -1010,6 +1040,7 @@
       [:label.quiet-5d4e8 "license: "]
       [:a.ftr-link-e980e {:href license-href} "MIT"]]])
 
+
 ;;------------------------------------------------------------------------------
 ;; Head and Script Includes
 ;;------------------------------------------------------------------------------
@@ -1026,8 +1057,10 @@
     [:link {:rel "apple-touch-icon" :href "apple-touch-icon.png"}]
     [:link {:rel "stylesheet" :href "css/main.min.css"}]])
 
+
 (hiccups/defhtml script-tags []
   [:script {:src "js/cheatsheet.min.js"}])
+
 
 ;;------------------------------------------------------------------------------
 ;; Body
@@ -1095,18 +1128,21 @@
     [:div.two-col-container
       [:div.column (bitwise-section)]]])
 
+
 (defn cheatsheet-page []
-  (str "<!doctype html>"
-       "<html>"
-       (head)
-       "<body>"
-       (header)
-       (body)
-       (footer)
-       (info-tooltips)
-       (script-tags)
-       "</body>"
-       "</html>"))
+  (str
+    "<!doctype html>"
+    "<html>"
+    (head)
+    "<body>"
+    (header)
+    (body)
+    (footer)
+    (info-tooltips)
+    (script-tags)
+    "</body>"
+    "</html>"))
+
 
 ;;------------------------------------------------------------------------------
 ;; Init
@@ -1115,11 +1151,14 @@
 (defn- write-cheatsheet-html! []
   (.writeFileSync fs "public/index.html" (cheatsheet-page)))
 
+
 (defn- write-symbols-json! []
   (.writeFileSync fs "symbols.json" (-> @symbols sort clj->js json-stringify)))
 
+
 (write-cheatsheet-html!)
 (write-symbols-json!)
+
 
 ;; needed for :nodejs cljs build
 (def always-nil (constantly nil))
