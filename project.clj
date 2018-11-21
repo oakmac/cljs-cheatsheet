@@ -9,10 +9,10 @@
 
   :dependencies
     [[org.clojure/clojure "1.9.0"]
-     [org.clojure/clojurescript "1.9.946"]
-     [binaryage/oops "0.5.8"]
+     [org.clojure/clojurescript "1.10.439"]
+     [binaryage/oops "0.6.3"]
      [cljsjs/jquery "2.1.4-0"]
-     [com.cognitect/transit-cljs "0.8.243"]
+     [com.cognitect/transit-cljs "0.8.256"]
      [hiccups "0.3.0"]]
 
   :plugins [[lein-cljsbuild "1.1.7"]]
