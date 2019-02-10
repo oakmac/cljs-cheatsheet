@@ -6,7 +6,7 @@
     [cljs-cheatsheet-client.util :refer [point-inside-box?]]
     [cljs-cheatsheet.util :refer [js-log log]]
     [cljsjs.jquery]
-    [clojure.string :refer [blank? lower-case]]
+    [clojure.string :as str]
     [goog.functions :refer [once]]
     [oops.core :refer [ocall oget oset!]]))
 
@@ -118,7 +118,7 @@
 
 (defn- toggle-fn-link [el search-txt]
   (let [$link ($ el)
-        link-txt (-> $link .text lower-case)
+        link-txt (-> $link .text str/lower-case)
         match? (not= -1 (.indexOf link-txt search-txt))]
     (if match?
       (.addClass $link matched-search-class)
@@ -152,7 +152,7 @@
 
 
 (defn- change-search-text [_kwd _the-atom _old-txt new-txt]
-  (if (blank? new-txt)
+  (if (str/blank? new-txt)
     (clear-search!)
     (search! new-txt)))
 
@@ -165,7 +165,7 @@
 ;;------------------------------------------------------------------------------
 
 (defn- change-search-input2 []
-  (let [txt (-> ($ search-input-sel) .val lower-case)]
+  (let [txt (-> ($ search-input-sel) .val str/lower-case)]
     (when (not= txt @search-text)
       (reset! search-text txt))))
 
@@ -201,6 +201,6 @@
 
       ;; put the focus on the search field
       (when-let [search-input-el (by-id search-input-id)]
-        (.focus search-input-el)))))
+        (ocall search-input-el "focus")))))
 
 (init!)

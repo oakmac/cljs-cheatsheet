@@ -1068,6 +1068,9 @@
 
 
 (hiccups/defhtml script-tags []
+  [:script
+    (str "if (window.location.hostname !== 'localhost' && window.location.protocol !== 'https:') { "
+         "window.location.href = window.location.href.replace('http://', 'https://'); }")]
   [:script {:src "js/cheatsheet.min.js"}])
 
 
