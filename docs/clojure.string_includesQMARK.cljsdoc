@@ -1,0 +1,13 @@
+===== Name
+clojure.string/includes?
+
+===== Signature
+[s substr]
+
+===== Description
+
+True if `s` includes `substr`.
+
+===== Related
+cljs.core/re-find
+cljs.core/contains?

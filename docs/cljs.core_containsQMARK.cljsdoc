@@ -17,3 +17,4 @@ linear search for a value.
 ===== Related
 cljs.core/some
 cljs.core/get
+clojure.string/includes?

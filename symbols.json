@@ -258,6 +258,7 @@
   "clojure.string/blank?",
   "clojure.string/capitalize",
   "clojure.string/escape",
+  "clojure.string/includes?",
   "clojure.string/join",
   "clojure.string/lower-case",
   "clojure.string/replace",

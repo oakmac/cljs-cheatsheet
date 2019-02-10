@@ -291,6 +291,7 @@
             (fn-link "char")
             (fn-link "string?")
             (literal "(clojure.string/)")
+            (fn-link "includes?" clj-string-ns)
             (fn-link "blank?" clj-string-ns)]]]]])
 
 
