@@ -1064,13 +1064,13 @@
     [:meta {:name "description" :content "ClojureScript cheatsheet"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
     [:link {:rel "apple-touch-icon" :href "apple-touch-icon.png"}]
+    [:script
+      (str "if (window.location.hostname !== 'localhost' && window.location.protocol !== 'https:') {"
+           "window.location.href = window.location.href.replace('http://', 'https://');}")]
     [:link {:rel "stylesheet" :href "css/main.min.css"}]])
 
 
 (hiccups/defhtml script-tags []
-  [:script
-    (str "if (window.location.hostname !== 'localhost' && window.location.protocol !== 'https:') { "
-         "window.location.href = window.location.href.replace('http://', 'https://'); }")]
   [:script {:src "js/cheatsheet.min.js"}])
 
 

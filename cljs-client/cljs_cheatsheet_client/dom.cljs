@@ -7,40 +7,29 @@
 (def $ js/jQuery)
 
 (defn by-id [id]
-  (.getElementById js/document id))
-
+  (ocall js/document "getElementById" id))
 
 (defn element? [el]
   (goog.dom/isElement el))
 
-
 (defn get-value [id]
   (oget (by-id id) "value"))
-
 
 (defn set-html! [id html]
   (oset! (by-id id) "innerHTML" html))
 
-
-(defn- set-value! [id v]
-  (oset! (by-id id) "value" v))
-
-
 (defn show-el! [id]
-  (oset! (by-id id) "style" "display" ""))
-
+  (oset! (by-id id) "style.display" ""))
 
 (defn hide-el! [id]
-  (oset! (by-id id) "style" "display" "none"))
-
+  (oset! (by-id id) "style.display" "none"))
 
 (defn toggle-display! [id]
   (let [el (by-id id)
-        display (oget el "style" "display")]
+        display (oget el "style.display")]
     (if (= display "none")
       (show-el! id)
       (hide-el! id))))
-
 
 ;; NOTE: Surely there must be a jQuery or Google Closure function that does
 ;;       this already?
