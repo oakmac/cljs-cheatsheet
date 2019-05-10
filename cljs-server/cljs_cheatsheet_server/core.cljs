@@ -61,7 +61,7 @@
 
 (hiccups/defhtml inside-fn-link
   ([symbol-name]
-   (inside-fn-link symbol-name cljs-core-ns))
+   (inside-fn-link symbol-name clojure-core-ns))
   ([symbol-name name-space]
    (let [full-name (str name-space "/" symbol-name)
          ;; add this symbol to the docs list
@@ -340,14 +340,14 @@
           [:td.label-9e0b7 "Create Object"]
           [:td.body-885f4
             (literal "#js {}")
-            (fn-link "js-obj")]]
+            (fn-link "js-obj" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Create Array"]
           [:td.body-885f4
             (literal "#js []")
-            (fn-link "array")
-            (fn-link "make-array")
-            (fn-link "aclone")]]
+            (fn-link "array" cljs-core-ns)
+            (fn-link "make-array" cljs-core-ns)
+            (fn-link "aclone" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Get Property"]
           [:td.body-885f4
@@ -359,7 +359,7 @@
         [:tr
           [:td.label-9e0b7 "Set Property"]
           [:td.body-885f4
-            [:div.row-5dec8 "(" (inside-fn-link "set!") " (.-innerHTML el) \"Hi!\")"]
+            [:div.row-5dec8 "(" (inside-fn-link "set!" cljs-core-ns) " (.-innerHTML el) \"Hi!\")"]
             [:div.row-5dec8
               [:div.msg-b3d36
                 "Using " [:a {:href cljs-oops-lib-url} "cljs-oops"] " library:"]
@@ -367,27 +367,27 @@
         [:tr
           [:td.label-9e0b7 "Delete Property"]
           [:td.body-885f4
-            (fn-link "js-delete")]]
+            (fn-link "js-delete" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Convert Between"]
           [:td.body-885f4
-            (fn-link "clj->js")
-            (fn-link "js->clj")]]
+            (fn-link "clj->js" cljs-core-ns)
+            (fn-link "js->clj" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Type Tests"]
           [:td.body-885f4
-            (fn-link "array?")
-            (fn-link "fn?")
-            (fn-link "number?")
-            (fn-link "object?")
-            (fn-link "string?")]]
+            (fn-link "array?" cljs-core-ns)
+            (fn-link "fn?" cljs-core-ns)
+            (fn-link "number?" cljs-core-ns)
+            (fn-link "object?" cljs-core-ns)
+            (fn-link "string?" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Exceptions"]
           [:td.body-885f4
-            (fn-link "try")
-            (fn-link "catch")
-            (fn-link "finally")
-            (fn-link "throw")]]
+            (fn-link "try" cljs-core-ns)
+            (fn-link "catch" cljs-core-ns)
+            (fn-link "finally" cljs-core-ns)
+            (fn-link "throw" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "External Library"]
           [:td.body-885f4
