@@ -22,23 +22,30 @@
 
 (def uri-encode js/encodeURIComponent)
 
-(defn- encode-symbol-url-clojuredocs
-  "Encode URL for clojuredocs.org"
-  [s]
-  (-> s
-      (replace "/" "_fs") ;; divide symbol - "/"
-      (replace "?" "_q")))
+(def encode-clojuredocs
+  {"/" "_fs"
+   "?" "_q"})
 
-(defn- encode-symbol-url-cljs
-  "Encode URL for cljs.github.io"
-  [s]
-  (-> s
-      (replace "/" "SLASH")
-      (replace "?" "QMARK")
-      (replace "!" "BANG")
-      (replace ">" "GT")
-      (replace "<" "LT")
-      (replace "=" "EQ")))
+(def encode-cljs
+  {"/" "SLASH"
+   "?" "QMARK"
+   "!" "BANG"
+   ">" "GT"
+   "<" "LT"
+   "=" "EQ"})
+
+(defn encoder-gen [mapping]
+  (fn [s]
+    (reduce-kv
+      replace
+      s
+      mapping)))
+
+(def encode-symbol-url-clojuredocs
+  (encoder-gen encode-clojuredocs))
+
+(def encode-symbol-url-cljs
+  (encoder-gen encode-cljs))
 
 (defn docs-href [name name-space]
   (let [cljsns? (= name-space "cljs.core")
