@@ -1,5 +1,4 @@
-(ns cljs-cheatsheet.util
-  "Utility functions shared on both the client and server."
+(ns cljs-cheatsheet.util "Utility functions shared on both the client and server."
   (:require
     [clojure.string :refer [replace]]))
 
@@ -32,6 +31,6 @@
 
 (defn docs-href [name name-space]
   (str "http://clojuredocs.org/"
-       (uri-encode (replace name-space "cljs.core" "clojure.core"))
+       (uri-encode name-space)
        "/"
        (uri-encode (encode-symbol-url name))))

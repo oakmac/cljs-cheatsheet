@@ -16,6 +16,7 @@
 
 (def html-encode js/goog.string.htmlEscape)
 
+(def clojure-core-ns "clojure.core")
 (def cljs-core-ns "cljs.core")
 (def clj-string-ns "clojure.string")
 (def clj-set-ns "clojure.set")
@@ -47,7 +48,7 @@
 
 (hiccups/defhtml fn-link
   ([symbol-name]
-   (fn-link symbol-name cljs-core-ns))
+   (fn-link symbol-name clojure-core-ns))
   ([symbol-name name-space]
    (let [full-name (str name-space "/" symbol-name)
          ;; add this symbol to the docs list
