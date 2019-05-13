@@ -4,7 +4,7 @@
     [cljs-cheatsheet-client.state :refer [active-tooltip mouse-position mousetrap-boxes]]
     [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]
     [cljs-cheatsheet.util :refer [js-log log]]
-    [clojure.string :refer [blank? replace split]]
+    [clojure.string :as str]
     [goog.functions :refer [once]]
     [oops.core :refer [ocall oget oset!]]))
 
@@ -255,7 +255,11 @@
 (defn- mouseenter-link [js-evt]
   (let [$link-el ($ (oget js-evt "currentTarget"))
         full-name (.attr $link-el "data-full-name")
-        tooltip-data (get @docs (keyword full-name))
+        ;; NOTE: this is a hack until the doc files are fixed
+        clojure-name-kwd (keyword (str/replace full-name "cljs.core" "clojure.core"))
+        cljs-name-kwd (keyword (str/replace full-name "clojure.core" "cljs.core"))
+        tooltip-data (or (get @docs clojure-name-kwd)
+                         (get @docs cljs-name-kwd))
         tooltip-already-showing? (and @active-tooltip
                                       (= full-name (:full-name @active-tooltip)))]
     (when (and tooltip-data

@@ -143,11 +143,16 @@ module.exports = function (grunt) {
     // build only the symbols we need for the cheatsheet
     var docsWeNeed = {}
     for (var i = 0; i < symbolsWeNeed.length; i++) {
-      var fullName = symbolsWeNeed[i]
+      const cljsName = symbolsWeNeed[i].replace('clojure.core', 'cljs.core')
+      const clojureName = symbolsWeNeed[i].replace('cljs.core', 'clojure.core')
 
-      // sanity check: make sure we have all the symbols on the cheatsheet
-      if (!allDocsObj.hasOwnProperty(fullName)) {
-        grunt.fail.warn('Missing docfile for ' + fullName)
+      let fullName = null
+      if (allDocsObj[cljsName]) fullName = cljsName
+      if (allDocsObj[clojureName]) fullName = clojureName
+
+      // sanity check: make sure we have the docfile for everything in symbols.json
+      if (!fullName) {
+        grunt.fail.warn('Missing docfile for ' + symbolsWeNeed[i])
       }
 
       docsWeNeed[fullName] = allDocsObj[fullName]
