@@ -16,6 +16,5 @@ Has no effect on the map type (hashed/sorted).
 
 ===== Related
 cljs.core/assoc
-cljs.core/dissoc-in
 cljs.core/disj
 cljs.core/select-keys

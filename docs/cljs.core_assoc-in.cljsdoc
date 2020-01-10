@@ -14,7 +14,6 @@ If any levels do not exist, hash-maps will be created.
 ===== Related
 cljs.core/assoc
 cljs.core/update-in
-cljs.core/dissoc-in
 cljs.core/get-in
 
 ===== Example#e76f20
