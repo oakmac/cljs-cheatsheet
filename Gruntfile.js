@@ -168,11 +168,11 @@ module.exports = function (grunt) {
 
   function preBuildSanityCheck () {
     if (!grunt.file.exists('public/index.html')) {
-      grunt.fail.warn('Could not find public/index.html! Aborting...')
+      grunt.fail.warn('Could not find public/index.html. Please run "node app.js" to generate it. Aborting build...')
     }
 
     if (!grunt.file.exists('public/js/cheatsheet.min.js')) {
-      grunt.fail.warn('Could not find public/js/cheatsheet.min.js! Aborting...')
+      grunt.fail.warn('Could not find public/js/cheatsheet.min.js. Please run "lein cljsbuild once cheatsheet-prod" to generate it. Aborting build...')
     }
 
     // TODO: check to make sure the ctime on cheatsheet.min.js is pretty fresh
@@ -183,9 +183,9 @@ module.exports = function (grunt) {
 
   function hashAssets () {
     const cssFile = grunt.file.read('00_build/css/main.min.css')
-    const cssHash = md5(cssFile).substr(0, 8)
+    const cssHash = md5(cssFile).substr(0, 10)
     const jsFile = grunt.file.read('00_build/js/cheatsheet.min.js')
-    const jsHash = md5(jsFile).substr(0, 8)
+    const jsHash = md5(jsFile).substr(0, 10)
     const htmlFile = grunt.file.read('00_build/index.html')
 
     // write the new files
