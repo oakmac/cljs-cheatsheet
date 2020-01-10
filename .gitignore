@@ -1,20 +1,20 @@
-# ignore the build directory
+# build directory
 00_build
 
-# ignore node_modules
+# npm libs
 node_modules/
 
-# ignore CLJS-generated files
+# CLJS-generated files
 target/
 public/js/cheatsheet.js
 public/js/cheatsheet.min.js
 app.js
 
-# ignore less-generated css file
 public/css/main.min.css
+public/docs.json
+public/index.html
+
+symbols.json
 
 # ignore diff files
 *.diff
-
-public/index.html
-public/docs.json
