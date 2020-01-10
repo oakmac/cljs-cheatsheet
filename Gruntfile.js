@@ -182,30 +182,30 @@ module.exports = function (grunt) {
   }
 
   function hashAssets () {
-    const cssFile = grunt.file.read('00-publish/css/main.min.css')
+    const cssFile = grunt.file.read('00_build/css/main.min.css')
     const cssHash = md5(cssFile).substr(0, 8)
-    const jsFile = grunt.file.read('00-publish/js/cheatsheet.min.js')
+    const jsFile = grunt.file.read('00_build/js/cheatsheet.min.js')
     const jsHash = md5(jsFile).substr(0, 8)
-    const htmlFile = grunt.file.read('00-publish/index.html')
+    const htmlFile = grunt.file.read('00_build/index.html')
 
     // write the new files
-    grunt.file.write('00-publish/css/main.min.' + cssHash + '.css', cssFile)
-    grunt.file.write('00-publish/js/cheatsheet.min.' + jsHash + '.js', jsFile)
+    grunt.file.write('00_build/css/main.min.' + cssHash + '.css', cssFile)
+    grunt.file.write('00_build/js/cheatsheet.min.' + jsHash + '.js', jsFile)
 
     // delete the old files
-    grunt.file.delete('00-publish/css/main.min.css')
-    grunt.file.delete('00-publish/js/cheatsheet.min.js')
+    grunt.file.delete('00_build/css/main.min.css')
+    grunt.file.delete('00_build/js/cheatsheet.min.js')
 
     // update the HTML file
-    grunt.file.write('00-publish/index.html',
+    grunt.file.write('00_build/index.html',
       htmlFile.replace('main.min.css', 'main.min.' + cssHash + '.css')
               .replace('cheatsheet.min.js', 'cheatsheet.min.' + jsHash + '.js'))
 
     // show some output
-    grunt.log.writeln('00-publish/css/main.min.css → ' +
-                      '00-publish/css/main.min.' + cssHash + '.css')
-    grunt.log.writeln('00-publish/js/cheatsheet.min.js → ' +
-                      '00-publish/js/cheatsheet.min.' + jsHash + '.js')
+    grunt.log.writeln('00_build/css/main.min.css → ' +
+                      '00_build/css/main.min.' + cssHash + '.css')
+    grunt.log.writeln('00_build/js/cheatsheet.min.js → ' +
+                      '00_build/js/cheatsheet.min.' + jsHash + '.js')
   }
 
   // ---------------------------------------------------------------------------
@@ -219,17 +219,17 @@ module.exports = function (grunt) {
         force: true
       },
 
-      // remove all the files in the 00-publish folder
-      pre: ['00-publish'],
+      // remove all the files in the 00_build folder
+      pre: ['00_build'],
 
       // remove the uncompressed CLJS client file
-      post: ['00-publish/js/cheatsheet.js']
+      post: ['00_build/js/cheatsheet.js']
     },
 
     copy: {
       cheatsheet: {
         files: [
-        {expand: true, cwd: 'public/', src: ['**'], dest: '00-publish/'}
+        {expand: true, cwd: 'public/', src: ['**'], dest: '00_build/'}
         ]
       }
     },

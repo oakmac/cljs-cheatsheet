@@ -1,5 +1,5 @@
-# ignore the publish directory
-00-publish/
+# ignore the build directory
+00_build
 
 # ignore node_modules
 node_modules/
