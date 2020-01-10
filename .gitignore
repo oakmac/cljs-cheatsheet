@@ -15,3 +15,6 @@ public/css/main.min.css
 
 # ignore diff files
 *.diff
+
+public/index.html
+public/docs.json
