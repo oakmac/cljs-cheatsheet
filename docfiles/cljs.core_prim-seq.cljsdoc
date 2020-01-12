@@ -1,0 +1,13 @@
+===== Name
+cljs.core/prim-seq
+
+===== Signature
+[array]
+[array i]
+
+===== Description
+
+Creates a `seq` from a JavaScript array or array-like object.
+
+===== Related
+cljs.core/array-seq

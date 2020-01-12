@@ -605,6 +605,11 @@
             (fn-link "subseq")
             (fn-link "rsubseq")]]
         [:tr
+          [:td.label-9e0b7 "From JS Array"]
+          [:td.body-885f4
+            (fn-link "array-seq" cljs-core-ns)
+            (fn-link "prim-seq" cljs-core-ns)]]
+        [:tr
           [:td.label-9e0b7 "Producer Functions"]
           [:td.body-885f4
             (fn-link "lazy-seq")
@@ -1156,23 +1161,21 @@
     "</body>"
     "</html>"))
 
-
 ;;------------------------------------------------------------------------------
 ;; Init
-;;------------------------------------------------------------------------------
 
 (defn- write-cheatsheet-html! []
+  (js-log "[cljs-cheatsheet] Writing public/index.html ...")
   (.writeFileSync fs "public/index.html" (cheatsheet-page)))
 
-
 (defn- write-symbols-json! []
+  (js-log "[cljs-cheatsheet] Writing symbols.json ...")
   (.writeFileSync fs "symbols.json" (-> @symbols sort clj->js json-stringify)))
 
-
-(write-cheatsheet-html!)
-(write-symbols-json!)
-
+(defn -main []
+  (write-cheatsheet-html!)
+  (write-symbols-json!)
+  (js-log "[cljs-cheatsheet] Done 👍"))
 
 ;; needed for :nodejs cljs build
-(def always-nil (constantly nil))
-(set! *main-cli-fn* always-nil)
+(set! *main-cli-fn* -main)
