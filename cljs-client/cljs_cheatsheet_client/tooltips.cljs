@@ -229,7 +229,7 @@
 
 (def docs (atom {}))
 
-(fetch-clj "docs.json" #(reset! docs %))
+(fetch-clj "docs.HASHME.json" #(reset! docs %))
 
 ;;------------------------------------------------------------------------------
 ;; Events

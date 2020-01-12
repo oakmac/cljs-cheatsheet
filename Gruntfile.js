@@ -22,7 +22,7 @@ module.exports = function (grunt) {
   function arrToObj (arr) {
     var o = {}
     for (var i = 0; i < arr.length; i++) {
-      o[ arr[i] ] = null
+      o[arr[i]] = null
     }
     return o
   }
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
     const cssClasses = extractSnowflakeClasses('public/css/main.min.css')
     const jsServer = extractSnowflakeClasses('app.js')
     const jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js')
-    const docs = extractSnowflakeClasses('public/docs.json')
+    const docs = extractSnowflakeClasses('public/docs.HASHME.json')
     const jsClasses = jsServer.concat(jsClient, docs)
 
     console.log(cssClasses.length + ' class names found in css/main.min.css')
@@ -97,12 +97,12 @@ module.exports = function (grunt) {
   }
 
   // ---------------------------------------------------------------------------
-  // Build docs.json from kidif files
+  // Build docs.HASHME.json from kidif files
   // ---------------------------------------------------------------------------
 
   function splitSection (str) {
     const lines = str.split('\n')
-    let lines2 = []
+    const lines2 = []
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i].trim()
       if (line !== '') {
@@ -118,17 +118,17 @@ module.exports = function (grunt) {
     for (var i = 0; i < docsArr.length; i++) {
       var symbol = docsArr[i]
 
-      docs[ symbol.name ] = {}
-      docs[ symbol.name ]['full-name'] = symbol.name
-      docs[ symbol.name ]['signature'] = splitSection(symbol.signature)
-      docs[ symbol.name ]['description-html'] = marked(symbol.description)
+      docs[symbol.name] = {}
+      docs[symbol.name]['full-name'] = symbol.name
+      docs[symbol.name]['signature'] = splitSection(symbol.signature)
+      docs[symbol.name]['description-html'] = marked(symbol.description)
 
       if (symbol.related) {
-        docs[ symbol.name ]['related'] = splitSection(symbol.related)
+        docs[symbol.name]['related'] = splitSection(symbol.related)
       }
 
       if (symbol.type) {
-        docs[ symbol.name ]['type'] = symbol.type
+        docs[symbol.name]['type'] = symbol.type
       }
     }
 
@@ -158,8 +158,8 @@ module.exports = function (grunt) {
       docsWeNeed[fullName] = allDocsObj[fullName]
     }
 
-    grunt.file.write('public/docs.json', JSON.stringify(docsWeNeed))
-    grunt.log.writeln(symbolsWeNeed.length + ' doc symbols written to public/docs.json')
+    grunt.file.write('public/docs.HASHME.json', JSON.stringify(docsWeNeed))
+    grunt.log.writeln(symbolsWeNeed.length + ' doc symbols written to public/docs.HASHME.json')
   }
 
   // ---------------------------------------------------------------------------
@@ -181,29 +181,47 @@ module.exports = function (grunt) {
     grunt.log.writeln('Everything looks ok for a build.')
   }
 
+  // FIXME: re-write this to be more generic please :)
   function hashAssets () {
-    const cssFile = grunt.file.read('00_build/css/main.min.css')
-    const cssHash = md5(cssFile).substr(0, 10)
-    const jsFile = grunt.file.read('00_build/js/cheatsheet.min.js')
-    const jsHash = md5(jsFile).substr(0, 10)
+    const unhashedDocsFilename = '00_build/docs.HASHME.json'
+    const docsFileContents = grunt.file.read(unhashedDocsFilename)
+    const docsHash = md5(docsFileContents).substr(0, 10)
+
+    // update cheatsheet.min.js with docs hash
+    const buildJsFilename = '00_build/js/cheatsheet.min.js'
+    const jsFileContents1 = grunt.file.read(buildJsFilename)
+    const jsFileContents2 = jsFileContents1.replace('docs.HASHME.json', 'docs.' + docsHash + '.json')
+    grunt.file.write(buildJsFilename, jsFileContents2)
+
+    // hash css file
+    const cssFileContents = grunt.file.read('00_build/css/main.min.css')
+    const cssHash = md5(cssFileContents).substr(0, 10)
+
+    // hash JS file
+    const jsHash = md5(jsFileContents2).substr(0, 10)
+
     const htmlFile = grunt.file.read('00_build/index.html')
 
     // write the new files
-    grunt.file.write('00_build/css/main.min.' + cssHash + '.css', cssFile)
-    grunt.file.write('00_build/js/cheatsheet.min.' + jsHash + '.js', jsFile)
+    grunt.file.write('00_build/css/main.min.' + cssHash + '.css', cssFileContents)
+    grunt.file.write('00_build/docs.' + docsHash + '.json', docsFileContents)
+    grunt.file.write('00_build/js/cheatsheet.min.' + jsHash + '.js', jsFileContents2)
 
     // delete the old files
     grunt.file.delete('00_build/css/main.min.css')
+    grunt.file.delete('00_build/docs.HASHME.json')
     grunt.file.delete('00_build/js/cheatsheet.min.js')
 
     // update the HTML file
     grunt.file.write('00_build/index.html',
       htmlFile.replace('main.min.css', 'main.min.' + cssHash + '.css')
-              .replace('cheatsheet.min.js', 'cheatsheet.min.' + jsHash + '.js'))
+        .replace('cheatsheet.min.js', 'cheatsheet.min.' + jsHash + '.js'))
 
     // show some output
     grunt.log.writeln('00_build/css/main.min.css → ' +
                       '00_build/css/main.min.' + cssHash + '.css')
+    grunt.log.writeln('00_build/docs.HASHME.json → ' +
+                      '00_build/docs.' + docsHash + '.json')
     grunt.log.writeln('00_build/js/cheatsheet.min.js → ' +
                       '00_build/js/cheatsheet.min.' + jsHash + '.js')
   }
@@ -229,7 +247,7 @@ module.exports = function (grunt) {
     copy: {
       cheatsheet: {
         files: [
-        {expand: true, cwd: 'public/', src: ['**'], dest: '00_build/'}
+          { expand: true, cwd: 'public/', src: ['**'], dest: '00_build/' }
         ]
       }
     },

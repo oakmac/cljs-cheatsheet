@@ -39,7 +39,7 @@ lein clean && lein cljsbuild auto
 # NOTE: app.js is generated from "lein cljsbuild auto" above
 node app.js
 
-# create a build into the 00-build directory
+# create a build into the 00_build directory
 npx grunt build
 ```
 
