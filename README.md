@@ -25,7 +25,7 @@ You may wish to run these commands in separate console tabs / screens.
 ```sh
 # does two things:
 # - compiles LESS into CSS whenever a less/*.less file changes
-# - builds public/docs.json whenever a docs/*.cljsdoc file changes
+# - builds public/docs.json whenever a docfiles/*.cljsdoc file changes
 npx grunt watch
 
 # run a local web server on port 9224

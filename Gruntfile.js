@@ -136,7 +136,7 @@ module.exports = function (grunt) {
   }
 
   function buildDocs () {
-    const allDocsArr = kidif('docs/*.cljsdoc')
+    const allDocsArr = kidif('docfiles/*.cljsdoc')
     const allDocsObj = docsToObj(allDocsArr)
     const symbolsWeNeed = require('./symbols.json')
 
@@ -257,7 +257,7 @@ module.exports = function (grunt) {
       },
 
       docs: {
-        files: 'docs/*.cljsdoc',
+        files: 'docfiles/*.cljsdoc',
         tasks: 'docs'
       }
     }
