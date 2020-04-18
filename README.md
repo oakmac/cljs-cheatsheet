@@ -40,7 +40,7 @@ lein clean && lein cljsbuild auto
 node app.js
 
 # create a build into the 00_build directory
-npx grunt build
+yarn run build-release
 ```
 
 ## License
