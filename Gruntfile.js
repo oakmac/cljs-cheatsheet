@@ -2,103 +2,13 @@ const md5 = require('md5')
 const kidif = require('kidif')
 const marked = require('marked')
 
+const hashLength = 15
+
 module.exports = function (grunt) {
   'use strict'
 
   // ---------------------------------------------------------------------------
-  // Snowflake CSS
-  // TODO: this should become it's own module and published on npm
-  // ---------------------------------------------------------------------------
-
-  function keys (o) {
-    var a = []
-    for (var i in o) {
-      if (o.hasOwnProperty(i) !== true) continue
-      a.push(i)
-    }
-    return a
-  }
-
-  function arrToObj (arr) {
-    var o = {}
-    for (var i = 0; i < arr.length; i++) {
-      o[arr[i]] = null
-    }
-    return o
-  }
-
-  function difference (arr1, arr2) {
-    var o1 = arrToObj(arr1)
-    var o2 = arrToObj(arr2)
-    var delta = []
-
-    for (var i in o1) {
-      if (o1.hasOwnProperty(i) !== true) continue
-
-      if (o2.hasOwnProperty(i) !== true) {
-        delta.push(i)
-      }
-    }
-
-    for (i in o2) {
-      if (o2.hasOwnProperty(i) !== true) continue
-
-      if (o1.hasOwnProperty(i) !== true) {
-        delta.push(i)
-      }
-    }
-
-    return delta.sort()
-  }
-
-  // Snowflake class names must contain at least one letter and one number
-  function hasNumbersAndLetters (str) {
-    return str.search(/\d/) !== -1 &&
-           str.search(/[a-z]/) !== -1
-  }
-
-  // returns an array of unique Snowflake classes from a file
-  function extractSnowflakeClasses (filename, pattern) {
-    if (!pattern) {
-      pattern = /([a-z0-9]+-){1,}([abcdef0-9]){5}/g
-    }
-
-    const fileContents = grunt.file.read(filename)
-    const matches = fileContents.match(pattern)
-    var classes = {}
-
-    if (matches) {
-      for (var i = 0; i < matches.length; i++) {
-        var className = matches[i]
-        var arr = className.split('-')
-        var hash = arr[arr.length - 1]
-
-        if (hasNumbersAndLetters(hash) === true) {
-          classes[className] = null
-        }
-      }
-    }
-
-    return keys(classes)
-  }
-
-  function snowflakeCount () {
-    const cssClasses = extractSnowflakeClasses('public/css/main.min.css')
-    const jsServer = extractSnowflakeClasses('app.js')
-    const jsClient = extractSnowflakeClasses('public/js/cheatsheet.min.js')
-    const docs = extractSnowflakeClasses('public/docs.HASHME.json')
-    const jsClasses = jsServer.concat(jsClient, docs)
-
-    console.log(cssClasses.length + ' class names found in css/main.min.css')
-    console.log(jsClasses.length + ' class names found in JS files')
-
-    console.log('Classes found in one file but not the other:')
-    console.log(difference(jsClasses, cssClasses))
-  }
-
-  // ---------------------------------------------------------------------------
   // Build docs.HASHME.json from kidif files
-  // ---------------------------------------------------------------------------
 
   function splitSection (str) {
     const lines = str.split('\n')
@@ -185,7 +95,7 @@ module.exports = function (grunt) {
   function hashAssets () {
     const unhashedDocsFilename = '00_build/docs.HASHME.json'
     const docsFileContents = grunt.file.read(unhashedDocsFilename)
-    const docsHash = md5(docsFileContents).substr(0, 10)
+    const docsHash = md5(docsFileContents).substr(0, hashLength)
 
     // update cheatsheet.min.js with docs hash
     const buildJsFilename = '00_build/js/cheatsheet.min.js'
@@ -195,10 +105,10 @@ module.exports = function (grunt) {
 
     // hash css file
     const cssFileContents = grunt.file.read('00_build/css/main.min.css')
-    const cssHash = md5(cssFileContents).substr(0, 10)
+    const cssHash = md5(cssFileContents).substr(0, hashLength)
 
     // hash JS file
-    const jsHash = md5(jsFileContents2).substr(0, 10)
+    const jsHash = md5(jsFileContents2).substr(0, hashLength)
 
     const htmlFile = grunt.file.read('00_build/index.html')
 
@@ -296,14 +206,11 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'pre-build-sanity-check',
     'clean:pre',
-    'less',
-    'docs',
     'copy:cheatsheet',
     'clean:post',
     'hash-assets'
   ])
 
-  grunt.registerTask('snowflake', snowflakeCount)
   grunt.registerTask('default', 'watch')
 
 // end module.exports

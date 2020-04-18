@@ -1,5 +1,5 @@
 {
-  "author": "Chris Oakman <chris@oakmac.com> (http://chrisoakman.com/)",
+  "author": "Chris Oakman <chris@oakmac.com> (https://chrisoakman.com)",
   "name": "cljs-cheatsheet",
   "description": "a ClojureScript Cheatsheet",
   "homepage": "https://github.com/oakmac/cljs-cheatsheet",
@@ -8,15 +8,19 @@
     "type": "git",
     "url": "https://github.com/oakmac/cljs-cheatsheet.git"
   },
+  "scripts": {
+    "build-release": "lein cljsbuild once server && node app.js && grunt docs && grunt less && lein cljsbuild once cheatsheet-prod && snowflake-css prune && grunt build"
+  },
   "devDependencies": {
     "express": "4.16.2",
-    "grunt": "1.0.1",
     "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-less": "1.4.1",
     "grunt-contrib-watch": "1.0.0",
+    "grunt": "1.0.1",
     "kidif": "1.1.0",
     "marked": "0.3.18",
-    "md5": "2.2.1"
+    "md5": "2.2.1",
+    "snowflake-css": "0.1.0"
   }
 }

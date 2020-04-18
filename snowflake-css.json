@@ -1,0 +1,5 @@
+{
+  "inputCSSFile": "public/css/main.min.css",
+  "outputCSSFile": "public/css/main.min.css",
+  "templateFiles": ["public/**/*.js", "public/**/*.json", "public/**/*.html"]
+}
