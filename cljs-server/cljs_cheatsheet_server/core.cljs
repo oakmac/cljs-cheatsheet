@@ -1027,7 +1027,7 @@
     [:h1
       [:img {:src "img/cljs-ring.svg" :alt "ClojureScript Logo"}]
       "ClojureScript Cheatsheet"]
-    [:input#searchInput {:type "text" :placeholder "Search"}]])
+    [:input#searchInput {:type "search" :placeholder "Search"}]])
 
 
 (def clojure-cheatsheet-href "http://clojure.org/cheatsheet")
