@@ -12,7 +12,7 @@
     "build-release": "lein cljsbuild once server && node app.js && grunt docs && grunt less && lein cljsbuild once cheatsheet-prod && snowflake-css prune && grunt build"
   },
   "devDependencies": {
-    "express": "4.16.2",
+    "express": "4.17.3",
     "grunt-contrib-clean": "1.1.0",
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-less": "1.4.1",
