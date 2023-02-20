@@ -1,0 +1,13 @@
+===== Name
+clojure.string/ends-with?
+
+===== Signature
+[s substr]
+
+===== Description
+
+True if `s` ends with `substr`.
+
+===== Related
+clojure.string/starts-with?
+clojure.string/includes?

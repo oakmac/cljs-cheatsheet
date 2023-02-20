@@ -11,3 +11,5 @@ True if `s` includes `substr`.
 ===== Related
 cljs.core/re-find
 cljs.core/contains?
+clojure.string/starts-with?
+clojure.string/ends-with?
