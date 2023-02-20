@@ -345,6 +345,11 @@
             (FnLink "make-array" cljs-core-ns)
             (FnLink "aclone" cljs-core-ns)]]
         [:tr
+          [:td.label-9e0b7 "Invoke constructor"]
+          [:td.body-885f4
+            [:div.row-5dec8 "(new js/Date 1984)"]
+            [:div.row-5dec8 "(js/Date. 1984)"]]]
+        [:tr
           [:td.label-9e0b7 "Get Property"]
           [:td.body-885f4
             [:div.row-5dec8 "(.-innerHTML el)"]
