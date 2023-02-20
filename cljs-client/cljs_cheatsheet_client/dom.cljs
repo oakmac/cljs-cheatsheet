@@ -36,10 +36,10 @@
 (defn get-element-box [el]
   (let [$el ($ el)
         o (.offset $el)
-        x (oget o "left")
-        y (oget o "top")
-        height (ocall $el "outerHeight")
-        width (ocall $el "outerWidth")]
+        x (js/parseFloat (oget o "left"))
+        y (js/parseFloat (oget o "top"))
+        height (js/parseFloat (ocall $el "outerHeight"))
+        width (js/parseFloat (ocall $el "outerWidth"))]
     {:x1 x
      :x2 (+ x width)
      :y1 y

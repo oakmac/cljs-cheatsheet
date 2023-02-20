@@ -8,14 +8,14 @@
             :distribution :repo}
 
   :dependencies
-    [[org.clojure/clojure "1.9.0"]
-     [org.clojure/clojurescript "1.10.439"]
-     [binaryage/oops "0.6.3"]
+    [[org.clojure/clojure "1.11.1"]
+     [org.clojure/clojurescript "1.11.60"]
+     [binaryage/oops "0.7.2"]
      [cljsjs/jquery "2.1.4-0"]
-     [com.cognitect/transit-cljs "0.8.256"]
-     [hiccups "0.3.0"]]
+     [com.cognitect/transit-cljs "0.8.280"]
+     [macchiato/hiccups "0.4.1"]]
 
-  :plugins [[lein-cljsbuild "1.1.7"]]
+  :plugins [[lein-cljsbuild "1.1.8"]]
 
   :source-paths ["src"]
 
@@ -42,8 +42,6 @@
 
        {:id "server"
         :source-paths ["cljs-server" "cljs-shared"]
-        :compiler {:language-in :ecmascript5
-                   :language-out :ecmascript5
-                   :output-to "app.js"
+        :compiler {:output-to "app.js"
                    :optimizations :simple
                    :target :nodejs}}]})

@@ -2,8 +2,8 @@
   (:require-macros
     [hiccups.core :as hiccups])
   (:require
-    [clojure.string :refer [blank? join replace]]
     [cljs-cheatsheet.util :refer [docs-href js-log log]]
+    [clojure.string :refer [blank? join replace]]
     [hiccups.runtime :as hiccupsrt]))
 
 ;; This file produces:
@@ -35,18 +35,18 @@
   (js/JSON.stringify js-thing nil 2))
 
 
-(hiccups/defhtml tt-icon [id]
+(defn tt-icon [id]
   [:img.tooltip-icon-0e91b
     {:alt ""
      :data-info-id id
      :src "img/info-circle.svg"}])
 
 
-(hiccups/defhtml literal [n]
+(defn literal [n]
   [:span.literal-c3029 n])
 
 
-(hiccups/defhtml fn-link
+(defn fn-link
   ([symbol-name]
    (fn-link symbol-name clojure-core-ns))
   ([symbol-name name-space]
@@ -56,10 +56,11 @@
      [:a.fn-a8476
        {:data-full-name full-name
         :href (docs-href symbol-name name-space)}
-       (html-encode symbol-name)])))
+       ; (html-encode symbol-name)
+       symbol-name])))
 
 
-(hiccups/defhtml inside-fn-link
+(defn inside-fn-link
   ([symbol-name]
    (inside-fn-link symbol-name clojure-core-ns))
   ([symbol-name name-space]
@@ -69,13 +70,14 @@
      [:a.inside-fn-c7607
        {:data-full-name (str name-space "/" symbol-name)
         :href (docs-href symbol-name name-space)}
-       (html-encode symbol-name)])))
+       ; (html-encode symbol-name)
+       symbol-name])))
 
 ;;------------------------------------------------------------------------------
 ;; Sections
 ;;------------------------------------------------------------------------------
 
-(hiccups/defhtml basics-section []
+(defn BasicsSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Basics"]
     [:table.tbl-902f0
@@ -135,7 +137,7 @@
             (fn-link "some?")]]]]])
 
 
-(hiccups/defhtml functions-section []
+(defn FunctionSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "#( ) Functions" (tt-icon "functions")]
     [:table.tbl-902f0
@@ -143,7 +145,7 @@
         [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
-            [:div.row-5dec8 "#(...) &rarr; (fn [args] (...))"
+            [:div.row-5dec8 "#(...) → (fn [args] (...))"
               (tt-icon "function-shorthand")]
             (fn-link "fn")
             (fn-link "defn")
@@ -176,7 +178,7 @@
             (fn-link "ifn?")]]]]])
 
 
-(hiccups/defhtml numbers-section []
+(defn NumbersSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Numbers" (tt-icon "numbers")]
     [:table.tbl-902f0
@@ -234,7 +236,7 @@
             (fn-link "rand-int")]]]]])
 
 
-(hiccups/defhtml strings-section []
+(defn StringsSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "\" \" Strings" (tt-icon "strings")]
     [:table.tbl-902f0
@@ -296,7 +298,7 @@
             (fn-link "blank?" clj-string-ns)]]]]])
 
 
-(hiccups/defhtml atoms-section []
+(defn AtomsSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Atoms / State" (tt-icon "atoms")]
     [:table.tbl-902f0
@@ -308,7 +310,7 @@
         [:tr
           [:td.label-9e0b7 "Get Value"]
           [:td.body-885f4
-            [:span.literal-c3029 "@my-atom &rarr; (" (inside-fn-link "deref") " my-atom)"]]]
+            [:span.literal-c3029 "@my-atom → (" (inside-fn-link "deref") " my-atom)"]]]
         [:tr
           [:td.label-9e0b7 "Set Value"]
           [:td.body-885f4
@@ -331,7 +333,7 @@
 (def cljs-docs-url "https://github.com/binaryage/cljs-oops#object-operations")
 
 
-(hiccups/defhtml js-interop-section []
+(defn JsInteropSection []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "JavaScript Interop"]
     [:table.tbl-902f0
@@ -396,7 +398,7 @@
             [:div.row-5dec8 "(.html (js/jQuery \"#myDiv\") \"Hi!\")"]]]]]])
 
 
-(hiccups/defhtml collections-section []
+(defn CollectionsBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Collections" (tt-icon "collections")]
     [:table.tbl-902f0
@@ -437,7 +439,7 @@
             (fn-link "seq?")]]]]])
 
 
-(hiccups/defhtml lists-section []
+(defn ListsBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "( ) Lists" (tt-icon "lists")]
     [:table.tbl-902f0
@@ -463,7 +465,7 @@
             (fn-link "pop")]]]]])
 
 
-(hiccups/defhtml vectors-section []
+(defn VectorsBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "[ ] Vectors" (tt-icon "vectors")]
     [:table.tbl-902f0
@@ -478,7 +480,7 @@
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
-              "(my-vec idx) &rarr; (" (inside-fn-link "nth") " my-vec idx)"
+              "(my-vec idx) → (" (inside-fn-link "nth") " my-vec idx)"
               (tt-icon "vector-as-fn")]
             (fn-link "get")
             (fn-link "peek")]]
@@ -499,7 +501,7 @@
             (fn-link "reduce-kv")]]]]])
 
 
-(hiccups/defhtml sets-section []
+(defn SetsBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "#{ } Sets" (tt-icon "sets")]
     [:table.tbl-902f0
@@ -516,7 +518,7 @@
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
-              "(my-set itm) &rarr; (" (inside-fn-link "get") " my-set itm)"
+              "(my-set itm) → (" (inside-fn-link "get") " my-set itm)"
               (tt-icon "set-as-fn")]
             (fn-link "contains?")]]
         [:tr
@@ -540,7 +542,7 @@
             (fn-link "superset?" clj-set-ns)]]]]])
 
 
-(hiccups/defhtml maps-section []
+(defn MapsBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "{ } Maps" (tt-icon "maps")]
     [:table.tbl-902f0
@@ -560,7 +562,7 @@
           [:td.label-9e0b7 "Examine"]
           [:td.body-885f4
             [:div.row-5dec8
-              "(:key my-map) &rarr; (" (inside-fn-link "get") " my-map :key)"
+              "(:key my-map) → (" (inside-fn-link "get") " my-map :key)"
               (tt-icon "keywords-as-fn")]
             (fn-link "get-in")
             (fn-link "contains?")
@@ -590,7 +592,7 @@
             (fn-link "rsubseq")]]]]])
 
 
-(hiccups/defhtml create-seq-section []
+(defn CreateSeqBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Create a Seq"]
     [:table.tbl-902f0
@@ -632,7 +634,7 @@
             (fn-link "keep-indexed")]]]]])
 
 
-(hiccups/defhtml seq-in-out-section []
+(defn SeqInOutBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Seq in, Seq out" (tt-icon "sequences")]
     [:table.tbl-902f0
@@ -710,7 +712,7 @@
             (fn-link "replace")]]]]])
 
 
-(hiccups/defhtml use-seq-section []
+(defn UsingSequenceBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Using a Seq"]
     [:table.tbl-902f0
@@ -764,7 +766,7 @@
           [:td.body-885f4
             (fn-link "realized?")]]]]])
 
-(hiccups/defhtml bitwise-section []
+(defn BitwiseBlock []
   [:div.section-31efe
     [:h3.section-title-8ccf5 "Bitwise"]
     [:div.solo-section-d5309
@@ -789,9 +791,7 @@
 ;; Info Tooltips
 ;;------------------------------------------------------------------------------
 
-;; TODO: break these up into functions
-
-(hiccups/defhtml truthy-table []
+(defn TruthyTable []
   [:table.tbl-3160a
     [:thead
       [:tr
@@ -829,7 +829,7 @@
         [:td.cell-e6fd2 [:code "false"]]]]])
 
 
-(hiccups/defhtml function-shorthand-table []
+(defn FunctionShorthandTable []
   [:table.exmpl-tbl-42d9f
     [:thead
       [:tr
@@ -853,144 +853,145 @@
             "  (* x (apply + the-rest)))"]]]]])
 
 
-(hiccups/defhtml basics-tooltips []
+(defn BasicsTooltips []
+  (list
+    [:div#tooltip-define.tooltip-53dde {:style "display:none"}
+      [:p "Everything in ClojureScript is immutable by default, meaning that the "
+          "value of a symbol cannot be changed after it is defined."]]
 
-  [:div#tooltip-define.tooltip-53dde {:style "display:none"}
-    [:p "Everything in ClojureScript is immutable by default, meaning that the "
-        "value of a symbol cannot be changed after it is defined."]]
+    [:div#tooltip-branch.tooltip-53dde {:style "display:none"}
+      [:p "In conditional statements, everything evaluates to " [:code "true"]
+          " except for " [:code "false"] " and " [:code "nil"] "."]
+      [:p "This is much simpler than JavaScript, which has complex rules for "
+          "truthiness."]
+      (TruthyTable)]
 
-  [:div#tooltip-branch.tooltip-53dde {:style "display:none"}
-    [:p "In conditional statements, everything evaluates to " [:code "true"]
-        " except for " [:code "false"] " and " [:code "nil"] "."]
-    [:p "This is much simpler than JavaScript, which has complex rules for "
-        "truthiness."]
-    (truthy-table)]
+    [:div#tooltip-numbers.tooltip-53dde {:style "display:none"}
+      [:p "All ClojureScript Numbers are IEEE 754 Double Precision floating point. "
+          "The same as JavaScript."]]
 
-  [:div#tooltip-numbers.tooltip-53dde {:style "display:none"}
-    [:p "All ClojureScript Numbers are IEEE 754 Double Precision floating point. "
-        "The same as JavaScript."]]
+    [:div#tooltip-atoms.tooltip-53dde {:style "display:none"}
+      [:p
+        "Atoms provide a way to manage state in a ClojureScript program."]
+      [:p
+        "Unlike JavaScript, everything in ClojureScript is immutable by default. "
+        "This means that you cannot change the value of something after it has "
+        "been defined."]
+      [:p
+        "Atoms allow for mutability and distinguish between setting and reading "
+        "a value, which makes state easier to reason about."]
+      [:p
+        "Watcher functions execute when a value changes, providing a powerful UI "
+        "pattern when your value maps to interface state."]]
 
-  [:div#tooltip-atoms.tooltip-53dde {:style "display:none"}
-    [:p
-      "Atoms provide a way to manage state in a ClojureScript program."]
-    [:p
-      "Unlike JavaScript, everything in ClojureScript is immutable by default. "
-      "This means that you cannot change the value of something after it has "
-      "been defined."]
-    [:p
-      "Atoms allow for mutability and distinguish between setting and reading "
-      "a value, which makes state easier to reason about."]
-    [:p
-      "Watcher functions execute when a value changes, providing a powerful UI "
-      "pattern when your value maps to interface state."]]
+    [:div#tooltip-functions.tooltip-53dde {:style "display:none"}
+      [:p
+        "ClojureScript Functions are JavaScript Functions and can be called and "
+        "used in all the ways that JavaScript Functions can."]
+      [:p
+        "The core library provides many useful higher-order functions and there "
+        "is a convenient shorthand for creating anonymous functions."]]
 
-  [:div#tooltip-functions.tooltip-53dde {:style "display:none"}
-    [:p
-      "ClojureScript Functions are JavaScript Functions and can be called and "
-      "used in all the ways that JavaScript Functions can."]
-    [:p
-      "The core library provides many useful higher-order functions and there "
-      "is a convenient shorthand for creating anonymous functions."]]
+    [:div#tooltip-function-shorthand.tooltip-53dde {:style "display:none"}
+      [:p
+        "The " [:code "#()"] " function shorthand is a convenient way to write a "
+        "small function definition and is often used to pass closures from one "
+        "scope to another."]
+      [:p
+        [:code "#()"] " forms cannot be nested and it is idiomatic to keep them "
+        "short."]
+      (FunctionShorthandTable)]
 
-  [:div#tooltip-function-shorthand.tooltip-53dde {:style "display:none"}
-    [:p
-      "The " [:code "#()"] " function shorthand is a convenient way to write a "
-      "small function definition and is often used to pass closures from one "
-      "scope to another."]
-    [:p
-      [:code "#()"] " forms cannot be nested and it is idiomatic to keep them "
-      "short."]
-    (function-shorthand-table)]
-
-  [:div#tooltip-strings.tooltip-53dde {:style "display:none"}
-    [:p "ClojureScript Strings are JavaScript Strings and have all of the native "
-        "methods and properties that a JavaScript String has."]
-    [:p "ClojureScript Strings must be defined using double quotes."]
-    [:p "The " [:code "clojure.string"] " namespace provides many useful "
-        "functions for dealing with strings."]])
-
-
-(hiccups/defhtml collections-tooltips []
-  [:div#tooltip-collections.tooltip-53dde {:style "display:none"}
-    [:p
-      "ClojureScript provides four collection types: lists, vectors, sets, and "
-      "maps. "
-      "Each of these data types has unique strengths and are used heavily in "
-      "most programs."]
-    [:p
-      "All collections are immutable and persistent, which means they preserve "
-      "the previous version(s) of themselves when they are modified. "
-      "Creating a \"changed\" version of any collection is an efficient "
-      "operation."]
-    [:p
-      "Collections can be represented literally:"]
-    [:table.tbl-3160a
-      [:thead
-        [:tr
-          [:th.tbl-hdr-e0564 "Collection"]
-          [:th.tbl-hdr-e0564 "Literal Form"]]]
-      [:tbody
-        [:tr
-          [:td.cell-e6fd2.right-border-c1b54 "List"]
-          [:td.cell-e6fd2 [:code "()"]]]
-        [:tr
-          [:td.cell-e6fd2.right-border-c1b54 "Vector"]
-          [:td.cell-e6fd2 [:code "[]"]]]
-        [:tr
-          [:td.cell-e6fd2.right-border-c1b54 "Set"]
-          [:td.cell-e6fd2 [:code "#{}"]]]
-        [:tr
-          [:td.cell-e6fd2.right-border-c1b54 "Map"]
-          [:td.cell-e6fd2 [:code "{}"]]]]]]
-
-  [:div#tooltip-lists.tooltip-53dde {:style "display:none"}
-    [:p
-      "Lists are a sequence of values, similar to a vector."]
-    [:p
-      "Most literal lists represent a function call."]
-    [:p
-      [:code "(a b c)"] " is a list of three things, and it also means "
-      "\"call the function " [:code "a"] " with two arguments: " [:code "b"]
-      " and " [:code "c"] "\""]]
-
-  [:div#tooltip-vectors.tooltip-53dde {:style "display:none"}
-    [:p
-      "Vectors are collections of values that are indexed by sequential "
-      "integers."]
-    [:p
-      "Though similar, a JavaScript Array is not the same thing as a "
-      "ClojureScript vector. "
-      "ie: " [:code "(.indexOf my-vec)"] " will not work on a vector."]]
-
-  [:div#tooltip-vector-as-fn.tooltip-53dde {:style "display:none"}
-    [:p
-      "A vector can be used as a function to access its elements."]]
-
-  [:div#tooltip-sets.tooltip-53dde {:style "display:none"}
-    [:p "Sets are collections of unique values, just like in "
-      "mathematics."]]
-
-  [:div#tooltip-set-as-fn.tooltip-53dde {:style "display:none"}
-    [:p
-      "A set can be used as a function to access its elements."]]
-
-  [:div#tooltip-maps.tooltip-53dde {:style "display:none"}
-    [:p
-      "A map is a collection that maps keys to values. "
-      "Accessing a value in a map using a key is very fast."]
-    [:p
-      "In JavaScript, Objects are commonly used as a de facto map using "
-      "strings as keys. "
-      "A key in a ClojureScript map can be any value, although keywords are "
-      "commonly used."]]
-
-  [:div#tooltip-keywords-as-fn.tooltip-53dde {:style "display:none"}
-    [:p
-      "Keywords can be used as a function to get a value from a map. "
-      "They are commonly used as map keys for this reason."]])
+    [:div#tooltip-strings.tooltip-53dde {:style "display:none"}
+      [:p "ClojureScript Strings are JavaScript Strings and have all of the native "
+          "methods and properties that a JavaScript String has."]
+      [:p "ClojureScript Strings must be defined using double quotes."]
+      [:p "The " [:code "clojure.string"] " namespace provides many useful "
+          "functions for dealing with strings."]]))
 
 
-(hiccups/defhtml sequences-tooltips []
+(defn CollectionsTooltips []
+  (list
+    [:div#tooltip-collections.tooltip-53dde {:style "display:none"}
+      [:p
+        "ClojureScript provides four collection types: lists, vectors, sets, and "
+        "maps. "
+        "Each of these data types has unique strengths and are used heavily in "
+        "most programs."]
+      [:p
+        "All collections are immutable and persistent, which means they preserve "
+        "the previous version(s) of themselves when they are modified. "
+        "Creating a \"changed\" version of any collection is an efficient "
+        "operation."]
+      [:p
+        "Collections can be represented literally:"]
+      [:table.tbl-3160a
+        [:thead
+          [:tr
+            [:th.tbl-hdr-e0564 "Collection"]
+            [:th.tbl-hdr-e0564 "Literal Form"]]]
+        [:tbody
+          [:tr
+            [:td.cell-e6fd2.right-border-c1b54 "List"]
+            [:td.cell-e6fd2 [:code "()"]]]
+          [:tr
+            [:td.cell-e6fd2.right-border-c1b54 "Vector"]
+            [:td.cell-e6fd2 [:code "[]"]]]
+          [:tr
+            [:td.cell-e6fd2.right-border-c1b54 "Set"]
+            [:td.cell-e6fd2 [:code "#{}"]]]
+          [:tr
+            [:td.cell-e6fd2.right-border-c1b54 "Map"]
+            [:td.cell-e6fd2 [:code "{}"]]]]]]
+
+    [:div#tooltip-lists.tooltip-53dde {:style "display:none"}
+      [:p
+        "Lists are a sequence of values, similar to a vector."]
+      [:p
+        "Most literal lists represent a function call."]
+      [:p
+        [:code "(a b c)"] " is a list of three things, and it also means "
+        "\"call the function " [:code "a"] " with two arguments: " [:code "b"]
+        " and " [:code "c"] "\""]]
+
+    [:div#tooltip-vectors.tooltip-53dde {:style "display:none"}
+      [:p
+        "Vectors are collections of values that are indexed by sequential "
+        "integers."]
+      [:p
+        "Though similar, a JavaScript Array is not the same thing as a "
+        "ClojureScript vector. "
+        "ie: " [:code "(.indexOf my-vec)"] " will not work on a vector."]]
+
+    [:div#tooltip-vector-as-fn.tooltip-53dde {:style "display:none"}
+      [:p
+        "A vector can be used as a function to access its elements."]]
+
+    [:div#tooltip-sets.tooltip-53dde {:style "display:none"}
+      [:p "Sets are collections of unique values, just like in "
+        "mathematics."]]
+
+    [:div#tooltip-set-as-fn.tooltip-53dde {:style "display:none"}
+      [:p
+        "A set can be used as a function to access its elements."]]
+
+    [:div#tooltip-maps.tooltip-53dde {:style "display:none"}
+      [:p
+        "A map is a collection that maps keys to values. "
+        "Accessing a value in a map using a key is very fast."]
+      [:p
+        "In JavaScript, Objects are commonly used as a de facto map using "
+        "strings as keys. "
+        "A key in a ClojureScript map can be any value, although keywords are "
+        "commonly used."]]
+
+    [:div#tooltip-keywords-as-fn.tooltip-53dde {:style "display:none"}
+      [:p
+        "Keywords can be used as a function to get a value from a map. "
+        "They are commonly used as map keys for this reason."]]))
+
+
+(defn SequencesTooltips []
   [:div#tooltip-sequences.tooltip-53dde {:style "display:none"}
     [:p
       "Many core algorithms are defined in terms of sequences. A sequence is "
@@ -1011,18 +1012,18 @@
       "results of a side-effecting function over an entire sequence."]])
 
 
-(hiccups/defhtml info-tooltips []
+(defn InfoTooltips []
   [:section
-    (basics-tooltips)
-    (collections-tooltips)
-    (sequences-tooltips)])
+    (BasicsTooltips)
+    (CollectionsTooltips)
+    (SequencesTooltips)])
 
 
 ;;------------------------------------------------------------------------------
 ;; Header and Footer
 ;;------------------------------------------------------------------------------
 
-(hiccups/defhtml header []
+(defn Header []
   [:header
     [:h1
       [:img {:src "img/cljs-ring.svg" :alt "ClojureScript Logo"}]
@@ -1039,7 +1040,7 @@
 
 ;; include this? "Please copy, improve, and share this work."
 ;; TODO: improve the markup here
-(hiccups/defhtml footer []
+(defn Footer []
   [:footer
     [:div.links-446e0
       [:label.quiet-5d4e8 "reference: "]
@@ -1062,7 +1063,7 @@
 
 (def page-title "ClojureScript Cheatsheet")
 
-(hiccups/defhtml head []
+(defn Head []
   [:head
     [:meta {:charset "utf-8"}]
     [:meta {:http-equiv "x-ua-compatible" :content "ie=edge"}]
@@ -1070,13 +1071,17 @@
     [:meta {:name "description" :content "ClojureScript cheatsheet"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
     [:link {:rel "apple-touch-icon" :href "apple-touch-icon.png"}]
-    [:script
-      (str "if (window.location.hostname !== 'localhost' && window.location.protocol !== 'https:') {"
-           "window.location.href = window.location.href.replace('http://', 'https://');}")]
+    [:div
+     {:dangerously-set-inner-HTML
+      {:__html
+       (str "<script>"
+            "if(window.location.hostname!=='localhost'&&window.location.protocol!=='https:'){"
+            "window.location.href=window.location.href.replace('http://','https://')}"
+            "</script>")}}]
     [:link {:rel "stylesheet" :href "css/main.min.css"}]])
 
 
-(hiccups/defhtml script-tags []
+(defn Scripts []
   [:script {:src "js/cheatsheet.min.js"}])
 
 
@@ -1084,80 +1089,88 @@
 ;; Body
 ;;------------------------------------------------------------------------------
 
-(hiccups/defhtml body []
+(defn BasicsSection2222222 []
   [:section.major-category
     [:h2 "Basics"]
     [:div.three-col-container
       [:div.column
-        (basics-section)
-        (functions-section)]
+        (BasicsSection)
+        (FunctionSection)]
       [:div.column
-        (numbers-section)
-        (strings-section)]
+        (NumbersSection)
+        (StringsSection)]
       [:div.column
-        (atoms-section)
-        (js-interop-section)]]
+        (AtomsSection)
+        (JsInteropSection)]]
     [:div.two-col-container
       [:div.column
-        (basics-section)
-        (numbers-section)
-        (js-interop-section)]
+        (BasicsSection)
+        (NumbersSection)
+        (JsInteropSection)]
       [:div.column
-        (functions-section)
-        (strings-section)
-        (atoms-section)]]]
+        (FunctionSection)
+        (StringsSection)
+        (AtomsSection)]]])
 
+(defn CollectionsSection []
   [:section.major-category
     [:h2 "Collections"]
     [:div.three-col-container
       [:div.column
-        (collections-section)
-        (lists-section)]
+        (CollectionsBlock)
+        (ListsBlock)]
       [:div.column
-        (vectors-section)
-        (sets-section)]
+        (VectorsBlock)
+        (SetsBlock)]
       [:div.column
-        (maps-section)]]
+        (MapsBlock)]]
     [:div.two-col-container
       [:div.column
-        (collections-section)
-        (lists-section)
-        (maps-section)]
+        (CollectionsBlock)
+        (ListsBlock)
+        (MapsBlock)]
       [:div.column
-        (vectors-section)
-        (sets-section)]]]
+        (VectorsBlock)
+        (SetsBlock)]]])
 
+(defn SequencesSection []
   [:section.major-category
     [:h2 "Sequences"]
     [:div.three-col-container
-      [:div.column (seq-in-out-section)]
-      [:div.column (use-seq-section)]
-      [:div.column (create-seq-section)]]
+      [:div.column (SeqInOutBlock)]
+      [:div.column (UsingSequenceBlock)]
+      [:div.column (CreateSeqBlock)]]
     [:div.two-col-container
-      [:div.column (seq-in-out-section)]
+      [:div.column (SeqInOutBlock)]
       [:div.column
-        (use-seq-section)
-        (create-seq-section)]]]
+        (UsingSequenceBlock)
+        (CreateSeqBlock)]]])
 
+(defn MiscSection []
   [:section.major-category
     [:h2 "Misc"]
     [:div.three-col-container
-      [:div.column (bitwise-section)]]
+      [:div.column (BitwiseBlock)]]
     [:div.two-col-container
-      [:div.column (bitwise-section)]]])
+      [:div.column (BitwiseBlock)]]])
 
+(defn Body []
+  (list (BasicsSection2222222)
+        (CollectionsSection)
+        (SequencesSection)
+        (MiscSection)))
 
-(defn cheatsheet-page []
+(defn CheatsheetPage []
   (str
     "<!doctype html>"
     "<html>"
-    (head)
+    (hiccups/html (Head))
     "<body>"
-    (header)
-    (body)
-    (footer)
-    (info-tooltips)
-    (script-tags)
+    (hiccups/html (Header))
+    (hiccups/html (Body))
+    (hiccups/html (Footer))
+    (hiccups/html (InfoTooltips))
+    (hiccups/html (Scripts))
     "</body>"
     "</html>"))
 
@@ -1166,7 +1179,7 @@
 
 (defn- write-cheatsheet-html! []
   (js-log "[cljs-cheatsheet] Writing public/index.html ...")
-  (.writeFileSync fs "public/index.html" (cheatsheet-page)))
+  (.writeFileSync fs "public/index.html" (CheatsheetPage)))
 
 (defn- write-symbols-json! []
   (js-log "[cljs-cheatsheet] Writing symbols.json ...")
