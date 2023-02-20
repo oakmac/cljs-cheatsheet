@@ -1,6 +1,6 @@
 (ns cljs-cheatsheet-client.tooltips
   (:require
-    [cljs-cheatsheet-client.html :refer [inline-tooltip]]
+    [cljs-cheatsheet-client.html :refer [InlineTooltip]]
     [cljs-cheatsheet-client.state :refer [active-tooltip mouse-position mousetrap-boxes]]
     [cljs-cheatsheet-client.util :refer [fetch-clj half point-inside-box?]]
     [cljs-cheatsheet.util :refer [js-log log]]
@@ -24,7 +24,7 @@
 ;;------------------------------------------------------------------------------
 
 (defn- create-inline-tooltip! [tt]
-  (.append ($ "body") (inline-tooltip tt)))
+  (.append ($ "body") (InlineTooltip tt)))
 
 ;;------------------------------------------------------------------------------
 ;; Hide and Show
