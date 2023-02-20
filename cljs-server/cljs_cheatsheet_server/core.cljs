@@ -285,11 +285,12 @@
         [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
-            (FnLink "char")
             (FnLink "string?")
             (CodeText "(clojure.string/)")
-            (FnLink "includes?" clj-string-ns)
-            (FnLink "blank?" clj-string-ns)]]]]])
+            (FnLink "blank?" clj-string-ns)
+            (FnLink "starts-with?" clj-string-ns)
+            (FnLink "ends-with?" clj-string-ns)
+            (FnLink "includes?" clj-string-ns)]]]]])
 
 
 (defn AtomsSection []
