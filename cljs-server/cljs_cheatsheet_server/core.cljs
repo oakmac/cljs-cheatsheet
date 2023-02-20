@@ -34,17 +34,14 @@
 (defn- json-stringify [js-thing]
   (js/JSON.stringify js-thing nil 2))
 
-
 (defn TooltipIcon [id]
   [:img.tooltip-icon-0e91b
     {:alt ""
      :data-info-id id
      :src "img/info-circle.svg"}])
 
-
-(defn literal [n]
+(defn CodeText [n]
   [:span.literal-c3029 n])
-
 
 (defn FnLink
   ([symbol-name]
@@ -56,9 +53,7 @@
      [:a.fn-a8476
        {:data-full-name full-name
         :href (docs-href symbol-name name-space)}
-       ; (html-encode symbol-name)
        symbol-name])))
-
 
 (defn InsideFnLink
   ([symbol-name]
@@ -70,7 +65,6 @@
      [:a.inside-fn-c7607
        {:data-full-name (str name-space "/" symbol-name)
         :href (docs-href symbol-name name-space)}
-       ; (html-encode symbol-name)
        symbol-name])))
 
 ;;------------------------------------------------------------------------------
@@ -186,10 +180,10 @@
         [:tr
           [:td.label-9e0b7 "Literals"]
           [:td.body-885f4
-            (literal "7")
-            (literal "3.14")
-            (literal "-1.2e3")
-            (literal "0x0000ff")]]
+            (CodeText "7")
+            (CodeText "3.14")
+            (CodeText "-1.2e3")
+            (CodeText "0x0000ff")]]
         [:tr
           [:td.label-9e0b7 "Arithmetic"]
           [:td.body-885f4
@@ -244,17 +238,17 @@
         [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
-            (literal "\"abc\"")
+            (CodeText "\"abc\"")
             (FnLink "str")
             (FnLink "name")]]
         [:tr
           [:td.label-9e0b7 "Use"]
           [:td.body-885f4
-            (literal "(.-length my-str)")
+            (CodeText "(.-length my-str)")
             (FnLink "count")
             (FnLink "get")
             (FnLink "subs")
-            (literal "(clojure.string/)")
+            (CodeText "(clojure.string/)")
             (FnLink "join" clj-string-ns)
             (FnLink "escape" clj-string-ns)
             (FnLink "split" clj-string-ns)
@@ -270,20 +264,20 @@
             (FnLink "re-seq")
             (FnLink "re-matches")
             (FnLink "re-pattern")
-            (literal "(clojure.string/)")
+            (CodeText "(clojure.string/)")
             (FnLink "replace" clj-string-ns)
             (FnLink "replace-first" clj-string-ns)]]
         [:tr
           [:td.label-9e0b7 "Letters"]
           [:td.body-885f4
-            (literal "(clojure.string/)")
+            (CodeText "(clojure.string/)")
             (FnLink "capitalize" clj-string-ns)
             (FnLink "lower-case" clj-string-ns)
             (FnLink "upper-case" clj-string-ns)]]
         [:tr
           [:td.label-9e0b7 "Trim"]
           [:td.body-885f4
-            (literal "(clojure.string/)")
+            (CodeText "(clojure.string/)")
             (FnLink "trim" clj-string-ns)
             (FnLink "trim-newline" clj-string-ns)
             (FnLink "triml" clj-string-ns)
@@ -293,7 +287,7 @@
           [:td.body-885f4
             (FnLink "char")
             (FnLink "string?")
-            (literal "(clojure.string/)")
+            (CodeText "(clojure.string/)")
             (FnLink "includes?" clj-string-ns)
             (FnLink "blank?" clj-string-ns)]]]]])
 
@@ -341,12 +335,12 @@
         [:tr
           [:td.label-9e0b7 "Create Object"]
           [:td.body-885f4
-            (literal "#js {}")
+            (CodeText "#js {}")
             (FnLink "js-obj" cljs-core-ns)]]
         [:tr
           [:td.label-9e0b7 "Create Array"]
           [:td.body-885f4
-            (literal "#js []")
+            (CodeText "#js []")
             (FnLink "array" cljs-core-ns)
             (FnLink "make-array" cljs-core-ns)
             (FnLink "aclone" cljs-core-ns)]]
@@ -447,7 +441,7 @@
         [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
-            (literal "'()")
+            (CodeText "'()")
             (FnLink "list")
             (FnLink "list*")]]
         [:tr
@@ -473,7 +467,7 @@
         [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
-            (literal "[]")
+            (CodeText "[]")
             (FnLink "vector")
             (FnLink "vec")]]
         [:tr
@@ -509,7 +503,7 @@
         [:tr
           [:td.label-9e0b7 "Create"]
           [:td.body-885f4
-            (literal "#{}")
+            (CodeText "#{}")
             (FnLink "set")
             (FnLink "hash-set")
             (FnLink "sorted-set")
@@ -529,7 +523,7 @@
         [:tr
           [:td.label-9e0b7 "Set Ops"]
           [:td.body-885f4
-            (literal "(clojure.set/)")
+            (CodeText "(clojure.set/)")
             (FnLink "union" clj-set-ns)
             (FnLink "difference" clj-set-ns)
             (FnLink "intersection" clj-set-ns)
@@ -537,7 +531,7 @@
         [:tr
           [:td.label-9e0b7 "Test"]
           [:td.body-885f4
-            (literal "(clojure.set/)")
+            (CodeText "(clojure.set/)")
             (FnLink "subset?" clj-set-ns)
             (FnLink "superset?" clj-set-ns)]]]]])
 
