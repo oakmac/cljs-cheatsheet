@@ -1,6 +1,7 @@
 const md5 = require('md5')
 const kidif = require('kidif')
 const marked = require('marked')
+const shell = require('shelljs')
 
 const hashLength = 15
 
@@ -13,8 +14,8 @@ module.exports = function (grunt) {
   function splitSection (str) {
     const lines = str.split('\n')
     const lines2 = []
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i].trim()
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim()
       if (line !== '') {
         lines2.push(line)
       }
@@ -23,22 +24,22 @@ module.exports = function (grunt) {
   }
 
   function docsToObj (docsArr) {
-    var docs = {}
+    const docs = {}
 
-    for (var i = 0; i < docsArr.length; i++) {
-      var symbol = docsArr[i]
+    for (let i = 0; i < docsArr.length; i++) {
+      const symbol = docsArr[i]
 
       docs[symbol.name] = {}
       docs[symbol.name]['full-name'] = symbol.name
-      docs[symbol.name]['signature'] = splitSection(symbol.signature)
+      docs[symbol.name].signature = splitSection(symbol.signature)
       docs[symbol.name]['description-html'] = marked(symbol.description)
 
       if (symbol.related) {
-        docs[symbol.name]['related'] = splitSection(symbol.related)
+        docs[symbol.name].related = splitSection(symbol.related)
       }
 
       if (symbol.type) {
-        docs[symbol.name]['type'] = symbol.type
+        docs[symbol.name].type = symbol.type
       }
     }
 
@@ -51,8 +52,8 @@ module.exports = function (grunt) {
     const symbolsWeNeed = require('./symbols.json')
 
     // build only the symbols we need for the cheatsheet
-    var docsWeNeed = {}
-    for (var i = 0; i < symbolsWeNeed.length; i++) {
+    const docsWeNeed = {}
+    for (let i = 0; i < symbolsWeNeed.length; i++) {
       const cljsName = symbolsWeNeed[i].replace('clojure.core', 'cljs.core')
       const clojureName = symbolsWeNeed[i].replace('cljs.core', 'clojure.core')
 
@@ -89,6 +90,31 @@ module.exports = function (grunt) {
     //       (< 5 minutes)
 
     grunt.log.writeln('Everything looks ok for a build.')
+  }
+
+  function nowStr () {
+    const opts = {
+      day: '2-digit',
+      hour12: false,
+      month: '2-digit',
+      year: 'numeric'
+    }
+    const now = new Date()
+    const timeStr = now.toLocaleTimeString('en-US', opts)
+    const year = timeStr.substring(6, 10)
+    const month = timeStr.substring(0, 2)
+    const day = timeStr.substring(3, 5)
+    const hours = timeStr.substring(12, 14)
+    const minutes = timeStr.substring(15, 17)
+    const seconds = timeStr.substring(18, 20)
+
+    return year + '-' + month + '-' + day + '-' + hours + minutes + seconds
+  }
+
+  function createReleaseId () {
+    const gitFullHash = shell.exec('git rev-parse HEAD', { silent: true }).stdout.trim()
+    const gitShortHash = gitFullHash.substr(0, 10)
+    return nowStr() + '-' + gitShortHash
   }
 
   // FIXME: re-write this to be more generic please :)
@@ -134,6 +160,15 @@ module.exports = function (grunt) {
                       '00_build/docs.' + docsHash + '.json')
     grunt.log.writeln('00_build/js/cheatsheet.min.js → ' +
                       '00_build/js/cheatsheet.min.' + jsHash + '.js')
+  }
+
+  function addReleaseId () {
+    const htmlFile = grunt.file.read('00_build/index.html')
+    const releaseId = createReleaseId()
+    const updatedFile = htmlFile.replace('<html>', '<html data-release-id="' + releaseId + '">')
+
+    grunt.file.write('00_build/index.html', updatedFile)
+    grunt.log.writeln('Tagged 00_build/index.html with releaseId: ' + releaseId)
   }
 
   // ---------------------------------------------------------------------------
@@ -202,13 +237,15 @@ module.exports = function (grunt) {
   grunt.registerTask('docs', buildDocs)
   grunt.registerTask('pre-build-sanity-check', preBuildSanityCheck)
   grunt.registerTask('hash-assets', hashAssets)
+  grunt.registerTask('add-release-id', addReleaseId)
 
   grunt.registerTask('build', [
     'pre-build-sanity-check',
     'clean:pre',
     'copy:cheatsheet',
     'clean:post',
-    'hash-assets'
+    'hash-assets',
+    'add-release-id'
   ])
 
   grunt.registerTask('default', 'watch')
